@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Responsible:</strong>
+  <%= @class_group.responsible %>
+</p>
+
+<p>
+  <strong>Discipline:</strong>
+  <%= @class_group.discipline %>
+</p>
+
+<p>
+  <strong>Class code:</strong>
+  <%= @class_group.class_code %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @class_group.active %>
+</p>
+
+<p>
+  <strong>Expiration date:</strong>
+  <%= @class_group.expiration_date %>
+</p>
+
+<%= link_to 'Edit', edit_class_group_path(@class_group) %> |
+<%= link_to 'Back', class_groups_path %>
