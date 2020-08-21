@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_200525) do
+ActiveRecord::Schema.define(version: 2020_08_21_211756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,46 @@ ActiveRecord::Schema.define(version: 2020_08_21_200525) do
     t.string "class_code"
     t.boolean "active"
     t.date "expiration_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.integer "profile"
+    t.string "name"
+    t.string "registration"
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "person_classes", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "class_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "task_id"
+    t.text "response_value"
+    t.text "annotation_person"
+    t.integer "status"
+    t.float "grade"
+    t.text "observation_responsible"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.integer "class_id"
+    t.text "description"
+    t.integer "status"
+    t.date "expiration_date"
+    t.boolean "active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
