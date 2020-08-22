@@ -8,5 +8,5 @@
   <%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %>
 <% end %>
 <div class="main-content">
-  <%= render partial: "home", locals: { last_column_name: "Não Entregue" } %>
+  <%= render partial: "home", locals: { last_column_name: true ? "Não Entregue" : "Corrigido" } %>
 </div>
