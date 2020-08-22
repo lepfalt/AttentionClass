@@ -5,7 +5,7 @@
       <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
     <% end %>
   <%# <% end %>
-  <%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %>
+  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %></a>
 <% end %>
 <div class="main-content">
   <%= render partial: "home", locals: { last_column_name: true ? "Não Entregue" : "Corrigido" } %>
