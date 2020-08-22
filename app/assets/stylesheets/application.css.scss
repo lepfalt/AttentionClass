@@ -2,3 +2,12 @@
  *= require_tree .
  *= require_self
  */
+
+ .navbar-brand {
+  padding: 0 0 0 2em;
+  font-size: 28px;
+ }
+
+ .navbar-default {
+  height: 5em;
+}

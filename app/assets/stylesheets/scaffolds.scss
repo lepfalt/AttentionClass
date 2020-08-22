@@ -4,11 +4,11 @@ body {
   //margin: 33px; 
 }
 
-// body, p, ol, ul, td {
-//   font-family: verdana, arial, helvetica, sans-serif;
-//   font-size: 13px;
-//   line-height: 18px; 
-// }
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; 
+}
 
 pre {
   background-color: #eee;
@@ -22,8 +22,10 @@ a:visited {
   color: #666; }
 
 a:hover {
-  color: #fff;
-  background-color: #000; }
+  color: #000;
+  background-color: #000;
+  font-weight: bold;
+}
 
 th {
   padding-bottom: 5px; }
@@ -31,9 +33,9 @@ th {
 td {
   padding: 0 5px 7px; }
 
-// div.field,
-// div.actions {
-//   margin-bottom: 10px; }
+div.field,
+div.actions {
+  margin-bottom: 10px; }
 
 #notice {
   color: green; }
@@ -66,15 +68,15 @@ td {
 label {
   display: block; }
 
-#logouticon {
-  width: 4em;
-  height: 4em;
-  margin-right: 1em;
-  margin-top: 1em;
-  float: right;
-}
+// #logouticon {
+//   width: 4em;
+//   height: 4em;
+//   margin-right: 1em;
+//   margin-top: 1em;
+//   float: right;
+// }
 
-.logout-div {
-  display: inline-block;
-  width: 100%;
-}
+// .logout-div {
+//   display: inline-block;
+//   width: 100%;
+// }
