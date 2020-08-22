@@ -1,9 +1,9 @@
-<main class="card-main class-list">
+<main class="card-main card-table">
   <p id="notice"><%= notice %></p>
 
-  <h1 class='title-class'>Turma: T847ME</h1>
+  <h1 class='title-page'>Turma: T847ME</h1>
 
-  <table class="table table-bordered table-hover table-class">
+  <table class="table table-bordered table-hover table-page">
     <thead class="header-table">
       <tr>
         <th>Tarefa</th>
@@ -19,7 +19,7 @@
           <td><%= task.title %></td>
           <td><%= task.expiration_date %></td>
           <td><%= task.status %></td>
-          <td><%= link_to 'Ver', class_group, class: 'btn-view-class' %></td>
+          <td><%= link_to 'Ver', class_group, class: 'btn-view-item-table' %></td>
           <%# <td><%= link_to 'Edit', edit_task_path(task) %>
           <%# </td> %>
           <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -32,7 +32,7 @@
   <br>
 
   <div class="btns-content">
-    <%= link_to 'Criar Tarefa', new_task_path, class: 'btn-new-class' %>
+    <%= link_to 'Criar Tarefa', new_task_path, class: 'btn-new-item' %>
     <%= link_to 'Vincular Aluno', nil, class: 'btn-new-student' %>
   </div>
 </main>
