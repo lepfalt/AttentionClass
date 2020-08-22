@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get "home", to: 'home#index'
   get "login", to: 'login#index'
   get "turmas", to: 'class_groups#index'
+  get "tarefas", to: 'tasks#index'
 end

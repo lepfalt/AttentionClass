@@ -1,37 +1,38 @@
-<p id="notice"><%= notice %></p>
+<main class="card-main class-list">
+  <p id="notice"><%= notice %></p>
 
-<h1>Tasks</h1>
+  <h1 class='title-class'>Turma: T847ME</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Class code</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>Expiration date</th>
-      <th>Active</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tasks.each do |task| %>
+  <table class="table table-bordered table-hover table-class">
+    <thead class="header-table">
       <tr>
-        <td><%= task.title %></td>
-        <td><%= task.class_code %></td>
-        <td><%= task.description %></td>
-        <td><%= task.status %></td>
-        <td><%= task.expiration_date %></td>
-        <td><%= task.active %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Tarefa</th>
+        <th>Data Limite</th> 
+        <th>Status</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody class="body-table">
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.expiration_date %></td>
+          <td><%= task.status %></td>
+          <td><%= link_to 'Ver', class_group, class: 'btn-view-class' %></td>
+          <%# <td><%= link_to 'Edit', edit_task_path(task) %>
+          <%# </td> %>
+          <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%# </td> %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Task', new_task_path %>
+  <br>
+
+  <div class="btns-content">
+    <%= link_to 'Criar Tarefa', new_task_path, class: 'btn-new-class' %>
+    <%= link_to 'Vincular Aluno', nil, class: 'btn-new-student' %>
+  </div>
+</main>
