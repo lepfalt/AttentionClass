@@ -1,0 +1,12 @@
+<%= nav_bar brand: "Attention Class", brand_link: root_url  do %>
+  <%# <% if person.profile = 1 (professor) %>
+    <%= menu_group do %>
+      <%= menu_item "Turmas", root_url, class: "nav-menu-item" %>
+      <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
+    <% end %>
+  <%# <% end %>
+  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %></a>
+<% end %>
+<div class="main-content">
+  <%= render partial: "home", locals: { last_column_name: true ? "Não Entregue" : "Corrigido" } %>
+</div>

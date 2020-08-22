@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @response.person_id %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @response.task_id %>
+</p>
+
+<p>
+  <strong>Response value:</strong>
+  <%= @response.response_value %>
+</p>
+
+<p>
+  <strong>Annotation person:</strong>
+  <%= @response.annotation_person %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @response.status %>
+</p>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @response.grade %>
+</p>
+
+<p>
+  <strong>Observation responsible:</strong>
+  <%= @response.observation_responsible %>
+</p>
+
+<%= link_to 'Edit', edit_response_path(@response) %> |
+<%= link_to 'Back', responses_path %>
