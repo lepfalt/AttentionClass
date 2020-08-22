@@ -1,15 +1,12 @@
 <%= nav_bar brand: "Attention Class", brand_link: root_url  do %>
-  
-    <%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %>
-
+  <%# <% if person.profile = 1 (professor) %>
+    <%= menu_group do %>
+      <%= menu_item "Turmas", root_url, class: "nav-menu-item" %>
+      <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
+    <% end %>
+  <%# <% end %>
+  <%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %>
 <% end %>
 <div class="main-content">
-<%# <% if person.profile = 1 (professor) %>
-  
-<%# <% else %>
-  <%# <div class="logout-div"> %>
-    <%# <%= image_tag('logout.png', id: "logouticon") %>
-  <%# </div> %>
-<%# <% end %>
   <%= render partial: "home", locals: { last_column_name: "Não Entregue" } %>
 </div>
