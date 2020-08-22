@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= favicon_link_tag 'favicon.png' %>
     <title>Attention Class</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -19,7 +20,7 @@
               <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
             <% end %>
           <%# <% end %>
-          <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "logouticon navbar-form navbar-right") %></a>
+          <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %></a>
         <% end %>
       <%# <% end %>
       <div class="main-content">
