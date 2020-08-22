@@ -1,5 +1,5 @@
 class ClassGroupsController < ApplicationController
-  before_action :set_class_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_class_group, only: %i[show edit update destroy]
 
   # GET /class_groups
   # GET /class_groups.json
@@ -9,8 +9,7 @@ class ClassGroupsController < ApplicationController
 
   # GET /class_groups/1
   # GET /class_groups/1.json
-  def show
-  end
+  def show; end
 
   # GET /class_groups/new
   def new
@@ -18,8 +17,7 @@ class ClassGroupsController < ApplicationController
   end
 
   # GET /class_groups/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /class_groups
   # POST /class_groups.json
@@ -62,13 +60,14 @@ class ClassGroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_class_group
-      @class_group = ClassGroup.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def class_group_params
-      params.require(:class_group).permit(:responsible, :discipline, :class_code, :active, :expiration_date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_class_group
+    @class_group = ClassGroup.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def class_group_params
+    params.require(:class_group).permit(:responsible, :discipline, :class_code, :active, :expiration_date)
+  end
 end
