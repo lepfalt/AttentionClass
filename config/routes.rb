@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get "login", to: 'login#index'
   get "turmas", to: 'class_groups#index'
   get "tarefas", to: 'tasks#index'
+  get "vincular", to: 'person#index'
 end

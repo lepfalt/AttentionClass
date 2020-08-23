@@ -72,13 +72,18 @@
   width: 13em;
   height: 4em;
   display: flex;
-  margin: 7em auto auto auto;
+
   font-family: Roboto;
   font-size: 25px;
   line-height: 21px;
   align-items: center;
   text-align: center;
   color: #FFFFFF;
+
+}
+
+.btn-new-iten-table {
+  margin: 7em auto auto auto;
   padding-left: 4em;
 }
 
