@@ -37,3 +37,68 @@
 
 <%= link_to 'Edit', edit_response_path(@response) %> |
 <%= link_to 'Back', responses_path %>
+
+
+
+<main class="card-main card-table">
+  <p id="notice"><%= notice %></p>
+
+  <a href='<%= home_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+    <div class="top-panel">
+      <h1 class='title-page title-task'><%= @response.task_id %></h1>
+      
+      <section class="section-task">
+        <h4 class="field-task">Entregar até:  </h4>
+        <span class="span-task"><%= @task.expiration_date %></span>
+      </section>
+
+      <section class="section-task">
+        <h4 class="field-task">Professor:  </h4>
+        <span class="span-task"><%= @task.expiration_date %></span>
+      </section>
+
+      <section class="section-task">
+        <h4 class="field-task">Disciplina:  </h4>
+        <span class="span-task"><%= @task.expiration_date %></span>
+      </section>
+
+
+      <section class="section-task">
+        <span class="card-class status-not-completed"><%= @task.class_id %></span>
+      </section>
+    </div>
+
+    <section class="description-task">
+      <h4>Descrição:</h4>
+      <h3 class="description-task-text"><%= @task.description %></h3>
+    </section>
+
+    <section class="content-body">
+      <section style="display: flex;
+    flex-direction: column;         width: 55%;
+    margin-left: 5.5em;">
+        <%= text_field_tag :annotation, @response.annotation_person, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
+        <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student upload-task' %>
+      </section>
+    
+      <section class="section-alterar-status">
+        <%= select_tag Response.all, @response.status, class: 'status-task' %>
+        <%= link_to 'Alterar', edit_task_path(@task), class: 'btn-new-item btn-alterar' %>
+      </section>
+    </section>
+
+    <!--<p>
+    <strong>Grade:</strong>
+      <%= @response.grade %>
+    </p> -->
+
+    <!--<p>
+      <strong>Observation responsible:</strong>
+      <%= @response.observation_responsible %>
+    </p> -->
+
+    <%# <%= link_to 'Edit', edit_task_path(@task) %> 
+    <%# <%= link_to 'Back', tasks_path %>
+  </div>
+</main>
