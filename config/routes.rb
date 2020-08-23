@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get "turmas", to: 'class_groups#index'
   get "tarefas", to: 'tasks#index'
   get "vincular", to: 'person#index'
+  get "respostas", to: 'responses#index'
 end
