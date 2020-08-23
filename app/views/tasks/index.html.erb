@@ -2,39 +2,40 @@
   <p id="notice"><%= notice %></p>
 
   <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+    <h1 class='title-page'>Turma: T847ME</h1>
 
-  <h1 class='title-page'>Turma: T847ME</h1>
-
-  <table class="table table-bordered table-hover table-page">
-    <thead class="header-table">
-      <tr>
-        <th>Tarefa</th>
-        <th>Data Limite</th> 
-        <th>Status</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody class="body-table">
-      <% @tasks.each do |task| %>
+    <table class="table table-bordered table-hover table-page">
+      <thead class="header-table">
         <tr>
-          <td><%= task.title %></td>
-          <td><%= task.expiration_date %></td>
-          <td><%= task.status %></td>
-          <td><%= link_to 'Ver', class_group, class: 'btn-view-item-table' %></td>
-          <%# <td><%= link_to 'Edit', edit_task_path(task) %>
-          <%# </td> %>
-          <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%# </td> %>
+          <th>Tarefa</th>
+          <th>Data Limite</th> 
+          <th>Status</th>
+          <th colspan="3"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
 
-  <br>
+      <tbody class="body-table">
+        <% @tasks.each do |task| %>
+          <tr>
+            <td><%= task.title %></td>
+            <td><%= task.expiration_date %></td>
+            <td><%= task.status %></td>
+            <td><%= link_to 'Ver', class_group, class: 'btn-view-item-table' %></td>
+            <%# <td><%= link_to 'Edit', edit_task_path(task) %>
+            <%# </td> %>
+            <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%# </td> %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-  <div class="btns-content">
-    <%= link_to 'Criar Tarefa', new_task_path, class: 'btn-new-item' %>
-    <%= link_to 'Vincular Aluno', nil, class: 'btn-new-student' %>
-  </div>
+    <br>
+
+    <div class="btns-content">
+      <%= link_to 'Criar Tarefa', new_task_path, class: 'btn-new-item btn-new-iten-table' %>
+      <%= link_to 'Vincular Aluno', nil, class: 'btn-new-student' %>
+    </div>
+  <div>
 </main>
