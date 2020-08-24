@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_24_191903) do
+ActiveRecord::Schema.define(version: 2020_08_24_220408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,18 +25,11 @@ ActiveRecord::Schema.define(version: 2020_08_24_191903) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "person_classes", id: :bigint, default: -> { "nextval('user_classes_id_seq'::regclass)" }, force: :cascade do |t|
-    t.integer "person_id"
-    t.integer "class_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "responses", force: :cascade do |t|
-    t.integer "person_id"
+    t.integer "user_id"
     t.integer "task_id"
     t.text "response_value"
-    t.text "annotation_person"
+    t.text "response_annotation"
     t.integer "status"
     t.float "grade"
     t.text "observation_responsible"
