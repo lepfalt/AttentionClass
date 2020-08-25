@@ -21,12 +21,13 @@
               <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
             <% end %>
           <%# <% end %>
-          <a href=<% sessions_path %>% data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %></a>
+          <a href=<%= sessions_path %> data-method="delete" data-toggle="tooltip" title="Sair">
+            <%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %>
+          </a>
         <% end %>
         <%# <% end %>
         <%# <%= button_to "Logout", sessions_path, method: :delete %>
       <% end %>
-      
       <div class="main-content">
         <%= yield %>
       </div>
