@@ -1,32 +1,84 @@
-<main class="card-main card-table">
-  <p id="notice"><%= notice %></p>
-
-  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <div class="content-intern">
-    <h1 class='title-page'>Respostas</h1>
-
-    <table class="table table-bordered table-hover table-page">
-      <thead class="header-table-red header-table-font">
-        <tr>
-          <th>Nome</th>
-          <th>Nota</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
-
-      <tbody class="body-table">
-         <% @responses.each do |response| %>
-          <tr>
-            <td><%= response.person_id %></td>
-            <td><%= response.grade %></td>
-            <td><%= link_to 'Ver', response, class: 'btn btn-default btn-view-item-table' %></td>
-            <%# <td><%= link_to 'Edit', edit_response_path(response) %>
-            <%# </td> %>
-            <%# <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <%# </td> %>
-          </tr>
+<%# <% if current_user == @user %>
+<% @responses.each do |response| %>
+<main class="card-main align-columns">
+  <section class="status-column">
+    <div class="status-header">
+      <h3 class="status-name">Pendente</h3>
+    </div>
+    <div class="status-body">
+      
+        <% if response.pending? %>
+          <div class="card-task">
+            <a href="http://www.google.com">
+              <div>
+                <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
+                <h4 class="card-title"><%=response.task.title%></h4>
+                <span class="card-date"><%=response.task.expiration_date%></span>
+              </div>
+            </a>
+          </div>
         <% end %>
-      </tbody>
-    </table>
-  </div>
+      
+    </div>
+  </section>
+
+  <section class="status-column">
+    <div class="status-header">
+      <h3 class="status-name">Em Andamento</h3>
+    </div>
+    <div class="status-body">
+      <% if response.progress? %>
+      <div class="card-task">
+        <a href="#">
+          <div>
+            <span class="card-class status-progress"><%=response.task.class_group.class_code%></span>
+            <h4 class="card-title"><%=response.task.title%></h4>
+            <span class="card-date"><%=response.task.expiration_date%></span>
+          </div>
+        </a>
+      </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="status-column">
+    <div class="status-header">
+      <h3 class="status-name">Concluído</h3>
+    </div>
+    <div class="status-body">
+      <% if response.done? %>
+      <div class="card-task">
+        <a href="#">
+          <div>
+            <span class="card-class status-done"><%=response.task.class_group.class_code%></span>
+            <h4 class="card-title"><%=response.task.title%></h4>
+            <span class="card-date"><%=response.task.expiration_date%></span>
+          </div>
+        </a>
+        <a href="#"><span class="remove-task">X</span></a>
+      </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="status-column">
+    <div class="status-header">
+      <h3 class="status-name"><%= true ? "Não Entregue" : "Corrigido" %></h3>
+    </div>
+    <div class="status-body">
+      <% if response.undelivered? %>
+      <div class="card-task">
+        <a href="http://www.google.com.br">
+          <div>
+            <span class="card-class status-not-completed"><%=response.task.class_group.class_code%></span>
+            <h4 class="card-title"><%=response.task.title%></h4>
+            <span class="card-date"><%=response.task.expiration_date%></span>
+          </div>
+        </a>
+        <a href="https://www.youtube.com.br"><span class="remove-task">X</span></a>
+      </div>
+      <% end %>
+    </div>
+  </section>
 </main>
+<% end %>
