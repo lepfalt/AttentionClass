@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_032525) do
+ActiveRecord::Schema.define(version: 2020_08_25_195211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "class_groups", force: :cascade do |t|
-    t.integer "responsible"
+    t.integer "user_id"
     t.string "discipline"
     t.string "class_code"
     t.boolean "active"
