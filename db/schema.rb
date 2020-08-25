@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_195211) do
+ActiveRecord::Schema.define(version: 2020_08_25_201318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 2020_08_25_195211) do
     t.date "expiration_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "class_groups_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "class_group_id", null: false
   end
 
   create_table "responses", force: :cascade do |t|
@@ -44,13 +49,6 @@ ActiveRecord::Schema.define(version: 2020_08_25_195211) do
     t.integer "status"
     t.date "expiration_date"
     t.boolean "active"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "user_classes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "class_group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
