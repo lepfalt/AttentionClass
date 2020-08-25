@@ -1,0 +1,32 @@
+<main class="card-main card-table">
+  <p id="notice"><%= notice %></p>
+
+  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+    <h1 class='title-page'>Respostas</h1>
+
+    <table class="table table-bordered table-hover table-page">
+      <thead class="header-table-red header-table-font">
+        <tr>
+          <th>Nome</th>
+          <th>Nota</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody class="body-table">
+         <% @responses.each do |response| %>
+          <tr>
+            <td><%= response.user_id %></td>
+            <td><%= response.grade %></td>
+            <td><%= link_to 'Ver', response, class: 'btn btn-default btn-view-item-table' %></td>
+            <%# <td><%= link_to 'Edit', edit_response_path(response) %>
+            <%# </td> %>
+            <%# <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%# </td> %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>

@@ -3,13 +3,18 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @user = User.all
+    # puts 'Entrou no index, ' params.require(:user).permit(:id)
+    # @responses_user = Response.where(user_id: session[:id])
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     puts 'show: ', params[:id]
+    puts 'RESPONSES ', Response.all
+    @responses_user = Response.all.where(user_id: params[:id])
+    puts 'RESPONSE ', @responses_user
     @user = User.find(params[:id])
   end
 
@@ -56,6 +61,10 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def find_responses
+    Response.where(user_id: @user.id)
   end
 
   private
