@@ -1,0 +1,11 @@
+<div class="content-intern">
+<div class="main-container"> 
+  <div class="form-group">
+    <%= form_for @user do |form| %>
+      <%= form.email_field :email, class:"form-control text-field", placeholder: "lembra o email?" %>
+      <%= form.password_field :password, class:"form-control text-field", placeholder: "e a senha??" %>
+      <%= submit "Cadastrar", class:"btn btn-danger btn-login" %>
+    <% end %>
+  </div>
+  </div>
+</div>

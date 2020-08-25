@@ -12,7 +12,8 @@
 
   <body>
     <div class="container">
-      <%# <% if true  Validar se a tela é login %>
+      <% if logged_in? %>
+        <%# <% if true  Validar se a tela é login %>
         <%= nav_bar brand: "Attention Class", brand_link: root_url  do %>
           <%# <% if person.profile = 1 (professor) %>
             <%= menu_group do %>
@@ -20,12 +21,18 @@
               <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
             <% end %>
           <%# <% end %>
-          <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Sair"><%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %></a>
+          <a href=<%= sessions_path %> data-method="delete" data-toggle="tooltip" title="Sair">
+            <%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %>
+          </a>
         <% end %>
-      <%# <% end %>
+        <%# <% end %>
+        <%# <%= button_to "Logout", sessions_path, method: :delete %>
+      <% end %>
       <div class="main-content">
         <%= yield %>
       </div>
+
     </div>
+    
   </body>
 </html>

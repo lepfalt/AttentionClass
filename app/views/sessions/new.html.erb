@@ -1,0 +1,11 @@
+<div class="content-intern">
+<div class="main-container"> 
+  <div class="form-group">
+    <%= form_tag sessions_path do %>
+      <%= email_field_tag :email, nil, class:"form-control text-field", placeholder: "lembra o email?" %>
+      <%= password_field_tag :password, nil, class:"form-control text-field", placeholder: "e a senha??" %>
+      <%= submit_tag "Entrar", class:"btn btn-danger btn-login" %>
+    <% end %>
+  </div>
+  </div>
+</div>
