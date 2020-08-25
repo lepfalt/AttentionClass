@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    puts 'login: ', params[:email], params[:password]
   end
 
   def create
