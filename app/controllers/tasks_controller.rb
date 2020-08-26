@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show update destroy]
 
   # GET /tasks
   # GET /tasks.json
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   # GET /tasks/1/edit
-  def edit; end
+  #def edit; end
 
   # POST /tasks
   # POST /tasks.json
@@ -38,14 +38,13 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update task_params
+      puts "Atualixodekdfjseç"
+      flash[:notice] = "Tarefa atualizada com sucesso!"
+      redirect_to tasks_path
+    else
+      puts 'NÃO ATUALIZOU'
+      renderiza :show
     end
   end
 
@@ -68,6 +67,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :class_code, :description, :status, :expiration_date, :active)
+    params.require(:task).permit(:title, :class_group_id, :description, :status, :expiration_date, :active)
   end
 end

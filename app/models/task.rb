@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   has_many :responses
   belongs_to :class_group, optional: false
 
-  validates :title, :class_id, :description, :status, :expiration_date, presence: true
-  validates :status, inclusion: { in: [pending, progress, done, ajusted] }
+  validates :title, :class_group_id, :description, :status, :expiration_date, presence: true
+  # validates :status, inclusion: { in: [pending, progress, done, ajusted] }
   validates_associated :class_group # Ver
 end
