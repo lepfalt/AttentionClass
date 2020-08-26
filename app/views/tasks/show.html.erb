@@ -13,17 +13,17 @@
 
       <section class="section-task">
         <h4 class="field-task">Professor:  </h4>
-        <span class="span-task"><%= @task.expiration_date %></span>
+        <span class="span-task"><%= @task.class_group.user.name %></span>
       </section>
 
       <section class="section-task">
         <h4 class="field-task">Disciplina:  </h4>
-        <span class="span-task"><%= @task.expiration_date %></span>
+        <span class="span-task"><%= @task.class_group.discipline %></span>
       </section>
 
 
       <section class="section-task">
-        <span class="card-class status-not-completed"><%= @task.class_id %></span>
+        <span class="card-class status-not-completed"><%= @task.class_group.class_code %></span>
       </section>
     </div>
 
@@ -33,15 +33,13 @@
     </section>
 
     <section class="content-body">
-      <section style="display: flex;
-    flex-direction: column;         width: 55%;
-    margin-left: 5.5em;">
+      <section class="section-response-user">
         <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
         <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student upload-task' %>
       </section>
     
       <section class="section-alterar-status">
-        <%= select_tag Task.all, @task.status, class: 'status-task' %>
+        <%= select_tag :status, @task, class: 'status-task' %>
         <%= link_to 'Alterar', edit_task_path(@task), class: 'btn-new-item btn-alterar' %>
       </section>
     </section>
