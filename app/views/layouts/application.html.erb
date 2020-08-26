@@ -13,26 +13,21 @@
   <body>
     <div class="container">
       <% if logged_in? %>
-        <%# <% if true  Validar se a tela é login %>
         <%= nav_bar brand: "Attention Class", brand_link: root_url  do %>
-          <%# <% if person.profile = 1 (professor) %>
+          <% if current_user.admin? %>
             <%= menu_group do %>
-              <%= menu_item "Turmas", root_url, class: "nav-menu-item" %>
-              <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
+              <%= menu_item "Turmas", admin_classes_path(:id => current_user ), class: "nav-menu-item" %>
+              <%# <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
             <% end %>
-          <%# <% end %>
+          <% end %>
           <a href=<%= sessions_path %> data-method="delete" data-toggle="tooltip" title="Sair">
             <%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %>
           </a>
         <% end %>
-        <%# <% end %>
-        <%# <%= button_to "Logout", sessions_path, method: :delete %>
       <% end %>
       <div class="main-content">
         <%= yield %>
       </div>
-
     </div>
-    
   </body>
 </html>
