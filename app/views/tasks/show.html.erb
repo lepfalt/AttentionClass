@@ -1,6 +1,10 @@
-<main class="card-main card-table">
-  <p id="notice"><%= notice %></p>
+<% if flash[:notice] %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
 
+<main class="card-main card-table">
   <a href='<%= tasks_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <div class="top-panel">
@@ -31,7 +35,7 @@
 
       <section class="description-task">
         <h4 class="item-description">Descrição:</h4>
-        <h3 class="description-task-text item-description"><%= form.text_field :description, class: 'input-text-task' %></h3>
+        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task' %></h3>
       </section>
 
       <section class="content-body">
@@ -42,7 +46,7 @@
       
         <section class="section-alterar-status">
           <%= form.select :status, Task.statuses.keys, {}, class: 'status-task' %>
-          <%= link_to 'Alterar', edit_task_path(@task), class: 'btn-new-item btn-alterar' %>
+          <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
         </section>
       </section>    
     <% end %>
