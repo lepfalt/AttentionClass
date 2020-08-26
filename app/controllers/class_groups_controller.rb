@@ -4,7 +4,7 @@ class ClassGroupsController < ApplicationController
   # GET /class_groups
   # GET /class_groups.json
   def index
-    @class_groups = ClassGroup.all
+    @class_groups = ClassGroup.where(user_id: params[:id])
   end
 
   # GET /class_groups/1
