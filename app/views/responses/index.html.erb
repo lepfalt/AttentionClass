@@ -9,7 +9,7 @@
       <% @responses.each do |response| %>
         <% if response.pending? %>
           <div class="card-task">
-            <a href="http://www.google.com">
+            <a href=<%= response_path(response) %>>
               <div>
                 <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
