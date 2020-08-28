@@ -35,33 +35,55 @@
 
 .title-task {
   display: inline-block;
+  font-size: 36px;
+}
+
+.input-title {
+  padding: 0.5em;
 }
 
 .section-task {
   display: inline-block;
-  margin: 4.5em auto auto auto;
+  margin: 4.5em auto auto 4em;
 }
 
 .field-task {
   display: inline-block;
 }
 
+.data-field-expiration {
+  font-size: 16px;
+}
+
 .span-task {
   margin-left: 1em;
+  font-size: 16px;
 }
 
 .content-body {
   display: inline-flex;
   width: 100%;
-  min-height: 34em;
-  max-height: 34em;
+  min-height: 21em;
+  max-height: 21em;
   position: absolute;
+}
+
+.item-description {
+  margin-bottom: 0;
 }
 
 .description-task {
   display: flex;
   flex-direction: column;
-  margin: 3em auto auto 5.5em;
+  margin: 1em auto auto 5.5em;
+}
+
+.input-text-task {
+  width: 90%;
+  height: 10em;
+  margin-left: -2em;
+  padding-bottom: 8em;
+  text-indent: 2em;
 }
 
 .description-task-text {
@@ -73,7 +95,8 @@
 .section-alterar-status {
   width: 20%;
   position: relative;
-  margin: auto auto 14em auto;;
+  margin: 2em auto auto auto;
+  height: 100%;
 }
 
 .btn-alterar {
@@ -98,10 +121,10 @@
 }
 
 .status-task {
-  min-width: 95%;
-  max-width: 95%;
-  height: 5em;
-  margin: auto 0.5em;
+  width: 95%;
+  height: 3em;
+  margin: 0.5em;
+  font-size: 18px;
 }
 
 .footer-task {
@@ -115,5 +138,15 @@
 .upload-task {
   position: relative;
   margin: auto;
-  padding-left: 3em;
+  padding-left: 2.5em;
+}
+
+.section-response-user {
+  display: flex;
+  width: 50%;
+  height: 21em;
+}
+
+.code-class {
+  font-size: 18px;
 }
