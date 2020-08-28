@@ -4,7 +4,7 @@ class Response < ApplicationRecord
   belongs_to :task, optional: false
 
   validates :status, :user_id, :task_id, presence: true
-  validates :status, inclusion: { in: [pending, progress, done, undelivered] }
-  validates_associated :user
-  validates_associated :task
+  #validates :status, inclusion: { in: [pending, progress, done, undelivered] }
+  # validates_associated :user
+  # validates_associated :task
 end

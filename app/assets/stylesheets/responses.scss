@@ -50,15 +50,20 @@
   display: inline-block;
 }
 
-.span-task {
-  margin-left: 1em;
+.code-class {
+  font-size: 18px;
 }
 
-.content-body {
+.span-task {
+  margin-left: 1em;
+  font-size: 16px;
+}
+
+.content-body-response {
   display: inline-flex;
   width: 100%;
-  min-height: 34em;
-  max-height: 34em;
+  min-height: 35em;
+  max-height: 35em;
   position: absolute;
 }
 
@@ -72,6 +77,14 @@
   font-size: 20px;
   font-family: Mixed;
   text-indent: 2em;
+  margin: 0 0 1em 0;
+}
+
+.response-user-task {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  margin-left: 5.5em;
 }
 
 .section-alterar-status {
@@ -118,6 +131,13 @@
 
 .upload-task {
   position: relative;
-  margin: auto;
+  margin: 4em auto;
+}
+
+.text-button-response {
   padding-left: 3em;
+}
+
+.btn-alterar-response {
+  padding-left: 7em;
 }

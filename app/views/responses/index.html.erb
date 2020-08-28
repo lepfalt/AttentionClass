@@ -9,7 +9,7 @@
       <% @responses.each do |response| %>
         <% if response.pending? %>
           <div class="card-task">
-            <a href="http://www.google.com">
+            <a href=<%= response_path(response) %>>
               <div>
                 <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
@@ -30,7 +30,7 @@
       <% @responses.each do |response| %>
         <% if response.progress? %>
           <div class="card-task">
-            <a href="#">
+            <a href=<%= response_path(response) %>>
               <div>
                 <span class="card-class status-progress"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
@@ -51,7 +51,7 @@
       <% @responses.each do |response| %>
         <% if response.done? %>
           <div class="card-task">
-            <a href="#">
+            <a href=<%= response_path(response) %>>
               <div>
                 <span class="card-class status-done"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
@@ -73,7 +73,7 @@
       <% @responses.each do |response| %>
         <% if response.undelivered? %>
           <div class="card-task">
-            <a href="http://www.google.com.br">
+            <a href=<%= response_path(response) %>>
               <div>
                 <span class="card-class status-not-completed"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
