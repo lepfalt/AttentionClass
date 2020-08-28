@@ -1,5 +1,5 @@
 class ResponsesController < ApplicationController
-  #before_action :set_response, only: %i[show edit update destroy]
+  before_action :set_response, only: %i[show update destroy]
 
   # GET /responses
   # GET /responses.json
@@ -19,7 +19,9 @@ class ResponsesController < ApplicationController
   end
 
   # GET /responses/1/edit
-  def edit; end
+  def edit
+    puts "Entrou no edit"
+  end
 
   # POST /responses
   # POST /responses.json
@@ -40,15 +42,18 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
-    respond_to do |format|
+    # puts 'ENTROU', response_params
+    # puts @response.task_id
+    #respond_to do |format|
       if @response.update(response_params)
-        format.html { redirect_to @response, notice: 'Response was successfully updated.' }
-        format.json { render :show, status: :ok, location: @response }
+        redirect_to responses_path
+        # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @response }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @response.errors, status: :unprocessable_entity }
       end
-    end
+    #end
   end
 
   # DELETE /responses/1
@@ -70,6 +75,6 @@ class ResponsesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def response_params
-    params.require(:response).permit(:person_id, :task_id, :response_value, :annotation_person, :status, :grade, :observation_responsible)
+    params.require(:response).permit(:response_value, :response_annotation, :status)
   end
 end

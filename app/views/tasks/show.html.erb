@@ -1,54 +1,54 @@
-<main class="card-main card-table">
-  <p id="notice"><%= notice %></p>
+<% if flash[:notice] %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
 
+<main class="card-main card-table">
   <a href='<%= tasks_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <div class="top-panel">
-      <h1 class='title-page title-task'><%= @task.title %></h1>
+      <%= form_for @task do |form| %>
+        <%# <%= form.text_field :title, class:"title-page title-task"%>
+        <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title' %></h1>
+        
+        <section class="section-task">
+          <h4 class="field-task">Entregar até:  </h4>
+          <span class="span-task"><%= form.date_field :expiration_date, class: 'data-field-expiration' %></span>
+        </section>
+
+        <section class="section-task">
+          <h4 class="field-task">Professor:  </h4>
+          <span class="span-task"><%= @task.class_group.user.name %></span>
+        </section>
+
+        <section class="section-task">
+          <h4 class="field-task">Disciplina:  </h4>
+          <span class="span-task"><%= @task.class_group.discipline %></span>
+        </section>
+
+
+        <section class="section-task">
+          <span class="card-class status-not-completed code-class"><%= @task.class_group.class_code %></span>
+        </section>
+      </div>
+
+      <section class="description-task">
+        <h4 class="item-description">Descrição:</h4>
+        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task' %></h3>
+      </section>
+
+      <section class="content-body">
+        <section class="section-response-user">
+          <!-- <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %> -->
+          <%= link_to 'Visualizar Respostas', nil, class: 'btn-new-student upload-task text-button-task' %>
+        </section>
       
-      <section class="section-task">
-        <h4 class="field-task">Entregar até:  </h4>
-        <span class="span-task"><%= @task.expiration_date %></span>
-      </section>
-
-      <section class="section-task">
-        <h4 class="field-task">Professor:  </h4>
-        <span class="span-task"><%= @task.expiration_date %></span>
-      </section>
-
-      <section class="section-task">
-        <h4 class="field-task">Disciplina:  </h4>
-        <span class="span-task"><%= @task.expiration_date %></span>
-      </section>
-
-
-      <section class="section-task">
-        <span class="card-class status-not-completed"><%= @task.class_id %></span>
-      </section>
-    </div>
-
-    <section class="description-task">
-      <h4>Descrição:</h4>
-      <h3 class="description-task-text"><%= @task.description %></h3>
-    </section>
-
-    <section class="content-body">
-      <section style="display: flex;
-    flex-direction: column;         width: 55%;
-    margin-left: 5.5em;">
-        <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
-        <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student upload-task' %>
-      </section>
-    
-      <section class="section-alterar-status">
-        <%= select_tag Task.all, @task.status, class: 'status-task' %>
-        <%= link_to 'Alterar', edit_task_path(@task), class: 'btn-new-item btn-alterar' %>
-      </section>
-    </section>
-
-   
-
-    <%# <%= link_to 'Edit', edit_task_path(@task) %> 
-    <%# <%= link_to 'Back', tasks_path %>
+        <section class="section-alterar-status">
+          <%= form.select :status, Task.statuses.keys, {}, class: 'status-task' %>
+          <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
+        </section>
+      </section>    
+    <% end %>
   </div>
 </main>

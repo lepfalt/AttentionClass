@@ -9,12 +9,13 @@ Rails.application.routes.draw do
 
   resources :responses
   resources :tasks
+  #get "tasks/:id/edit", to: ""
   resources :class_groups, except: :index
   get "classes/:id", to: "class_groups#index", as: :admin_classes
 
   #root to: 'home#index'
   get "home", to: 'home#index'
-  get "turmas", to: 'class_groups#index'
+  #get "turmas", to: 'class_groups#index'
   #get "tarefas", to: 'tasks#index'
 
   get "vincular", to: 'person#index'
