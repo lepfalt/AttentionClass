@@ -1,14 +1,14 @@
-<% if flash[:notice] %>
+<!--<% if flash[:notice] %>
   <div class="alert alert-success" role="alert">
     <%= flash[:notice] %>
   </div>
-<% end %>
+<% end %> -->
 
 <main class="card-main card-table">
   <a href='<%= tasks_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <div class="top-panel">
-      <%= form_for @task do |form| %>
+    <%= form_for @task do |form| %>
+      <div class="top-panel">
         <%# <%= form.text_field :title, class:"title-page title-task"%>
         <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title' %></h1>
         

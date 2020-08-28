@@ -38,12 +38,10 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    if @task.update task_params
-      puts "Atualixodekdfjseç"
+    if @task.update(task_params)
       flash[:notice] = "Tarefa atualizada com sucesso!"
       redirect_to tasks_path
     else
-      puts 'NÃO ATUALIZOU'
       renderiza :show
     end
   end
@@ -67,6 +65,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :class_group_id, :description, :status, :expiration_date, :active)
+    params.require(:task).permit(:title, :description, :status, :expiration_date)
   end
 end
