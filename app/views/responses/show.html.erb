@@ -1,45 +1,47 @@
 <main class="card-main card-table">
   <a href='<%= home_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <div class="top-panel">
-      <h1 class='title-page title-task'><%= @response.task.title %></h1>
+  <%= form_with(model: @response, local: true) do |form| %>
+      <div class="top-panel">
+        <h1 class='title-page title-task'><%= @response.task.title %></h1>
+        
+        <section class="section-task">
+          <h4 class="field-task">Entregar até:  </h4>
+          <span class="span-task"><%= @response.task.expiration_date %></span>
+        </section>
+
+        <section class="section-task">
+          <h4 class="field-task">Professor:  </h4>
+          <span class="span-task"><%= @response.task.class_group.user.name %></span>
+        </section>
+
+        <section class="section-task">
+          <h4 class="field-task">Disciplina:  </h4>
+          <span class="span-task"><%= @response.task.class_group.discipline %></span>
+        </section>
+
+
+        <section class="section-task">
+          <span class="card-class status-not-completed code-class"><%= @response.task.class_group.class_code %></span>
+        </section>
+      </div>
+
+      <section class="description-task">
+        <h4>Descrição:</h4>
+        <h3 class="description-task-text"><%= @response.task.description %></h3>
+      </section>
+
+      <section class="content-body-response">
+        <section class="response-user-task">
+          <%= form.text_field :response_annotation, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
+          <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %>
+        </section>
       
-      <section class="section-task">
-        <h4 class="field-task">Entregar até:  </h4>
-        <span class="span-task"><%= @response.task.expiration_date %></span>
+        <section class="section-alterar-status">
+          <%= form.select :status, Response.statuses.keys, {}, class: 'status-task' %>
+          <%= form.submit 'Alterar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
+        </section>
       </section>
-
-      <section class="section-task">
-        <h4 class="field-task">Professor:  </h4>
-        <span class="span-task"><%= @response.task.class_group.user.name %></span>
-      </section>
-
-      <section class="section-task">
-        <h4 class="field-task">Disciplina:  </h4>
-        <span class="span-task"><%= @response.task.class_group.discipline %></span>
-      </section>
-
-
-      <section class="section-task">
-        <span class="card-class status-not-completed code-class"><%= @response.task.class_group.class_code %></span>
-      </section>
-    </div>
-
-    <section class="description-task">
-      <h4>Descrição:</h4>
-      <h3 class="description-task-text"><%= @response.task.description %></h3>
-    </section>
-
-    <section class="content-body-response">
-      <section class="response-user-task">
-        <%= text_field_tag :annotation, @response.response_annotation, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
-        <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %>
-      </section>
-    
-      <section class="section-alterar-status">
-        <%= select_tag Response.all, @response.status, class: 'status-task' %>
-        <%= link_to 'Alterar', nil, class: ' btn-alterar-response btn-new-item btn-alterar' %>
-      </section>
-    </section>
+    <% end %>
   </div>
 </main>
