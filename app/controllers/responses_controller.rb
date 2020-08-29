@@ -44,6 +44,7 @@ class ResponsesController < ApplicationController
     # puts @response.task_id
     # respond_to do |format|
     #upload
+    #@response.response_value.attach(params[:response_value])
     if @response.update(response_params)
       redirect_to responses_path
       # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }

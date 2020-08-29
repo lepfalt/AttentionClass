@@ -34,8 +34,14 @@
       <section class="content-body-response">
         <section class="response-user-task">
           <%= form.text_field :response_annotation, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
-          <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %>
-          <%= form.file_field :response_value %>
+          <!-- <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %> -->
+          <%# <%= image_tag @response.response_value %>
+          <section class="upload-response">
+            <%= form.file_field :response_value, filename:'respostas' %>
+            <% unless @response.response_value.nil? %>
+              <%= link_to "Arquivo enviado: #{@response.response_value.filename}", rails_blob_path(@response.response_value, disposition: "attachment") %>
+            <% end %>
+          </section>
         </section>
       
         <section class="section-alterar-status">
