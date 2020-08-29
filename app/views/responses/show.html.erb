@@ -35,6 +35,7 @@
         <section class="response-user-task">
           <%= form.text_field :response_annotation, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
           <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %>
+          <%= form.file_field :response_value %>
         </section>
       
         <section class="section-alterar-status">

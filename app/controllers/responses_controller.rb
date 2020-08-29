@@ -43,6 +43,7 @@ class ResponsesController < ApplicationController
     # puts 'ENTROU', response_params
     # puts @response.task_id
     # respond_to do |format|
+    #upload
     if @response.update(response_params)
       redirect_to responses_path
       # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
@@ -74,5 +75,13 @@ class ResponsesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def response_params
     params.require(:response).permit(:response_value, :response_annotation, :status)
+  end
+
+  def upload
+    puts "FILE ", response_params[:response_value].original_filename
+    uploaded_file = response_params[:response_value]
+    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
   end
 end
