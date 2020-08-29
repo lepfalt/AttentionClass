@@ -10,58 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_201318) do
-
+ActiveRecord::Schema.define(version: 20_200_825_201_318) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "class_groups", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "discipline"
-    t.string "class_code"
-    t.boolean "active"
-    t.date "expiration_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'class_groups', force: :cascade do |t|
+    t.integer 'user_id'
+    t.string 'discipline'
+    t.string 'class_code'
+    t.boolean 'active'
+    t.date 'expiration_date'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "class_groups_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "class_group_id", null: false
+  create_table 'class_groups_users', id: false, force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'class_group_id', null: false
   end
 
-  create_table "responses", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "task_id"
-    t.text "response_value"
-    t.text "response_annotation"
-    t.integer "status"
-    t.float "grade"
-    t.text "observation_responsible"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'responses', force: :cascade do |t|
+    t.integer 'user_id'
+    t.integer 'task_id'
+    t.text 'response_value'
+    t.text 'response_annotation'
+    t.integer 'status'
+    t.float 'grade'
+    t.text 'observation_responsible'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "title"
-    t.integer "class_group_id"
-    t.text "description"
-    t.integer "status"
-    t.date "expiration_date"
-    t.boolean "active"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'tasks', force: :cascade do |t|
+    t.string 'title'
+    t.integer 'class_group_id'
+    t.text 'description'
+    t.integer 'status'
+    t.date 'expiration_date'
+    t.boolean 'active'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.integer "profile"
-    t.string "name"
-    t.string "registration"
-    t.string "email"
-    t.string "password"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'users', force: :cascade do |t|
+    t.integer 'profile'
+    t.string 'name'
+    t.string 'registration'
+    t.string 'email'
+    t.string 'password'
+    t.string 'password_digest'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
-
 end
