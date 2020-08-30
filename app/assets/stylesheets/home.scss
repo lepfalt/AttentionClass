@@ -146,3 +146,26 @@
   right: 0.5em;
   font-size: 1.5em;
 }
+
+.div-card-task{
+  box-sizing: content-box;
+  min-width: 96%;
+  max-width: 96%;
+  position: relative;
+  min-height: 8em;
+  background: #FFFFFF;
+  border-radius: 5px;
+  margin: auto auto 0.5em auto;
+  box-shadow: 0 5px 16px 0 rgba(0,0,0,0.1);
+}
+
+.div-card-task:hover{
+  background: #f5f5f5;
+}
+
+.card-footer {
+  display: flex;
+  margin: 1em 1em auto auto;
+  justify-content: flex-end;
+  padding-bottom: 0.5em;
+}
