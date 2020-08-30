@@ -7,7 +7,7 @@
         
         <section class="section-task">
           <h4 class="field-task">Entregar até:  </h4>
-          <span class="span-task"><%= @response.task.expiration_date %></span>
+          <span class="span-task"><%= @response.task.expiration_date.strftime("%d/%m/%Y") %></span>
         </section>
 
         <section class="section-task">

@@ -19,7 +19,7 @@
                 <span class="card-class status-pending"><%=task.class_group.class_code%></span>
                 <h4 class="card-title"><%=task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=task.expiration_date%></span>
+                  <span class="card-date"><%= task.expiration_date.strftime("%d/%m/%Y") %></span>
                 </div>
               </div>
             </a>
@@ -41,7 +41,7 @@
                 <span class="card-class status-progress"><%=task.class_group.class_code%></span>
                 <h4 class="card-title"><%=task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=task.expiration_date%></span>
+                  <span class="card-date"><%=task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
@@ -62,7 +62,7 @@
                 <span class="card-class status-done"><%=task.class_group.class_code%></span>
                 <h4 class="card-title"><%=task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=task.expiration_date%></span>
+                  <span class="card-date"><%=task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
@@ -84,7 +84,7 @@
                 <span class="card-class status-not-completed"><%=task.class_group.class_code%></span>
                 <h4 class="card-title"><%=task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=task.expiration_date%></span>
+                  <span class="card-date"><%=task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>

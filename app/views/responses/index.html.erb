@@ -8,9 +8,8 @@
     <div class="status-body">
       <% @responses.each do |response| %>
         <% if response.pending? %>
-          <div class="card-task">
             <a href=<%= response_path(response) %>>
-              <div>
+              <div class="div-card-task">
                 <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
                 <div class="card-footer">
@@ -18,7 +17,6 @@
                 </div>
               </div>
             </a>
-          </div>
         <% end %>
       <% end %>
     </div>
@@ -36,7 +34,7 @@
                 <span class="card-class status-progress"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date%></span>
+                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
@@ -57,7 +55,7 @@
                 <span class="card-class status-done"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date%></span>
+                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
@@ -74,18 +72,16 @@
     <div class="status-body">
       <% @responses.each do |response| %>
         <% if response.undelivered? %>
-          <div class="card-task">
             <a href=<%= response_path(response) %>>
-              <div>
+              <div class="div-card-task">
                 <span class="card-class status-not-completed"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date%></span>
+                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
             <a href="https://www.youtube.com.br"><span class="remove-task">X</span></a>
-          </div>
         <% end %>
       <% end %>
     </div>
