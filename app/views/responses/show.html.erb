@@ -1,5 +1,5 @@
 <main class="card-main card-table">
-  <a href='<%= home_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href='<%= responses_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
   <%= form_with(model: @response, local: true) do |form| %>
       <div class="top-panel">
@@ -7,7 +7,7 @@
         
         <section class="section-task">
           <h4 class="field-task">Entregar até:  </h4>
-          <span class="span-task"><%= @response.task.expiration_date %></span>
+          <span class="span-task"><%= @response.task.expiration_date.strftime("%d/%m/%Y") %></span>
         </section>
 
         <section class="section-task">
@@ -34,7 +34,14 @@
       <section class="content-body-response">
         <section class="response-user-task">
           <%= form.text_field :response_annotation, class:"annotation-task", placeholder: "Escreva suas anotações.." %>
-          <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %>
+          <!-- <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %> -->
+          <%# <%= image_tag @response.response_value %>
+          <section class="upload-response">
+            <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
+            <% unless @response.response_value.nil? %>
+              <%= link_to "Arquivo enviado: #{@response.response_value.filename}", rails_blob_path(@response.response_value, disposition: "attachment") %>
+            <% end %>
+          </section>
         </section>
       
         <section class="section-alterar-status">

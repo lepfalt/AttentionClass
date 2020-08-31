@@ -20,7 +20,7 @@
         <% @class_group.tasks.each do |task| %>
           <tr>
             <td><%= task.title %></td>
-            <td><%= task.expiration_date %></td>
+            <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
             <td><%= task.status %></td>
             <td><%= link_to 'Ver Respostas', task, class: 'btn btn-default btn-view-item-table' %></td>
             <%# <td><%= link_to 'Edit', edit_task_path(task) %>

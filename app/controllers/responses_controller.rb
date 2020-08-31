@@ -9,9 +9,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.json
-  def show
-  
-  end
+  def show; end
 
   # GET /responses/new
   def new
@@ -20,7 +18,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1/edit
   def edit
-    puts "Entrou no edit"
+    puts 'Entrou no edit'
   end
 
   # POST /responses
@@ -44,16 +42,18 @@ class ResponsesController < ApplicationController
   def update
     # puts 'ENTROU', response_params
     # puts @response.task_id
-    #respond_to do |format|
-      if @response.update(response_params)
-        redirect_to responses_path
-        # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
-        # format.json { render :show, status: :ok, location: @response }
-      else
-        format.html { render :show }
-        format.json { render json: @response.errors, status: :unprocessable_entity }
-      end
-    #end
+    # respond_to do |format|
+    @response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
+    #@response.response_value.attach(params[:response_value])
+    if @response.update(response_params)
+      redirect_to responses_path
+      # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
+      # format.json { render :show, status: :ok, location: @response }
+    else
+      format.html { render :show }
+      format.json { render json: @response.errors, status: :unprocessable_entity }
+    end
+    # end
   end
 
   # DELETE /responses/1
@@ -76,5 +76,13 @@ class ResponsesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def response_params
     params.require(:response).permit(:response_value, :response_annotation, :status)
+  end
+
+  def upload
+    puts "FILE ", response_params[:response_value].original_filename
+    uploaded_file = response_params[:response_value]
+    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
   end
 end

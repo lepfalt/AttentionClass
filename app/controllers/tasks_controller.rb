@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   # GET /tasks/1/edit
-  #def edit; end
+  # def edit; end
 
   # POST /tasks
   # POST /tasks.json
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
     if @task.update(task_params)
-      flash[:notice] = "Tarefa atualizada com sucesso!"
+      flash[:notice] = 'Tarefa atualizada com sucesso!'
       redirect_to tasks_path
     else
       renderiza :show
