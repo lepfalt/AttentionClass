@@ -43,7 +43,7 @@ class ResponsesController < ApplicationController
     # puts 'ENTROU', response_params
     # puts @response.task_id
     # respond_to do |format|
-    @response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
+    #@response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
     #@response.response_value.attach(params[:response_value])
     if @response.update(response_params)
       redirect_to responses_path
