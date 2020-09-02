@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :responses
   resources :tasks
   get 'tarefa/respostas/:id', to: 'tasks#index_responses', as: :task_responses
+  get 'tarefa/resposta/:id', to: 'tasks#show_response', as: :task_response
+  patch 'response/evaluate/:id', to: 'responses#evaluate_response', as: :evaluate_response
   # get "tasks/:id/edit", to: ""
   resources :class_groups, except: :index
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes

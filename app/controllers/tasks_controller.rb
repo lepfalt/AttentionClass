@@ -11,6 +11,10 @@ class TasksController < ApplicationController
     @responses_task = @task.responses
   end
 
+  def show_response
+    @response_task = Response.find_by(id: params[:id])
+  end
+
   # GET /tasks/1
   # GET /tasks/1.json
   def show; end
