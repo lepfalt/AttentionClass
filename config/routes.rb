@@ -15,12 +15,13 @@ Rails.application.routes.draw do
   # get "tasks/:id/edit", to: ""
   resources :class_groups, except: :index
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes
+  get 'classes/vincular/:id', to: 'class_groups#new_user', as: :new_user_class
+  patch 'classes/vincular', to: 'class_group#new_user_class', as: :new_user_class_group
 
   # root to: 'home#index'
   get 'home', to: 'home#index'
   # get "turmas", to: 'class_groups#index'
   # get "tarefas", to: 'tasks#index'
 
-  get 'vincular', to: 'person#index'
   get 'respostas', to: 'responses#index'
 end

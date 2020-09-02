@@ -1,10 +1,14 @@
 class ClassGroupsController < ApplicationController
-  before_action :set_class_group, only: %i[show edit update destroy]
+  before_action :set_class_group, only: %i[show new_user_class edit update destroy]
 
   # GET /class_groups
   # GET /class_groups.json
   def index
     @class_groups = ClassGroup.where(user_id: params[:id])
+  end
+
+  def new_user_class
+    puts 'ENTROU'
   end
 
   # GET /class_groups/1
