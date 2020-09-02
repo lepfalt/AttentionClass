@@ -1,5 +1,5 @@
 <main class="card-main card-table">
-  <a href='<%= task_responses_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
   <%= form_with(model: @response_task, local: true) do |form| %>
       <div class="top-panel">
