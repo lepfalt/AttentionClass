@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: %i[create show]
+  post 'classes/vincular/:class_id', to: 'users#update'
+
   get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/sessions', to: 'sessions#create'
@@ -16,7 +18,6 @@ Rails.application.routes.draw do
   resources :class_groups, except: :index
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes
   get 'classes/vincular/:id', to: 'class_groups#new_user', as: :new_user_class
-  patch 'classes/vincular', to: 'class_group#new_user_class', as: :new_user_class_group
 
   # root to: 'home#index'
   get 'home', to: 'home#index'

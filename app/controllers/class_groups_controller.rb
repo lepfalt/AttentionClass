@@ -7,10 +7,6 @@ class ClassGroupsController < ApplicationController
     @class_groups = ClassGroup.where(user_id: params[:id])
   end
 
-  def new_user_class
-    puts 'ENTROU'
-  end
-
   # GET /class_groups/1
   # GET /class_groups/1.json
   def show; end
