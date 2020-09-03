@@ -171,3 +171,44 @@
 .observation-responsible {
   margin-top: 1em;
 }
+
+.drop-class-code {
+  width: 10%;
+  height: 3em;
+  margin: 3em 0 0 auto;
+  font-size: 18px;
+}
+
+.section-task-create-task {
+  display: inline-block;
+    margin: 4.5em auto auto 10em;
+}
+
+.top-panel-create-task {
+  width: 90.3%;
+  justify-content: space-between;
+  display: flex;
+}
+
+.content-body-create-task {
+  display: inline-flex;
+  width: 100%;
+  min-height: 14em;
+  max-height: 14em;
+  position: absolute;
+}
+
+.section-create-task {
+  width: 20%;
+  position: relative;
+  height: 100%;
+  margin: auto;
+}
+
+.btn-create-task {
+  margin: auto;
+  position: relative;
+  min-width: 100%;
+  max-width: 100%;
+  padding-left: 7em;
+}

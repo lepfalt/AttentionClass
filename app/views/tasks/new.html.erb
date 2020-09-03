@@ -1,5 +1,44 @@
-<h1>New Task</h1>
+<!--<% if flash[:notice] %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:notice] %>
+  </div>
+<% end %> -->
+
+<main class="card-main card-table">
+  <a href=<%= admin_classes_path(current_user) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+   <h1 class='title-page title-task'>Criar Tarefa</h1>
+    <%= form_for @task do |form| %>
+      <div class="top-panel-create-task">
+        <%# <%= form.text_field :title, class:"title-page title-task"%>
+        <h1 class='title-page title-task'><%= form.text_field :title, placeholder: "Título", class: 'input-title' %></h1>
+        
+        <section class="section-task-create-task">
+          <h4 class="field-task">Data Limite:  </h4>
+          <span class="span-task"><%= form.date_field :expiration_date, class: 'data-field-expiration' %></span>
+        </section>
+
+        <%= form.collection_select :class_group_id, ClassGroup.where(user_id: current_user), :id, :class_code, {} , class: 'drop-class-code' %>
+      </div>
+
+      <section class="description-task">
+        <h4 class="item-description">Descrição:</h4>
+        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task' %></h3>
+      </section>
+
+      <section class="content-body-create-task">      
+        <section class="section-create-task">
+          <%= form.submit 'Criar', class: 'btn-new-item btn-create-task' %>
+        </section>
+      </section>  
+    <% end %>
+  </div>
+</main>
+
+
+
+<!-- <h1>New Task</h1>
 
 <%= render 'form', task: @task %>
 
-<%= link_to 'Back', tasks_path %>
+<%= link_to 'Back', tasks_path %> -->
