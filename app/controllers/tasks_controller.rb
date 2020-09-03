@@ -1,10 +1,18 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show update destroy]
+  before_action :set_task, only: %i[show index_responses update destroy]
 
   # GET /tasks
   # GET /tasks.json
   def index
     @tasks = Task.all
+  end
+
+  def index_responses
+    @responses_task = @task.responses
+  end
+
+  def show_response
+    @response_task = Response.find_by(id: params[:id])
   end
 
   # GET /tasks/1
