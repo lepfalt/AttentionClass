@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    puts 'login: ', params[:email], params[:password]
+    # @user = User.new
   end
 
   def create
@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
         redirect_to responses_path
       end
     else
+      flash[:notice] = 'Usuário inexistente'
       redirect_to login_path
     end
   end
