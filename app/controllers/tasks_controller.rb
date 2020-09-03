@@ -30,16 +30,18 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
+    puts 'ENTROU NO CREATE'
     @task = Task.new(task_params)
+    @task.status = 0
 
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    puts @task
+
+    if @task.save
+      flash[:notice] = 'Tarefa criada com sucesso!'
+      redirect_to tasks_path
+    else
+      #flash[:notice] = 'Erro ao criar tarefa.'
+      render :new
     end
   end
 
@@ -73,6 +75,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :description, :status, :expiration_date)
+    params.require(:task).permit(:title, :description, :status, :expiration_date, :class_group_id)
   end
 end
