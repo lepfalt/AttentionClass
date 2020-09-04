@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <p id="notice"><%= notice %></p>
 
-  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href=<%= class_group_path(@task.class_group_id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <h1 class='title-page'>Respostas</h1>
 
@@ -15,11 +15,11 @@
       </thead>
 
       <tbody class="body-table">
-         <% @responses.each do |response| %>
+         <% @responses_task.each do |response| %>
           <tr>
-            <td><%= response.user_id %></td>
+            <td><%= response.user.name %></td>
             <td><%= response.grade %></td>
-            <td><%= link_to 'Ver', response, class: 'btn btn-default btn-view-item-table' %></td>
+            <td><%= link_to 'Ver', task_response_path(response.id), class: 'btn btn-default btn-view-item-table' %></td>
             <%# <td><%= link_to 'Edit', edit_response_path(response) %>
             <%# </td> %>
             <%# <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -4,7 +4,7 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.json
   def index
-    @responses = Response.all
+    @responses = Response.where(user_id: params[:user_id])
   end
 
   # GET /responses/1
@@ -43,10 +43,14 @@ class ResponsesController < ApplicationController
     # puts 'ENTROU', response_params
     # puts @response.task_id
     # respond_to do |format|
-    @response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
+    #@response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
     #@response.response_value.attach(params[:response_value])
     if @response.update(response_params)
-      redirect_to responses_path
+      if current_user.admin?
+        redirect_to task_responses_path
+      else
+        redirect_to responses_path
+      end
       # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
       # format.json { render :show, status: :ok, location: @response }
     else
@@ -66,6 +70,10 @@ class ResponsesController < ApplicationController
     end
   end
 
+  def evaluate_response
+    puts 'ENTROU'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -75,7 +83,7 @@ class ResponsesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def response_params
-    params.require(:response).permit(:response_value, :response_annotation, :status)
+    params.require(:response).permit(:response_value, :response_annotation, :status, :observation_responsible, :grade)
   end
 
   def upload

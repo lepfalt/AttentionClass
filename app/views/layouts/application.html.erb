@@ -12,8 +12,8 @@
 
   <body>
     <div class="container">
-      <% if logged_in? %>
-        <%= nav_bar brand: "Attention Class", brand_link: current_user.admin? ? tasks_path : responses_path  do %>
+      <% if logged_in? && !current_page?(login_path) %>
+        <%= nav_bar brand: "Attention Class", brand_link: current_user.admin? ? tasks_board_path(current_user.id) : responses_board_path(current_user.id)  do %>
           <% if current_user.admin? %>
             <%= menu_group do %>
               <%= menu_item "Turmas", admin_classes_path(:id => current_user ), class: "nav-menu-item" %>

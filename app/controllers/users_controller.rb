@@ -41,14 +41,20 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    puts 'ENTROU NO UPDATE'
+    email = params[:email]
+    class_id = params[:class_id]
+    registered_user = User.find_by(email: email)
+    
+    if registered_user.nil?
+      flash[:notice] = 'Usuário inexistente.'
+      redirect_to new_user_class_path(class_id)
+    else
+      class_group = ClassGroup.find_by(id: class_id)
+      registered_user.class_groups << class_group
+      
+      flash[:notice] = 'Usuário vinculado com sucesso.'
+      redirect_to class_group_path(class_id)
     end
   end
 

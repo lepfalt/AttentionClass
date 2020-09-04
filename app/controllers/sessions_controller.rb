@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    puts 'login: ', params[:email], params[:password]
+    # @user = User.new
   end
 
   def create
@@ -8,11 +8,12 @@ class SessionsController < ApplicationController
     if @user&.authenticate(params[:password])
       session[:user_id] = @user.id
       if @user.admin?
-        redirect_to tasks_path
+        redirect_to tasks_board_path(@user.id)
       else
-        redirect_to responses_path
+        redirect_to responses_board_path(@user.id)
       end
     else
+      flash[:notice] = 'Usuário inexistente'
       redirect_to login_path
     end
   end
