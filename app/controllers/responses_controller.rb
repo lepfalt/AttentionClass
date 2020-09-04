@@ -4,7 +4,7 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.json
   def index
-    @responses = Response.all
+    @responses = Response.where(user_id: params[:user_id])
   end
 
   # GET /responses/1
