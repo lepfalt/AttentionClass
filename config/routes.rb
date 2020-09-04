@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   root to: 'sessions#new'
 
-  resources :responses
+  resources :responses, except: :index
   resources :tasks, except: :index
   get 'tasks/user/:user_id', to: 'tasks#index', as: :tasks_board
   get 'tarefa/respostas/:id', to: 'tasks#index_responses', as: :task_responses
@@ -25,5 +25,5 @@ Rails.application.routes.draw do
   # get "turmas", to: 'class_groups#index'
   # get "tarefas", to: 'tasks#index'
 
-  get 'respostas', to: 'responses#index'
+  get 'respostas/user/:user_id', to: 'responses#index', as: :responses_board
 end

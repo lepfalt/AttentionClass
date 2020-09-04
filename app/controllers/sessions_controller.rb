@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       if @user.admin?
         redirect_to tasks_board_path(@user.id)
       else
-        redirect_to responses_path
+        redirect_to responses_board_path(@user.id)
       end
     else
       flash[:notice] = 'Usuário inexistente'
