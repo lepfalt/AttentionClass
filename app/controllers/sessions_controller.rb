@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if @user&.authenticate(params[:password])
       session[:user_id] = @user.id
       if @user.admin?
-        redirect_to tasks_path
+        redirect_to tasks_board_path(@user.id)
       else
         redirect_to responses_path
       end

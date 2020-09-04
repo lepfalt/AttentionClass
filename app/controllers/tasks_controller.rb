@@ -4,7 +4,8 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    class_groups = ClassGroup.where(user_id: params[:user_id])
+    @tasks = Task.where(class_group_id: class_groups)
   end
 
   def index_responses

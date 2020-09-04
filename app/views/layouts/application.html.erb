@@ -12,7 +12,6 @@
 
   <body>
     <div class="container">
-    <%= puts "Essa é a rota",  !current_page?(login_path) %>
       <% if logged_in? && !current_page?(login_path) %>
         <%= nav_bar brand: "Attention Class", brand_link: current_user.admin? ? tasks_path : responses_path  do %>
           <% if current_user.admin? %>
