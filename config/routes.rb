@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
 
   resources :responses
-  resources :tasks
+  resources :tasks, except: :index
+  get 'tasks/user/:user_id', to: 'tasks#index', as: :tasks_board
   get 'tarefa/respostas/:id', to: 'tasks#index_responses', as: :task_responses
   get 'tarefa/resposta/:id', to: 'tasks#show_response', as: :task_response
   patch 'response/evaluate/:id', to: 'responses#evaluate_response', as: :evaluate_response

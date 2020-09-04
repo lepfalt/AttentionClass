@@ -12,7 +12,7 @@
 
   <body>
     <div class="container">
-      <% if logged_in? %>
+      <% if logged_in? && !current_page?(login_path) %>
         <%= nav_bar brand: "Attention Class", brand_link: current_user.admin? ? tasks_path : responses_path  do %>
           <% if current_user.admin? %>
             <%= menu_group do %>
