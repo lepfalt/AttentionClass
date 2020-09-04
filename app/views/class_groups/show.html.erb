@@ -2,7 +2,7 @@
 <main class="card-main card-table">
   <p id="notice"><%= notice %></p>
 
-  <a href=<%= admin_classes_path %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href=<%= admin_classes_path(current_user.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <h1 class='title-page'>Turma: <%=@class_group.class_code%></h1>
 

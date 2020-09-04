@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <p id="notice"><%= notice %></p>
 
-  <a href=<%= tasks_path %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href=<%= tasks_board_path(current_user.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <h1 class='title-page'>Turmas</h1>
 
