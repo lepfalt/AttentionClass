@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'classes/vincular/:id', to: 'class_groups#new_user', as: :new_user_class
 
   # root to: 'home#index'
-  get 'home', to: 'home#index'
+  # get 'home', to: 'home#index'
   # get "turmas", to: 'class_groups#index'
   # get "tarefas", to: 'tasks#index'
 
