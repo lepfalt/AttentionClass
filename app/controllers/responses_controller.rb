@@ -49,7 +49,7 @@ class ResponsesController < ApplicationController
       if current_user.admin?
         redirect_to task_responses_path
       else
-        redirect_to responses_path
+        redirect_to responses_board_path(current_user.id)
       end
       # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
       # format.json { render :show, status: :ok, location: @response }

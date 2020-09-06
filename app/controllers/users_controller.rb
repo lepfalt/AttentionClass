@@ -11,10 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    puts 'show: ', params[:id]
-    puts 'RESPONSES ', Response.all
     @responses_user = Response.all.where(user_id: params[:id])
-    puts 'RESPONSE ', @responses_user
     @user = User.find(params[:id])
   end
 
@@ -41,7 +38,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    puts 'ENTROU NO UPDATE'
     email = params[:email]
     class_id = params[:class_id]
     registered_user = User.find_by(email: email)
