@@ -38,7 +38,7 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:notice] = 'Tarefa criada com sucesso!'
-      redirect_to tasks_path
+      redirect_to tasks_board_path(current_user.id)
     else
       #flash[:notice] = 'Erro ao criar tarefa.'
       render :new
@@ -50,7 +50,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash[:notice] = 'Tarefa atualizada com sucesso!'
-      redirect_to tasks_path
+      redirect_to tasks_board_path(current_user.id)
     else
       renderiza :show
     end
