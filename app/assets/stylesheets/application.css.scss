@@ -3,6 +3,28 @@
  *= require_self
  */
 
+.container {
+  height: 100%;
+  width: 100%;
+  padding: 2em;
+  position: absolute;
+}
+
+.navbar-brand {
+  padding: 0 0 0 2em;
+  font-size: 28px;
+  margin-right: 1em;
+}
+
+.navbar-default {
+  height: 5em;
+}
+
+.nav-menu-item {
+  font-size: 22px;
+  margin-top: -0.6em;
+}
+
 .icon-page {
   width: 5em;
   height: 4em;

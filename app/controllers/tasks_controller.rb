@@ -31,7 +31,6 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    puts 'ENTROU NO CREATE'
     @task = Task.new(task_params)
     @task.status = 0
 
