@@ -47,6 +47,16 @@
   margin: auto;
 }
 
+.content-intern-login {
+  position: relative;
+  width: 75%;
+  height: 80%;
+  background-color: #fff;
+  margin: auto;
+  border-radius: 50px;
+  box-shadow: 1px 1px 10px 2px #ccc;
+}
+
 .card-table {
   display: inline-block;
 }
@@ -111,4 +121,14 @@
 .btn-new-item:hover {
   color: #000;
   background-color: #b93a3a;
+}
+
+.main-content-login {
+  width: 100%;
+  height: 100vh;
+  background: rgba(217, 217, 217, 0.25);
+  border: 1px solid #FFFFFF;
+  backdrop-filter: blur(4px);
+  border-radius: 5px;
+  display: flex;
 }
