@@ -1,5 +1,5 @@
 class ClassGroupsController < ApplicationController
-  before_action :set_class_group, only: %i[show new_user_class edit update destroy]
+  before_action :set_class_group, only: %i[show new_user edit update destroy]
 
   # GET /class_groups
   # GET /class_groups.json
@@ -58,6 +58,8 @@ class ClassGroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def new_user; end
 
   private
 

@@ -2,7 +2,7 @@
   
   <p id="notice"><%= notice %></p>
 
-  <a href="https://www.youtube.com.br" data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <a href=<%= class_group_path(@class_group.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <h1 class='title-page'>Vincular Aluno</h1>
     <%= form_with(model: @user, local: true) do |form| %>
