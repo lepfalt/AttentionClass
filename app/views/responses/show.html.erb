@@ -38,8 +38,8 @@
           <%# <%= image_tag @response.response_value %>
           <section class="upload-response">
             <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
-            <% unless @response.response_value.nil? %>
-              <%= link_to "Arquivo enviado: #{@response.response_value.filename}", rails_blob_path(@response.response_value, disposition: "attachment") %>
+            <% if @response.response_value.attached? %>
+              <%= link_to "Arquivo enviado: #{@response.response_value&.filename}", rails_blob_path(@response.response_value, disposition: "attachment")  %>
             <% end %>
           </section>
         </section>
