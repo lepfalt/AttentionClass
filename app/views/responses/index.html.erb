@@ -13,7 +13,7 @@
                 <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
                 <h4 class="card-title"><%=response.task.title%></h4>
                 <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date%></span>
+                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
                 </div>
               </div>
             </a>
