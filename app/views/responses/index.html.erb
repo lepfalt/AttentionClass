@@ -50,16 +50,16 @@
     <div class="status-body">
       <% @responses.each do |response| %>
         <% if response.done? %>
-            <a href=<%= response_path(response) %>>
-              <div class="div-card-task">
-                <span class="card-class status-done"><%=response.task.class_group.class_code%></span>
-                <h4 class="card-title"><%=response.task.title%></h4>
-                <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
-                </div>
+          <a href=<%= response_path(response) %>>
+            <div class="div-card-task">
+              <span class="card-class status-done"><%=response.task.class_group.class_code%></span>
+              <a href="#"><span class="remove-task">X</span></a>
+              <h4 class="card-title"><%=response.task.title%></h4>
+              <div class="card-footer">
+                <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
               </div>
-            </a>
-            <a href="#"><span class="remove-task">X</span></a>
+            </div>
+          </a>
         <% end %>
       <% end %>
     </div>
@@ -72,16 +72,16 @@
     <div class="status-body">
       <% @responses.each do |response| %>
         <% if response.undelivered? %>
-            <a href=<%= response_path(response) %>>
-              <div class="div-card-task">
-                <span class="card-class status-not-completed"><%=response.task.class_group.class_code%></span>
-                <h4 class="card-title"><%=response.task.title%></h4>
-                <div class="card-footer">
-                  <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
-                </div>
+          <a href=<%= response_path(response) %>>
+            <div class="div-card-task">
+              <span class="card-class status-not-completed"><%=response.task.class_group.class_code%></span>
+              <a href="https://www.youtube.com.br"><span class="remove-task">X</span></a>
+              <h4 class="card-title"><%=response.task.title%></h4>
+              <div class="card-footer">
+                <span class="card-date"><%=response.task.expiration_date.strftime("%d/%m/%Y")%></span>
               </div>
-            </a>
-            <a href="https://www.youtube.com.br"><span class="remove-task">X</span></a>
+            </div>
+          </a>
         <% end %>
       <% end %>
     </div>
