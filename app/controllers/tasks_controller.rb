@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def index_responses
-    @responses_task = @task.responses
+    @responses_task = @task.responses.where(status: 2)
   end
 
   def show_response
