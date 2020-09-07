@@ -47,7 +47,7 @@ class ResponsesController < ApplicationController
     #@response.response_value.attach(params[:response_value])
     if @response.update(response_params)
       if current_user.admin?
-        redirect_to task_responses_path
+        redirect_to task_responses_path(@response.task_id)
       else
         redirect_to responses_board_path(current_user.id)
       end
