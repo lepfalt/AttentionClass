@@ -80,7 +80,7 @@
      <% @tasks.each do |task| %>
         <% if task.ajusted? %>
             <a href=<%= task_path(task) %>>
-              <div class="card-task">
+              <div class="div-card-task">
                 <span class="card-class status-not-completed"><%=task.class_group.class_code%></span>
                 <h4 class="card-title"><%=task.title%></h4>
                 <div class="card-footer">
