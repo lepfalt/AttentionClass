@@ -49,6 +49,10 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
     if @task.update(task_params)
+      if @task.progress?
+        generate_responses
+      end
+
       flash[:notice] = 'Tarefa atualizada com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
@@ -76,5 +80,13 @@ class TasksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task).permit(:title, :description, :status, :expiration_date, :class_group_id)
+  end
+
+  def generate_responses
+    users_group = @task.class_group.users
+    users_group.each do |user|
+      response = Response.new(user_id: user.id, task_id: @task.id, status: 0)
+      puts "Error na criacao de response: ", response.errors unless response.save
+    end
   end
 end
