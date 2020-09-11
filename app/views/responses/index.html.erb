@@ -52,7 +52,9 @@
         <% if response.done? %>
           <div>
             <div class="div-remove-task">
-              <a href="#"><span class="remove-task">X</span></a>
+              <%= link_to "X", nil, 
+                    class:"remove-task", 
+                    data: {confirm: "Tem certeza que deseja remover?"} %>
             </div>
             <div class="div-click-task">
               <a href=<%= response_path(response) %>>
@@ -81,7 +83,9 @@
         <% if response.undelivered? %>
           <div>
             <div class="div-remove-task">
-              <a href="#"><span class="remove-task">X</span></a>
+              <%= link_to "X", nil, 
+                    class:"remove-task", 
+                    data: {confirm: "Tem certeza que deseja remover?"} %>
             </div>
             <div class="div-click-task">
               <a href=<%= response_path(response) %>>
