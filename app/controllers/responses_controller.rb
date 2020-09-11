@@ -45,6 +45,8 @@ class ResponsesController < ApplicationController
     # respond_to do |format|
     #@response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
     #@response.response_value.attach(params[:response_value])
+    task_ajusted? if current_user.admin?
+
     if @response.update(response_params)
       if current_user.admin?
         redirect_to task_responses_path(@response.task_id)
@@ -84,6 +86,16 @@ class ResponsesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def response_params
     params.require(:response).permit(:response_value, :response_annotation, :status, :observation_responsible, :grade)
+  end
+
+  def task_ajusted?
+    task = Task.find_by(id: @response.task_id)
+    puts 'ENTROU AJUSTED ', task
+    task.responses.each do |response|
+      return if response.done? && response.grade.blank?
+    end
+    task.status = 3
+    puts 'Erro ', task.errors unless task.save
   end
 
   def upload
