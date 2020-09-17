@@ -45,7 +45,7 @@
         </section>
       
         <section class="section-alterar-status">
-          <%= form.select :status, Task.statuses.keys, {}, class: 'status-task' %>
+          <%= form.select :status, Task.statuses.keys.reject { |k| k == "pending" }, {}, class: 'status-task' %>
           <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
         </section>
       </section>    
