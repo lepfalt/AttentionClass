@@ -65,11 +65,15 @@ class ResponsesController < ApplicationController
   # DELETE /responses/1
   # DELETE /responses/1.json
   def destroy
-    @response.destroy
-    respond_to do |format|
-      format.html { redirect_to responses_url, notice: 'Response was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @response.active = false
+    puts 'Erro ao excluir' unless @response.save
+
+    redirect_to responses_board_path(current_user.id)
+    # @response.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to responses_url, notice: 'Response was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
   end
 
   def evaluate_response

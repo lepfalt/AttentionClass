@@ -51,11 +51,13 @@
       <% @responses.each do |response| %>
         <% if response.done? && response.active %>
           <div>
-            <div class="div-remove-task">
-              <%= link_to "X", nil, 
-                    class:"remove-task", 
-                    data: {confirm: "Tem certeza que deseja remover?"} %>
-            </div>
+            <% if !response.grade.blank? %>
+              <div class="div-remove-task">
+                <%= link_to "X", response, method: :delete, 
+                      class:"remove-task", 
+                      data: {confirm: "Tem certeza que deseja remover?"} %>
+              </div>
+            <% end %>
             <div class="div-click-task">
               <a href=<%= response_path(response) %>>
                 <div class="div-card-task">
@@ -83,7 +85,7 @@
         <% if response.undelivered? && response.active %>
           <div>
             <div class="div-remove-task">
-              <%= link_to "X", nil, 
+              <%= link_to "X", response, method: :delete, 
                     class:"remove-task", 
                     data: {confirm: "Tem certeza que deseja remover?"} %>
             </div>
