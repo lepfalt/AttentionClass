@@ -45,10 +45,11 @@ class ResponsesController < ApplicationController
     # respond_to do |format|
     #@response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
     #@response.response_value.attach(params[:response_value])
-    task_ajusted? if current_user.admin?
+    #task_ajusted? if current_user.admin?
 
     if @response.update(response_params)
       if current_user.admin?
+        task_ajusted?
         redirect_to task_responses_path(@response.task_id)
       else
         redirect_to responses_board_path(current_user.id)
