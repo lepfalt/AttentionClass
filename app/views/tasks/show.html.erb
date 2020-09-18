@@ -39,14 +39,15 @@
       </section>
 
       <section class="content-body">
-        <section class="section-response-user">
-          <!-- <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %> -->
-          <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
-        </section>
-        <% if !@task.ajusted? %>
+        <% if @task.pending? %>
           <section class="section-alterar-status">
-            <%= form.select :status, Task.statuses.keys.reject { |k| k == "pending" }, {}, class: 'status-task' %>
+            <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, class: 'status-task' %>
             <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
+          </section>
+        <% else %>
+          <section class="section-response-user">
+            <!-- <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %> -->
+            <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
           </section>
         <% end %>
       </section>    
