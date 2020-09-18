@@ -7,7 +7,7 @@
     </div>
     <div class="status-body">
       <% @responses.each do |response| %>
-        <% if response.pending? %>
+        <% if response.pending? && response.active %>
             <a href=<%= response_path(response) %>>
               <div class="div-card-task">
                 <span class="card-class status-pending"><%=response.task.class_group.class_code%></span>
@@ -28,7 +28,7 @@
     </div>
     <div class="status-body">
       <% @responses.each do |response| %>
-        <% if response.progress? %>
+        <% if response.progress? && response.active %>
             <a href=<%= response_path(response) %>>
               <div class="div-card-task">
                 <span class="card-class status-progress"><%=response.task.class_group.class_code%></span>
@@ -49,11 +49,15 @@
     </div>
     <div class="status-body">
       <% @responses.each do |response| %>
-        <% if response.done? %>
+        <% if response.done? && response.active %>
           <div>
-            <div class="div-remove-task">
-              <a href="#"><span class="remove-task">X</span></a>
-            </div>
+            <% if !response.grade.blank? %>
+              <div class="div-remove-task">
+                <%= link_to "X", response, method: :delete, 
+                      class:"remove-task", 
+                      data: {confirm: "Tem certeza que deseja remover?"} %>
+              </div>
+            <% end %>
             <div class="div-click-task">
               <a href=<%= response_path(response) %>>
                 <div class="div-card-task">
@@ -78,10 +82,12 @@
     </div>
     <div class="status-body">
       <% @responses.each do |response| %>
-        <% if response.undelivered? %>
+        <% if response.undelivered? && response.active %>
           <div>
             <div class="div-remove-task">
-              <a href="#"><span class="remove-task">X</span></a>
+              <%= link_to "X", response, method: :delete, 
+                    class:"remove-task", 
+                    data: {confirm: "Tem certeza que deseja remover?"} %>
             </div>
             <div class="div-click-task">
               <a href=<%= response_path(response) %>>
