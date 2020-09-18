@@ -35,7 +35,7 @@
 
       <section class="description-task">
         <h4 class="item-description">Descrição:</h4>
-        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task' %></h3>
+        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task', disabled: @task.ajusted? %></h3>
       </section>
 
       <section class="content-body">
@@ -43,11 +43,12 @@
           <!-- <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %> -->
           <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
         </section>
-      
-        <section class="section-alterar-status">
-          <%= form.select :status, Task.statuses.keys.reject { |k| k == "pending" }, {}, class: 'status-task' %>
-          <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
-        </section>
+        <% if !@task.ajusted? %>
+          <section class="section-alterar-status">
+            <%= form.select :status, Task.statuses.keys.reject { |k| k == "pending" }, {}, class: 'status-task' %>
+            <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
+          </section>
+        <% end %>
       </section>    
     <% end %>
   </div>
