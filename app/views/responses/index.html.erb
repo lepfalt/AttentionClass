@@ -85,7 +85,7 @@
         <% if response.undelivered? && response.active %>
           <div>
             <div class="div-remove-task">
-              <%= link_to "X", nil, 
+              <%= link_to "X", response, method: :delete, 
                     class:"remove-task", 
                     data: {confirm: "Tem certeza que deseja remover?"} %>
             </div>
