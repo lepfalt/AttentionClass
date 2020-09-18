@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show index_responses update destroy cancel]
+  before_action :set_task, only: %i[show index_responses update destroy cancel remove_ajusted]
 
   # GET /tasks
   # GET /tasks.json
@@ -76,11 +76,22 @@ class TasksController < ApplicationController
         response.active = false
         puts 'erro ao inativar response' unless response.save
       end
-      
+
       flash[:notice] = 'Tarefa excluída com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
       puts "Erro ao cancelar task"
+    end
+  end
+
+  def remove_ajusted
+    puts 'ENTROU'
+    @task.active = false
+    if @task.save
+      flash[:notice] = 'Tarefa excluída com sucesso!'
+      redirect_to tasks_board_path(current_user.id)
+    else
+      puts "Erro ao remover task"
     end
   end
 

@@ -72,12 +72,12 @@
     </div>
     <div class="status-body">
      <% @tasks.each do |task| %>
-        <% if task.done? %>
+        <% if task.done? && task.active %>
           <div>
             <div class="div-remove-task">
-              <%= link_to "X", nil, 
+              <%= link_to "X", cancel_task_path(task), method: :delete, 
                   class:"remove-task", 
-                  data: {confirm: "Tem certeza que deseja remover?"} %>
+                  data: {confirm: "Excluir uma tarefa concluída excluirá também toda as respostas do grupo. Tem certeza que deseja excluir?"} %>
             </div>
             <div class="div-click-task">
               <a href=<%= task_path(task) %>>
@@ -103,12 +103,12 @@
     </div>
     <div class="status-body">
      <% @tasks.each do |task| %>
-        <% if task.ajusted? %>
+        <% if task.ajusted? && task.active %>
           <div>
               <div class="div-remove-task">
-                <%= link_to "X", nil, 
+                <%= link_to "X", remove_ajusted_path(task), method: :delete, 
                     class:"remove-task", 
-                    data: {confirm: "Tem certeza que deseja remover?"} %>
+                    data: {confirm: "Tem certeza que deseja remover do board?"} %>
               </div>
               <div class="div-click-task">
                 <a href=<%= task_path(task) %>>

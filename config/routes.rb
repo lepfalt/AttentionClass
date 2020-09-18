@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   patch 'response/evaluate/:id', to: 'responses#evaluate_response', as: :evaluate_response
   delete 'tasks/:id', to: 'tasks#destroy'
   delete 'task/:id', to: 'tasks#cancel', as: :cancel_task
+  delete 'tasks/ajusted/:id', to: 'tasks#remove_ajusted', as: :remove_ajusted
 end
