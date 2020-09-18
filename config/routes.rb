@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes
   get 'classes/:id/associate', to: 'class_groups#new_user', as: :new_user_class
 
-  resources :responses, except: :index
+  resources :responses, except: %i[index destroy]
   get 'responses/user/:user_id', to: 'responses#index', as: :responses_board
+  delete 'responses/:id', to: 'responses#destroy'
 
   resources :tasks, except: %i[index destroy]
   get 'tasks/user/:user_id', to: 'tasks#index', as: :tasks_board
