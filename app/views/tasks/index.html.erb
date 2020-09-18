@@ -13,17 +13,24 @@
     <div class="status-body">
       <% @tasks.each do |task| %>
         <% if task.pending? %>
-          <!--<div class="card-task div-card-task"> -->
-            <a href=<%= task_path(task) %>  >
-              <div class="div-card-task">
-                <span class="card-class status-pending"><%=task.class_group.class_code%></span>
-                <h4 class="card-title"><%=task.title%></h4>
-                <div class="card-footer">
-                  <span class="card-date"><%= task.expiration_date.strftime("%d/%m/%Y") %></span>
+          <div>
+            <div class="div-remove-task">
+              <%= link_to "X", task, method: :delete, 
+                  class:"remove-task", 
+                  data: {confirm: "Tem certeza que deseja remover essa tarefa?"} %>
+            </div>
+            <div class="div-click-task">
+              <a href=<%= task_path(task) %>  >
+                <div class="div-card-task">
+                  <span class="card-class status-pending"><%=task.class_group.class_code%></span>
+                  <h4 class="card-title"><%=task.title%></h4>
+                  <div class="card-footer">
+                    <span class="card-date"><%= task.expiration_date.strftime("%d/%m/%Y") %></span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          <%# </div> %>
+              </a>
+            </div>
+          </div>
         <% end %>
       <% end %>
     </div>
@@ -35,16 +42,25 @@
     </div>
     <div class="status-body">
      <% @tasks.each do |task| %>
-        <% if task.progress? %>
-          <a href=<%= task_path(task) %>>
-            <div class="div-card-task">
-              <span class="card-class status-progress"><%=task.class_group.class_code%></span>
-              <h4 class="card-title"><%=task.title%></h4>
-              <div class="card-footer">
-                <span class="card-date"><%=task.expiration_date.strftime("%d/%m/%Y")%></span>
-              </div>
+        <% if task.progress? && task.active %>
+          <div>
+            <div class="div-remove-task">
+              <%= link_to "X", cancel_task_path(task), method: :delete, 
+                  class:"remove-task", 
+                  data: {confirm: "Excluir uma tarefa em andamento excluirá também todo o progesso dos integrantes do grupo. Tem certeza que deseja excluir?"} %>
             </div>
-          </a>
+            <div class="div-click-task">
+              <a href=<%= task_path(task) %>>
+                <div class="div-card-task">
+                  <span class="card-class status-progress"><%=task.class_group.class_code%></span>
+                  <h4 class="card-title"><%=task.title%></h4>
+                  <div class="card-footer">
+                    <span class="card-date"><%=task.expiration_date.strftime("%d/%m/%Y")%></span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
         <% end %>
       <% end %>
     </div>
@@ -56,12 +72,12 @@
     </div>
     <div class="status-body">
      <% @tasks.each do |task| %>
-        <% if task.done? %>
+        <% if task.done? && task.active %>
           <div>
             <div class="div-remove-task">
-              <%= link_to "X", nil, 
-                    class:"remove-task", 
-                    data: {confirm: "Tem certeza que deseja remover?"} %>
+              <%= link_to "X", cancel_task_path(task), method: :delete, 
+                  class:"remove-task", 
+                  data: {confirm: "Excluir uma tarefa concluída excluirá também toda as respostas do grupo. Tem certeza que deseja excluir?"} %>
             </div>
             <div class="div-click-task">
               <a href=<%= task_path(task) %>>
@@ -87,12 +103,12 @@
     </div>
     <div class="status-body">
      <% @tasks.each do |task| %>
-        <% if task.ajusted? %>
+        <% if task.ajusted? && task.active %>
           <div>
               <div class="div-remove-task">
-                <%= link_to "X", nil, 
+                <%= link_to "X", remove_ajusted_path(task), method: :delete, 
                     class:"remove-task", 
-                    data: {confirm: "Tem certeza que deseja remover?"} %>
+                    data: {confirm: "Tem certeza que deseja remover do board?"} %>
               </div>
               <div class="div-click-task">
                 <a href=<%= task_path(task) %>>

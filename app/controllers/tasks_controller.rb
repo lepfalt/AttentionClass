@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show index_responses update destroy]
+  before_action :set_task, only: %i[show index_responses update destroy cancel remove_ajusted]
 
   # GET /tasks
   # GET /tasks.json
@@ -33,6 +33,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.status = 0
+    @task.active = true
 
     puts @task
 
@@ -64,9 +65,33 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
+    flash[:notice] = 'Tarefa excluída com sucesso!'
+    redirect_to tasks_board_path(current_user.id)
+  end
+
+  def cancel
+    @task.active = false
+    if @task.save
+      @task.responses.each do |response|
+        response.active = false
+        puts 'erro ao inativar response' unless response.save
+      end
+
+      flash[:notice] = 'Tarefa excluída com sucesso!'
+      redirect_to tasks_board_path(current_user.id)
+    else
+      puts "Erro ao cancelar task"
+    end
+  end
+
+  def remove_ajusted
+    puts 'ENTROU'
+    @task.active = false
+    if @task.save
+      flash[:notice] = 'Tarefa excluída com sucesso!'
+      redirect_to tasks_board_path(current_user.id)
+    else
+      puts "Erro ao remover task"
     end
   end
 
