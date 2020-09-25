@@ -149,7 +149,7 @@
 }
 
 .div-remove-task {
-  margin-left: 33.7em;
+  left: 91%;
   z-index: 10;
   margin-top: 1em;
   position: absolute;
@@ -158,4 +158,10 @@
 .div-click-task {
   z-index: 1;
   position: relative;
+}
+
+.btn-new-task{
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  padding-right: 4em;
 }

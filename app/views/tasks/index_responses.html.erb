@@ -10,16 +10,16 @@
         <tr>
           <th>Nome</th>
           <th>Nota</th>
-          <th colspan="3"></th>
+          <th colspan="1"></th>
         </tr>
       </thead>
 
       <tbody class="body-table">
          <% @responses_task.each do |response| %>
           <tr>
-            <td><%= response.user.name %></td>
+            <td class="content-text-table"><%= response.user.name %></td>
             <td><%= response.grade %></td>
-            <td><%= link_to 'Ver', task_response_path(response.id), class: 'btn btn-default btn-view-item-table' %></td>
+            <td><%= link_to 'Visualizar', task_response_path(response.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
             <%# <td><%= link_to 'Edit', edit_response_path(response) %>
             <%# </td> %>
             <%# <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -47,7 +47,7 @@
         </section>
         <% if !@response.undelivered? %>
           <section class="section-alterar-status">
-            <%= form.select :status, Response.statuses.keys, {}, class: 'status-task' %>
+            <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, class: 'status-task' %>
             <%= form.submit 'Alterar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
           </section>
         <% end %>
