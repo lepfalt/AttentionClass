@@ -101,7 +101,7 @@
 
 .btn-alterar {
   margin: 2em auto auto auto;
-  padding-left: 5em;
+  padding-left: 4em;
   position: relative;
   min-width: 100%;
   max-width: 100%;
@@ -212,4 +212,20 @@
   min-width: 100%;
   max-width: 100%;
   padding-left: 7em;
+}
+
+.btn-associate-user {
+  background: #D11919;
+  border-radius: 5px;
+  width: 13em;
+  height: 4em;
+  font-family: Roboto;
+  font-size: 25px;
+  line-height: 21px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  margin: 7em auto auto auto;
 }
