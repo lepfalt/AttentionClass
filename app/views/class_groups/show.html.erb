@@ -12,17 +12,17 @@
           <th>Tarefa</th>
           <th>Data Limite</th> 
           <th>Status</th>
-          <th colspan="3"></th>
+          <th colspan="1"></th>
         </tr>
       </thead>
 
       <tbody class="body-table">
         <% @class_group.tasks.each do |task| %>
           <tr>
-            <td><%= task.title %></td>
+            <td class="content-text-table"><%= task.title %></td>
             <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
             <td><%= task.status %></td>
-            <td><%= link_to 'Ver Respostas', task_responses_path(task.id), class: 'btn btn-default btn-view-item-table', style: 'width: 75%' %></td>
+            <td><%= link_to 'Ver Respostas', task_responses_path(task.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
             <%# <td><%= link_to 'Edit', edit_task_path(task) %>
             <%# </td> %>
             <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
