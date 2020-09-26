@@ -7,6 +7,7 @@ class ResponsesController < ApplicationController
     @responses = Response.where(user_id: params[:user_id])
     @responses.each do |response|
       check_status_task(response)
+      check_status_response(response)
     end
   end
 
@@ -45,6 +46,7 @@ class ResponsesController < ApplicationController
   def update
     if current_user.standard?
       return if !check_status_task(@response)
+      check_status_response(@response)
     end
 
     if @response.update(response_params)
@@ -123,5 +125,12 @@ class ResponsesController < ApplicationController
   def close_task(task)
     task.status = 2
     puts 'Erro ao concluir tarefa automática no response', task.errors unless task.save
+  end
+
+  def check_status_response(response)
+    if !response.task.progress? && !response.undelivered?
+      response.status = 3
+      puts 'Erro ao não entregar response', response.errors unless response.save
+    end
   end
 end
