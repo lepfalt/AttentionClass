@@ -1,6 +1,6 @@
 class ClassGroup < ApplicationRecord
   has_many :tasks
-  has_and_belongs_to_many :users
+  has_many :class_groups_users
   belongs_to :user, optional: false # Verificar depois
 
   validates :discipline, presence: true
