@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ConstantsHelper
+module ConstantsHelper
   STANDARD = 'standard'
   ADMIN = 'admin'
 end

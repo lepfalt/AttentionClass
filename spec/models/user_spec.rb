@@ -1,6 +1,11 @@
 require 'rails_helper'
+require 'support/fixtures_json_helper'
+require 'support/constants_helper'
 
 RSpec.describe User, type: :model do
+  include FixturesJsonHelper
+  include ConstantsHelper
+
   let(:user_params) do
     {
       id: 1,

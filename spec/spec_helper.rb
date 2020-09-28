@@ -1,9 +1,11 @@
+require 'factory_bot'
 require 'support/matchers'
 require 'support/constants_helper'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+    config.include FactoryBot::Syntax::Methods
   end
 
   config.mock_with :rspec do |mocks|
