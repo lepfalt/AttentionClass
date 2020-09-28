@@ -5,6 +5,10 @@ class ResponsesController < ApplicationController
   # GET /responses.json
   def index
     @responses = Response.where(user_id: params[:user_id])
+    @responses.each do |response|
+      check_status_task(response)
+      check_status_response(response)
+    end
   end
 
   # GET /responses/1
@@ -40,12 +44,10 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
-    # puts 'ENTROU', response_params
-    # puts @response.task_id
-    # respond_to do |format|
-    #@response.response_value.attach(io: File.open('/storage'), filename: response_params[:response_value].original_filename)
-    #@response.response_value.attach(params[:response_value])
-    #task_ajusted? if current_user.admin?
+    if current_user.standard?
+      return if !check_status_task(@response)
+      check_status_response(@response)
+    end
 
     if @response.update(response_params)
       if current_user.admin?
@@ -108,6 +110,27 @@ class ResponsesController < ApplicationController
     uploaded_file = response_params[:response_value]
     File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
       file.write(uploaded_file.read)
+    end
+  end
+
+  def check_status_task(response)
+    if response.task.progress? && response.task.expiration_date <= Date.today
+      close_task(response.task)
+      false
+    end
+
+    true
+  end
+
+  def close_task(task)
+    task.status = 2
+    puts 'Erro ao concluir tarefa automática no response', task.errors unless task.save
+  end
+
+  def check_status_response(response)
+    if !response.task.progress? && !response.undelivered?
+      response.status = 3
+      puts 'Erro ao não entregar response', response.errors unless response.save
     end
   end
 end
