@@ -6,6 +6,7 @@ class TasksController < ApplicationController
   def index
     class_groups = ClassGroup.where(user_id: params[:user_id])
     @tasks = Task.where(class_group_id: class_groups)
+    check_completed_tasks
   end
 
   def index_responses
@@ -112,6 +113,15 @@ class TasksController < ApplicationController
     users_group.each do |user|
       response = Response.new(user_id: user.id, task_id: @task.id, status: 0)
       puts "Error na criacao de response: ", response.errors unless response.save
+    end
+  end
+
+  def check_completed_tasks
+    @tasks.each do |task|
+      if (task.pending? || task.progress?) && task.expiration_date <= Date.today
+        task.status = 2
+        puts 'Erro ao concluir tarefa automática', task.errors unless task.save
+      end
     end
   end
 end
