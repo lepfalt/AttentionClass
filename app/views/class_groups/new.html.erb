@@ -1,5 +1,10 @@
-<h1>New Class Group</h1>
+<main class="card-main card-table">
+  <a href=<%= admin_classes_path(current_user) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+   <h1 class='title-page title-task'>Criar Turma</h1>
 
-<%= render 'form', class_group: @class_group %>
+    <%= render 'form', class_group: @class_group %>
 
-<%= link_to 'Back', class_groups_path %>
+    <!-- <%= link_to 'Back', class_groups_path %> -->
+  </div>
+</main>
