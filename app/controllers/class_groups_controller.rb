@@ -23,16 +23,18 @@ class ClassGroupsController < ApplicationController
   # POST /class_groups.json
   def create
     @class_group = ClassGroup.new(class_group_params)
+    @class_group.active = true
+    @class_group.user_id = session[:user_id] # Verificar sobre passagem de id do user na rota
 
-    respond_to do |format|
+    #respond_to do |format|
       if @class_group.save
-        format.html { redirect_to @class_group, notice: 'Class group was successfully created.' }
-        format.json { render :show, status: :created, location: @class_group }
+        flash[:notice] = 'Turma cadastrada com sucesso!'
+        redirect_to admin_classes_path(current_user)
       else
-        format.html { render :new }
-        format.json { render json: @class_group.errors, status: :unprocessable_entity }
+        flash[:notice] = 'Erro ao cadastrar tarefa.'
+        render :new
       end
-    end
+    #end
   end
 
   # PATCH/PUT /class_groups/1
