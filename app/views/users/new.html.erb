@@ -3,31 +3,43 @@
   <div class="content-intern">
     <h1 class='title-page title-task'>Cadastrar Usuário</h1>
     <div class="form-group-register">
-    <%= form_for @user do |form| %>
-      <div style="display: inline-block; width: 42%;">
-      <%= form.label 'Nome' %>
-      <%= form.text_field :name, class:"form-control text-field field-register", style: 'width: 100%;', placeholder: "Qual seu nome??" %>
-      <%= form.label 'Matrícula' %>
-      <%= form.text_field :name, class:"form-control text-field field-register", style: 'width: 100%;', placeholder: "Tem matrícula? Qual?" %>
-      </div>
-      <div style="display: inline-block; width: 22%; margin: 1em 2em 0 2em;">
-      <%= form.label 'Tipo de usuário' %>
-      <%= form.select :profile, 'Selecione o tipo', {}, class:"form-control text-field", style: 'width: 100%;' %>
-      </div>
-      <div style="display: flex;">
-      <div style="margin-top: 5em; display: inline-block; width: 42%;">
-      <%= form.label :email %>
-      <%= form.email_field :email, class:"form-control text-field field-register", style: 'width: 100%;', placeholder: "Digite seu email" %>
-      </div>
-      <div style="display: inline-block; width: 30%; margin-top: 5em; margin-left: 5em;">
-      <%= form.label 'Senha' %>
-      <%= form.password_field :password, class:"form-control text-field field-register", style: 'width: 100%;', placeholder: "Qual vai ser a senha?" %>
-      <%= form.label 'Confirmação de senha' %>
-      <%= form.password_field :password, class:"form-control text-field field-register", style: 'width: 100%;', placeholder: "Tem certeza da senha? Repita." %>
-      </div>
-      </div>
-      <%= form.submit "Cadastrar", class:"btn btn-danger btn-login field-register", style: 'margin-top: 2em;' %>
-    <% end %>
+      <%= form_for @user do |form| %>
+      <div style="width: 70%; margin: auto; margin-top: 2em;">
+        <div style="width: 100%; margin: auto;">
+          <%= form.label 'Nome' %>
+          <%= form.text_field :name, class:"form-control text-field ", style: 'margin-top: 0;', placeholder: "Qual seu nome??" %>
+          <div style="display: inline-block; width: 100%; margin-top: 1em;">
+            <div style="display: inline-block; vertical-align: bottom; width: 48%">
+            <%= form.label 'Matrícula' %>
+            <%= form.text_field :name, class:"form-control text-field ", style: 'margin-top: 0;', placeholder: "Tem matrícula? Qual?" %>
+            </div>
+            <div style="display: inline-block; margin-left: 2em; width: 48%">
+              <%= form.label 'Tipo de usuário' %>
+              <%= form.select :profile, 'Selecione o tipo', {}, class:"form-control text-field", style: 'margin-top: 0;' %>
+            </div>
+          </div>
+        </div>
+
+          <div style="margin-top: 3em; width: 100%;">
+            <%= form.label :email %>
+            <%= form.email_field :email, class:"form-control text-field ", style: 'margin-top: 0;', placeholder: "Digite seu email" %>
+          </div>
+          <div style=" width: 100%;  margin-top: 1em;">
+            <div style="display: inline-block; vertical-align: bottom; width: 48%">
+            <%= form.label 'Senha' %>
+            <%= form.password_field :password, class:"form-control text-field ", style: 'margin-top: 0;', placeholder: "Qual vai ser a senha?" %>
+            </div>
+            <div style="display: inline-block; margin-left: 2em; width: 48%">
+            <%= form.label 'Confirmação de senha' %>
+            <%= form.password_field :password, class:"form-control text-field", style: 'margin-top: 0;', placeholder: "Tem certeza da senha? Repita." %>
+            </div>
+          </div>
+        
+        <div style="margin: auto; width: 85%;">
+        <%= form.submit "Cadastrar", class:"btn btn-danger btn-login ", style: 'margin-top: 3em;' %>
+        </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </main>
