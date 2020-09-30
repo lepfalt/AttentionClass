@@ -54,11 +54,11 @@ class ClassGroupsController < ApplicationController
   # DELETE /class_groups/1
   # DELETE /class_groups/1.json
   def destroy
-    @class_group.destroy
-    respond_to do |format|
-      format.html { redirect_to class_groups_url, notice: 'Class group was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    return unless remove_associates
+    return unless remove_tasks
+    return unless @class_group.destroy
+    flash[:notice] = 'Turma removida com sucesso!'
+    redirect_to admin_classes_path(current_user)
   end
 
   def new_user; end
@@ -73,5 +73,19 @@ class ClassGroupsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def class_group_params
     params.require(:class_group).permit(:responsible, :discipline, :class_code, :active, :expiration_date)
+  end
+
+  def remove_associates
+    puts 'ENTROU'
+    @class_group.tasks.each do |task|
+      Response.destroy_by(task_id: task.id)
+    end
+    puts 'SAIU'
+    @class_group.users.clear
+  end
+
+  def remove_tasks
+    puts 'ENTROU'
+    @class_group.tasks.destroy_all
   end
 end
