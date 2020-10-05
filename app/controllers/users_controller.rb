@@ -28,14 +28,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_to_be_created)
 
-    if validate_user?
-      if @user.save
-        flash[:notice] = 'Usuário cadastrado com sucesso!'
-        redirect_to login_path
-      else
-        flash[:notice] = 'Erros: ' << @user.errors.first.to_s
-        redirect_to new_user_path
-      end
+    if validate_user? && @user.save
+      flash[:notice] = 'Usuário cadastrado com sucesso!'
+      redirect_to login_path
     else
       redirect_to new_user_path
     end
