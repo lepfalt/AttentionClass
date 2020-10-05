@@ -28,8 +28,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_to_be_created)
     puts "USER: ", @user.to_json
-    if @user.valid? && @user.confirm_password?(params.dig(:user, :password_confirm)) && @user.unique_email?
-      puts 'ENTROU'
+    if @user.valid? && @user.confirm_password?(params.dig(:user, :password_confirm)) && User.unique_email?(@user.email)
+      puts 'ENTROU ', @user.to_json
       @user.save
       flash[:notice] = 'Usuário cadastrado com sucesso!'
       redirect_to login_path

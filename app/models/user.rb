@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :class_groups
   has_secure_password
 
-  attr_accessor :password, :email
+  attr_accessor :password
 
   enum profile: { standard: 0, admin: 1 }
   #validates :profile, inclusion: { in: [standard, admin] }
@@ -18,11 +18,15 @@ class User < ApplicationRecord
     @password.eql?(confirm)
   end
 
-  def unique_email?
-    puts 'ENTROU', @email
+  def self.unique_email?(email)
+    puts 'ENTROU', email
 
-    return false unless User.find_by(email: @email).nil?
+    user = User.find_by(email: email)
 
-    true
+    puts 'VAI SER TRUE'
+
+    return true if user.nil?
+    puts 'VAI SER FALSE'
+    false
   end
 end
