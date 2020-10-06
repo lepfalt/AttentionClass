@@ -26,12 +26,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-    if @user.valid?
-      @user.save
-      redirect_to @user
+    @user = User.new(user_to_be_created)
+
+    if validate_user? && @user.save
+      flash[:notice] = 'Usuário cadastrado com sucesso!'
+      redirect_to login_path
     else
-      redirect_to :new
+      redirect_to new_user_path
     end
   end
 
@@ -78,5 +79,30 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:email, :password)
+  end
+
+  def validate_user?
+    if !@user.valid? 
+      flash[:notice] = 'Dados de usuário inválidos.'
+    elsif !User.unique_email?(@user.email)
+      flash[:notice] = 'Esse email já existe.'
+    elsif !@user.confirm_password?(params.dig(:user, :password_confirm)) 
+      flash[:notice] = 'A senha precisa ser igual à sua confirmação.'
+    else
+      return true
+    end
+
+    false
+  end
+
+  def user_to_be_created
+    {
+      name: params.dig(:user, :name),
+      registration: params.dig(:user, :registration),
+      profile: params.dig(:user, :profile),
+      email: params.dig(:user, :email),
+      password: params.dig(:user, :password),
+      password_digest: BCrypt::Password.create(params.dig(:user, :password))
+    }.to_hash
   end
 end
