@@ -14,7 +14,9 @@ class TasksController < ApplicationController
   end
 
   def show_response
+    puts 'ENTROU ', params[:id]
     @response_task = Response.find_by(id: params[:id])
+    puts @response_task.response_value
   end
 
   # GET /tasks/1
