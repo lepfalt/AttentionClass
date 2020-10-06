@@ -19,14 +19,10 @@ class User < ApplicationRecord
   end
 
   def self.unique_email?(email)
-    puts 'ENTROU', email
-
     user = User.find_by(email: email)
 
-    puts 'VAI SER TRUE'
-
     return true if user.nil?
-    puts 'VAI SER FALSE'
+
     false
   end
 end
