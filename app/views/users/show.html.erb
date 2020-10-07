@@ -1,113 +1,38 @@
 <p id="notice"><%= notice %></p>
 <% if current_user == @user %>
+  <main class="card-main card-table">
+    <a href='<%= response_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+    <div class="content-intern">
+    
+    <h1 class='title-my-account'>Minha Conta</h1>
+    <div style="display:inline-block; margin-top: 3em; margin-left: 10.5em;">
+      <p class="infos-my-account">
+        <strong>Perfil:</strong>
+        <%= @user.profile %>
+      </p>
 
-<main class="card-main align-columns">
-  <section class="status-column">
-    <div class="status-header">
-      <h3 class="status-name">Pendente</h3>
+      <p class="infos-my-account">
+        <strong>Nome:</strong>
+        <%= @user.name %>
+      </p>
+
+      <p class="infos-my-account">
+        <strong>Matrícula:</strong>
+        <%= @user.registration %>
+      </p>
+
+      <p class="infos-my-account">
+        <strong>Email:</strong>
+        <%= @user.email %>
+      </p>
+
+      <p class="infos-my-account">
+        <strong>Criado em:</strong>
+        <%= @user.created_at.strftime("%d/%m/%Y") %>
+      </p>
     </div>
-    <div class="status-body">
-      <% @responses_user.each do |response| %>
-        <% if response.progress? %>
-          <div class="card-task">
-            <a href="http://www.google.com">
-              <div>
-                <span class="card-class status-pending">T874ME</span>
-                <h4 class="card-title">Título da Tarefa</h4>
-                <span class="card-date">23/11/2020</span>
-              </div>
-            </a>
-          </div>
-        <% end %>
-      <% end %>
+    <div style="height: 65vh; margin: auto;">
+      <%= link_to 'Excluir Conta', @user, method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta conta? Isso irá apagar todo o progresso realizado' }, class: 'btn-remove-account' %>
     </div>
-  </section>
-
-  <section class="status-column">
-    <div class="status-header">
-      <h3 class="status-name">Em Andamento</h3>
-    </div>
-    <div class="status-body">
-      <div class="card-task">
-        <a href="#">
-          <div>
-            <span class="card-class status-progress">T874ME</span>
-            <h4 class="card-title">Título da Tarefa</h4>
-            <span class="card-date">23/11/2020</span>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="status-column">
-    <div class="status-header">
-      <h3 class="status-name">Concluído</h3>
-    </div>
-    <div class="status-body">
-      <div class="card-task">
-        <a href="#">
-          <div>
-            <span class="card-class status-done">T874ME</span>
-            <h4 class="card-title">Título da Tarefa</h4>
-            <span class="card-date">23/11/2020</span>
-          </div>
-        </a>
-        <a href="#"><span class="remove-task">X</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="status-column">
-    <div class="status-header">
-      <h3 class="status-name"><%= true ? "Não Entregue" : "Corrigido" %></h3>
-    </div>
-    <div class="status-body">
-      <div class="card-task">
-        <a href="http://www.google.com.br">
-          <div>
-            <span class="card-class status-not-completed">T874ME</span>
-            <h4 class="card-title">Título da Tarefa</h4>
-            <span class="card-date">23/11/2020</span>
-          </div>
-        </a>
-        <a href="https://www.youtube.com.br"><span class="remove-task">X</span></a>
-      </div>
-    </div>
-  </section>
-</main>
-
-
-<p>
-  <strong>Profile:</strong>
-  <%= @user.profile %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Registration:</strong>
-  <%= @user.registration %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
-
-  <%# <%= link_to 'Edit', edit_user_path(@user) %> 
-  <%# <%= link_to 'Back', users_path %>
+  </main>
 <% end %>

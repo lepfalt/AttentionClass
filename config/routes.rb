@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete '/sessions', to: 'sessions#destroy'
   get '/signup', to: 'users#new'
 
-  resources :users, only: %i[create show new]
+  resources :users, only: %i[create show new destroy]
   post 'classes/:class_id/associate', to: 'users#update'
 
   resources :class_groups, except: :index
