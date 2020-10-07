@@ -129,7 +129,7 @@ class ResponsesController < ApplicationController
   end
 
   def check_status_response(response)
-    if !response.task.progress? && !response.undelivered?
+    if !response.task.progress? && (response.pending? || response.progress?)
       response.status = 3
       puts 'Erro ao não entregar response', response.errors unless response.save
     end
