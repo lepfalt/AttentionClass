@@ -14,11 +14,12 @@
     <div class=<%= get_class_name("container") %>>
       <% if logged_in? && !current_page?(login_path) %>
         <%= nav_bar brand: "Attention Class", brand_link: current_user.admin? ? tasks_board_path(current_user.id) : responses_board_path(current_user.id)  do %>
-          <% if current_user.admin? %>
-            <%= menu_group do %>
+          <%= menu_group do %>
+            <% if current_user.admin? %>
               <%= menu_item "Turmas", admin_classes_path(:id => current_user ), class: "nav-menu-item" %>
               <%# <%= menu_item "Tarefas", root_url, class: "nav-menu-item" %>
             <% end %>
+              <%= menu_item "Minha Conta", user_path(:id => current_user ), class: "nav-menu-item" %>
           <% end %>
           <a href=<%= sessions_path %> data-method="delete" data-toggle="tooltip" title="Sair">
             <%= image_tag('logout.png', id: "logouticon", class: "icon-page logouticon navbar-form navbar-right") %>

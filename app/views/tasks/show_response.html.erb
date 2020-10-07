@@ -34,7 +34,7 @@
 
         <section class="upload-response response-upload-task">
           <!-- <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %> -->
-          <% unless @response_task.response_value.nil? %>
+          <% if @response_task&.response_value.present? %>
             <a href=<%= rails_blob_path(@response_task.response_value, disposition: "attachment") %> data-toggle="tooltip" title="Download Resposta"><%= image_tag('download.png', id: "download", class: "icon-page") %></a>
             <span>Arquivo de Resposta: <%= @response_task.response_value.filename %></span>
             <!-- <%= link_to "Arquivo enviado: #{@response_task.response_value.filename}", rails_blob_path(@response_task.response_value, disposition: "attachment") %> -->
@@ -44,7 +44,7 @@
 
       <section class="content-body-response">
         <section class="response-user-task">
-          <%= form.text_field :observation_responsible, class:"annotation-task observation-responsible", placeholder: "Escreva suas anotações.." %>
+          <%= form.text_field :observation_responsible, class:"annotation-task observation-responsible", placeholder: "Escreva suas observações.." %>
           <!-- <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %> -->
           <%# <%= image_tag @response.response_value %>
         </section>

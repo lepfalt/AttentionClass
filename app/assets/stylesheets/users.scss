@@ -12,3 +12,45 @@
   padding-left: 4em;
   margin: 5em auto 50% 42%;
 }
+
+.select-profile {
+  width: 100%;
+  height: 3em;
+  font-size: 18px;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.title-my-account {
+  margin-left: 2em;
+  padding-top: 1em;
+  font-size: 36px;
+}
+
+.infos-my-account {
+  font-size: 23px;
+  line-height: 8px;
+  margin-top: 1em;
+}
+
+.fields-my-account{
+  font-size: 28px; 
+  font-style: italic;
+}
+
+.btn-remove-account{
+  background: #D11919;
+  border-radius: 5px;
+  width: 13em;
+  height: 4em;
+  font-family: Roboto;
+  font-size: 25px;
+  line-height: 21px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  display: inline-block;
+  margin-top: 12%;
+  margin-left: 44%;
+  padding: 1.5em 3.5em;
+}

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
+  before_action :set_user , only: [:destroy]
   # GET /users
   # GET /users.json
   def index
@@ -26,12 +27,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-    if @user.valid?
-      @user.save
-      redirect_to @user
+    @user = User.new(user_to_be_created)
+
+    if validate_user? && @user.save
+      flash[:notice] = 'Usuário cadastrado com sucesso!'
+      redirect_to login_path
     else
-      redirect_to :new
+      redirect_to new_user_path
     end
   end
 
@@ -57,11 +59,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    remove_user_associations
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    session[:user_id] = nil
+    redirect_to login_path
   end
 
   def find_responses
@@ -78,5 +79,51 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:email, :password)
+  end
+
+  def validate_user?
+    if !@user.valid? 
+      flash[:notice] = 'Dados de usuário inválidos.'
+    elsif !User.unique_email?(@user.email)
+      flash[:notice] = 'Esse email já existe.'
+    elsif !@user.confirm_password?(params.dig(:user, :password_confirm)) 
+      flash[:notice] = 'A senha precisa ser igual à sua confirmação.'
+    else
+      return true
+    end
+
+    false
+  end
+
+  def user_to_be_created
+    {
+      name: params.dig(:user, :name),
+      registration: params.dig(:user, :registration),
+      profile: params.dig(:user, :profile),
+      email: params.dig(:user, :email),
+      password: params.dig(:user, :password),
+      password_digest: BCrypt::Password.create(params.dig(:user, :password))
+    }.to_hash
+  end
+
+  def remove_user_associations
+    if @user.admin?
+      classes = ClassGroup.where(user_id: @user.id)
+      classes.each do |cgroup|
+        cgroup.tasks.each do |task|
+          task.responses.destroy_all
+          task.destroy
+        end
+        puts 'REMOVEU RESPONSES E TASKS'
+        cgroup.users.clear
+        cgroup.destroy
+      end
+      puts 'REMOVEU USERS E TURMA'
+    else
+      @user.responses.destroy_all
+      puts 'REMOVEU RESPONSES'
+      @user.class_groups.clear
+      puts 'REMOVEU TURMA2'
+    end
   end
 end

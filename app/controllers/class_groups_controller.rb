@@ -23,16 +23,18 @@ class ClassGroupsController < ApplicationController
   # POST /class_groups.json
   def create
     @class_group = ClassGroup.new(class_group_params)
+    @class_group.active = true
+    @class_group.user_id = session[:user_id] # Verificar sobre passagem de id do user na rota
 
-    respond_to do |format|
+    #respond_to do |format|
       if @class_group.save
-        format.html { redirect_to @class_group, notice: 'Class group was successfully created.' }
-        format.json { render :show, status: :created, location: @class_group }
+        flash[:notice] = 'Turma cadastrada com sucesso!'
+        redirect_to admin_classes_path(current_user)
       else
-        format.html { render :new }
-        format.json { render json: @class_group.errors, status: :unprocessable_entity }
+        flash[:notice] = 'Erro ao cadastrar tarefa.'
+        render :new
       end
-    end
+    #end
   end
 
   # PATCH/PUT /class_groups/1
@@ -52,11 +54,11 @@ class ClassGroupsController < ApplicationController
   # DELETE /class_groups/1
   # DELETE /class_groups/1.json
   def destroy
-    @class_group.destroy
-    respond_to do |format|
-      format.html { redirect_to class_groups_url, notice: 'Class group was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    return unless remove_associates
+    return unless remove_tasks
+    return unless @class_group.destroy
+    flash[:notice] = 'Turma removida com sucesso!'
+    redirect_to admin_classes_path(current_user)
   end
 
   def new_user; end
@@ -71,5 +73,19 @@ class ClassGroupsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def class_group_params
     params.require(:class_group).permit(:responsible, :discipline, :class_code, :active, :expiration_date)
+  end
+
+  def remove_associates
+    puts 'ENTROU'
+    @class_group.tasks.each do |task|
+      Response.destroy_by(task_id: task.id)
+    end
+    puts 'SAIU'
+    @class_group.users.clear
+  end
+
+  def remove_tasks
+    puts 'ENTROU'
+    @class_group.tasks.destroy_all
   end
 end

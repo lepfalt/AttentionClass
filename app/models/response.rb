@@ -8,4 +8,14 @@ class Response < ApplicationRecord
   # validates :status, inclusion: { in: [pending, progress, done, undelivered] }
   # validates_associated :user
   # validates_associated :task
+
+  def self.isActive?(status, active)
+    if status == 'undelivered'
+      return false
+    elsif status == 'done' && !active
+      return false
+    end
+
+    return true
+  end
 end

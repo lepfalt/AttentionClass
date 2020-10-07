@@ -20,16 +20,23 @@
           <span class="span-task"><%= @response.task.class_group.discipline %></span>
         </section>
 
-
         <section class="section-task">
           <span class="card-class status-not-completed code-class"><%= @response.task.class_group.class_code %></span>
         </section>
       </div>
 
-      <section class="description-task">
-        <h4>Descrição:</h4>
-        <h3 class="description-task-text"><%= @response.task.description %></h3>
-      </section>
+      <div style="width: 100%;">
+        <section class="description-task" style="display: inline-block; width: 65%;">
+          <h4>Descrição:</h4>
+          <h3 class="description-task-text"><%= @response.task.description %></h3>
+        </section>
+
+        <% if @response.done? && @response.grade.present? %>
+          <div style="display: inline-block; width: 21%; height: 4em;">
+          <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
+          </div>
+        <% end %>
+      </div>
 
       <section class="content-body-response">
         <section class="response-user-task">
@@ -45,10 +52,11 @@
             <% end %>
           </section>
         </section>
-        <% if !@response.undelivered? %>
+        <% if Response.isActive?(@response.status, @response.active) %>
+        <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
           <section class="section-alterar-status">
-            <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, class: 'status-task' %>
-            <%= form.submit 'Alterar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
+            <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, disabled: desabilitar_status, class: 'status-task' %>
+            <%= form.submit 'Alterar', disabled: desabilitar_status, class: ' btn-alterar-response btn-new-item btn-alterar' %>
           </section>
         <% end %>
       </section>
