@@ -108,13 +108,17 @@ class UsersController < ApplicationController
 
   def remove_user_associations
     if @user.admin?
-      @user.tasks.clear
-      puts 'REMOVEU TASK'
       classes = ClassGroup.where(user_id: @user.id)
       classes.each do |cgroup|
-        cgroup.remove_associates
+        cgroup.tasks.each do |task|
+          task.responses.destroy_all
+          task.destroy
+        end
+        puts 'REMOVEU RESPONSES E TASKS'
+        cgroup.users.clear
+        cgroup.destroy
       end
-      puts 'REMOVEU TURMA'
+      puts 'REMOVEU USERS E TURMA'
     else
       @user.responses.destroy_all
       puts 'REMOVEU RESPONSES'
