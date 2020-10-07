@@ -1,5 +1,5 @@
 class ResponsesController < ApplicationController
-  before_action :set_response, only: %i[show update destroy]
+  before_action :set_response, only: %i[show update destroy show_grade]
 
   # GET /responses
   # GET /responses.json
@@ -97,6 +97,7 @@ class ResponsesController < ApplicationController
 
   def task_ajusted?
     task = Task.find_by(id: @response.task_id)
+    return if task.expiration_date > Date.today
     puts 'ENTROU AJUSTED ', task
     task.responses.each do |response|
       return if response.done? && response.grade.blank?
