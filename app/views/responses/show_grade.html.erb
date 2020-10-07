@@ -1,0 +1,13 @@
+<main class="card-main card-table">
+  <a href='<%= response_path %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+    <h1 class='title-page title-task'>Nota: <%= @response&.grade %></h1>
+
+    <section class="description-task" style="margin-top: 5em;" >
+      <h4>Observações sobre a resposta:</h4>
+      <h3 class="grade-observation-responsible description-task-text">
+        <%= @response&.observation_responsible.present? ? @response.observation_responsible : "Não possui observações." %>
+      </h3>
+    </section>
+  </div>
+</main>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :responses, except: %i[index destroy]
   get 'responses/user/:user_id', to: 'responses#index', as: :responses_board
   delete 'responses/:id', to: 'responses#destroy'
+  get 'responses/:id/grade', to: 'responses#show_grade', as: :view_grade
 
   resources :tasks, except: %i[index destroy]
   get 'tasks/user/:user_id', to: 'tasks#index', as: :tasks_board
