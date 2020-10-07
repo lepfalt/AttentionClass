@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
+  before_action :set_user , only: [:destroy]
   # GET /users
   # GET /users.json
   def index
@@ -58,11 +59,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    remove_user_associations
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    session[:user_id] = nil
+    redirect_to login_path
   end
 
   def find_responses
@@ -104,5 +104,26 @@ class UsersController < ApplicationController
       password: params.dig(:user, :password),
       password_digest: BCrypt::Password.create(params.dig(:user, :password))
     }.to_hash
+  end
+
+  def remove_user_associations
+    if @user.admin?
+      classes = ClassGroup.where(user_id: @user.id)
+      classes.each do |cgroup|
+        cgroup.tasks.each do |task|
+          task.responses.destroy_all
+          task.destroy
+        end
+        puts 'REMOVEU RESPONSES E TASKS'
+        cgroup.users.clear
+        cgroup.destroy
+      end
+      puts 'REMOVEU USERS E TURMA'
+    else
+      @user.responses.destroy_all
+      puts 'REMOVEU RESPONSES'
+      @user.class_groups.clear
+      puts 'REMOVEU TURMA2'
+    end
   end
 end
