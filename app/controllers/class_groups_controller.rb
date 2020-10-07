@@ -63,6 +63,15 @@ class ClassGroupsController < ApplicationController
 
   def new_user; end
 
+  def remove_associates
+    puts 'ENTROU'
+    @class_group.tasks.each do |task|
+      Response.destroy_by(task_id: task.id)
+    end
+    puts 'SAIU'
+    @class_group.users.clear
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -73,15 +82,6 @@ class ClassGroupsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def class_group_params
     params.require(:class_group).permit(:responsible, :discipline, :class_code, :active, :expiration_date)
-  end
-
-  def remove_associates
-    puts 'ENTROU'
-    @class_group.tasks.each do |task|
-      Response.destroy_by(task_id: task.id)
-    end
-    puts 'SAIU'
-    @class_group.users.clear
   end
 
   def remove_tasks

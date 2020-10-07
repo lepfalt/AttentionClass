@@ -59,6 +59,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    remove_user_associations
     @user.destroy
     session[:user_id] = nil
     redirect_to login_path
@@ -103,5 +104,22 @@ class UsersController < ApplicationController
       password: params.dig(:user, :password),
       password_digest: BCrypt::Password.create(params.dig(:user, :password))
     }.to_hash
+  end
+
+  def remove_user_associations
+    if @user.admin?
+      @user.tasks.clear
+      puts 'REMOVEU TASK'
+      classes = ClassGroup.where(user_id: @user.id)
+      classes.each do |cgroup|
+        cgroup.remove_associates
+      end
+      puts 'REMOVEU TURMA'
+    else
+      @user.responses.destroy_all
+      puts 'REMOVEU RESPONSES'
+      @user.class_groups.clear
+      puts 'REMOVEU TURMA2'
+    end
   end
 end
