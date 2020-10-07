@@ -32,10 +32,9 @@
         </section>
 
         <% if @response.done? && @response.grade.present? %>
-          <section class="section-task">
-            <h4 class="field-task">Nota:  </h4>
-            <span class="span-task"><%= @response.grade %></span>
-          </section>
+          <div style="display: inline-block; width: 21%; height: 4em;">
+          <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
+          </div>
         <% end %>
       </div>
 
