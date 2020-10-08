@@ -1,6 +1,13 @@
 class SessionsController < ApplicationController
   def new
-    # @user = User.new
+    if logged_in? #Se tá logado, redireciona pra conta
+      is_admin = User.find_by(id: current_user).admin?
+      if is_admin
+        redirect_to tasks_board_path(current_user)
+      else
+        redirect_to responses_board_path(current_user)
+      end
+    end
   end
 
   def create
