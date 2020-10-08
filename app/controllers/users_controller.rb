@@ -1,13 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
   before_action :set_user , only: [:destroy]
-  # GET /users
-  # GET /users.json
-  def index
-    @user = User.all
-    # puts 'Entrou no index, ' params.require(:user).permit(:id)
-    # @responses_user = Response.where(user_id: session[:id])
-  end
 
   # GET /users/1
   # GET /users/1.json
@@ -20,9 +13,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-
-  # GET /users/1/edit
-  def edit; end
 
   # POST /users
   # POST /users.json
@@ -74,10 +64,6 @@ class UsersController < ApplicationController
     redirect_to login_path
   end
 
-  def find_responses
-    Response.where(user_id: @user.id)
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -123,16 +109,13 @@ class UsersController < ApplicationController
           task.responses.destroy_all
           task.destroy
         end
-        puts 'REMOVEU RESPONSES E TASKS'
+
         cgroup.users.clear
         cgroup.destroy
       end
-      puts 'REMOVEU USERS E TURMA'
     else
       @user.responses.destroy_all
-      puts 'REMOVEU RESPONSES'
       @user.class_groups.clear
-      puts 'REMOVEU TURMA2'
     end
   end
 end
