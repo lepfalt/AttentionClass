@@ -9,7 +9,6 @@
   <div class="content-intern">
     <%= form_for @task do |form| %>
       <div class="top-panel">
-        <%# <%= form.text_field :title, class:"title-page title-task"%>
         <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title', disabled: @task.ajusted? %></h1>
         
         <section class="section-task">
@@ -27,7 +26,6 @@
           <span class="span-task"><%= @task.class_group.discipline %></span>
         </section>
 
-
         <section class="section-task">
           <span class="card-class status-not-completed code-class"><%= @task.class_group.class_code %></span>
         </section>
@@ -39,16 +37,14 @@
       </section>
 
       <section class="content-body">
-          <section class="section-alterar-status" style=<%= @task.progress? ? 'margin-left:38em' : '' %>>
-            <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, disabled: !@task.pending?, class: 'status-task' %>
-            <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
-          </section>
+        <section class="section-alterar-status" style=<%= @task.progress? ? 'margin-left:38em' : '' %>>
+          <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, disabled: !@task.pending?, class: 'status-task' %>
+          <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
+        </section>
 
-          <section class="section-response-user" style=<%= @task.pending? ? 'display:none' : '' %>>
-            <!-- <%= text_field_tag :annotation, nil, class:"annotation-task", placeholder: "Escreva suas anotações.." %> -->
-            <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
-          </section>
-
+        <section class="section-response-user" style=<%= @task.pending? ? 'display:none' : '' %>>
+          <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
+        </section>
       </section>    
     <% end %>
   </div>

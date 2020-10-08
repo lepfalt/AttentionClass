@@ -15,32 +15,6 @@ class ResponsesController < ApplicationController
   # GET /responses/1.json
   def show; end
 
-  # GET /responses/new
-  def new
-    @response = Response.new
-  end
-
-  # GET /responses/1/edit
-  def edit
-    puts 'Entrou no edit'
-  end
-
-  # POST /responses
-  # POST /responses.json
-  def create
-    @response = Response.new(response_params)
-
-    respond_to do |format|
-      if @response.save
-        format.html { redirect_to @response, notice: 'Response was successfully created.' }
-        format.json { render :show, status: :created, location: @response }
-      else
-        format.html { render :new }
-        format.json { render json: @response.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
@@ -56,13 +30,12 @@ class ResponsesController < ApplicationController
       else
         redirect_to responses_board_path(current_user.id)
       end
-      # format.html { redirect_to responses_path, notice: 'Response was successfully updated.' }
-      # format.json { render :show, status: :ok, location: @response }
     else
-      format.html { render :show }
-      format.json { render json: @response.errors, status: :unprocessable_entity }
+      # VER LANÇAMENTO DE ERRO
+      # format.html { render :show }
+      # format.json { render json: @response.errors, status: :unprocessable_entity }
     end
-    # end
+
   end
 
   # DELETE /responses/1
@@ -72,16 +45,9 @@ class ResponsesController < ApplicationController
     puts 'Erro ao excluir' unless @response.save
 
     redirect_to responses_board_path(current_user.id)
-    # @response.destroy
-    # respond_to do |format|
-    #   format.html { redirect_to responses_url, notice: 'Response was successfully destroyed.' }
-    #   format.json { head :no_content }
-    # end
   end
 
-  def evaluate_response
-    puts 'ENTROU'
-  end
+  def show_grade; end
 
   private
 
@@ -98,20 +64,12 @@ class ResponsesController < ApplicationController
   def task_ajusted?
     task = Task.find_by(id: @response.task_id)
     return if task.expiration_date > Date.today
-    puts 'ENTROU AJUSTED ', task
+
     task.responses.each do |response|
       return if response.done? && response.grade.blank?
     end
     task.status = 3
     puts 'Erro ', task.errors unless task.save
-  end
-
-  def upload
-    puts "FILE ", response_params[:response_value].original_filename
-    uploaded_file = response_params[:response_value]
-    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
-      file.write(uploaded_file.read)
-    end
   end
 
   def check_status_task(response)

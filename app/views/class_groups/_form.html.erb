@@ -11,35 +11,24 @@
     </div>
   <% end %>
 
-<div class="top-panel-create-class">
-  <div class="field field-class field-discipline">
-    <%= form.label :discipline %>
-    <%= form.text_field :discipline, class: 'discipline-class' %>
+  <div class="top-panel-create-class">
+    <div class="field field-class field-discipline">
+      <%= form.label :discipline %>
+      <%= form.text_field :discipline, class: 'discipline-class' %>
+    </div>
+
+    <div class="field field-class">
+      <%= form.label :class_code %>
+      <%= form.text_field :class_code, class: 'discipline-class' %>
+    </div>
+
+    <div class="field field-class">
+      <%= form.label :expiration_date %>
+      <%= form.date_select :expiration_date %>
+    </div>
   </div>
 
-  <!-- <div class="field">
-    <%= form.label :responsible %>
-    <%= form.number_field :responsible %>
-  </div> -->
-
-  <div class="field field-class">
-    <%= form.label :class_code %>
-    <%= form.text_field :class_code, class: 'discipline-class' %>
-  </div>
-
-  <div class="field field-class">
-    <%= form.label :expiration_date %>
-    <%= form.date_select :expiration_date %>
-  </div>
-</div>
-
-  <!-- <div class="field">
-    <%= form.label :active %>
-    <%= form.check_box :active %>
-  </div> -->
-
-  <div class="actions" style="display: flex;
-    margin-top: 10em;">
+  <div class="actions" style="display: flex; margin-top: 10em;">
     <%= form.submit 'Criar', class: 'btn-new-item', style: 'margin: auto; padding-left: 4em;' %>
   </div>
 <% end %>

@@ -26,9 +26,6 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  # GET /tasks/1/edit
-  # def edit; end
-
   # POST /tasks
   # POST /tasks.json
   def create
@@ -81,18 +78,17 @@ class TasksController < ApplicationController
       flash[:notice] = 'Tarefa excluída com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
-      puts "Erro ao cancelar task"
+      puts "Erro ao cancelar task" # Criar Error
     end
   end
 
   def remove_ajusted
-    puts 'ENTROU'
     @task.active = false
     if @task.save
       flash[:notice] = 'Tarefa excluída com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
-      puts "Erro ao remover task"
+      puts "Erro ao remover task" # Criar Error
     end
   end
 

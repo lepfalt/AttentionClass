@@ -1,7 +1,5 @@
-<!-- Visualizar turma abaixo..adaptar -->
 <main class="card-main card-table">
   <p id="notice"><%= notice %></p>
-
   <a href=<%= admin_classes_path(current_user.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
     <h1 class='title-page'>Turma: <%=@class_group.class_code%></h1>
@@ -23,17 +21,12 @@
             <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
             <td><%= task.status %></td>
             <td><%= link_to 'Ver Respostas', task_responses_path(task.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
-            <%# <td><%= link_to 'Edit', edit_task_path(task) %>
-            <%# </td> %>
-            <%# <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <%# </td> %>
           </tr>
         <% end %>
       </tbody>
     </table>
 
     <br>
-
 
     <div class="btns-content">
       <%= link_to 'Vincular Aluno', new_user_class_path(@class_group.id), class: 'btn-associate-user' %>

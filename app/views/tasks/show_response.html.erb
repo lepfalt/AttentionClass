@@ -1,14 +1,9 @@
 <main class="card-main card-table">
   <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-  <%= form_with(model: @response_task, local: true) do |form| %>
+    <%= form_with(model: @response_task, local: true) do |form| %>
       <div class="top-panel">
         <h1 class='title-page title-task'><%= @response_task.task.title %></h1>
-        
-        <!-- <section class="section-task">
-          <h4 class="field-task">Entregar até:  </h4>
-          <span class="span-task"><%= @response_task.task.expiration_date.strftime("%d/%m/%Y") %></span>
-        </section> -->
 
         <section class="section-task">
           <h4 class="field-task">Aluno:  </h4>
@@ -19,7 +14,6 @@
           <h4 class="field-task">Disciplina:  </h4>
           <span class="span-task"><%= @response_task.task.class_group.discipline %></span>
         </section>
-
 
         <section class="section-task">
           <span class="card-class status-not-completed code-class"><%= @response_task.task.class_group.class_code %></span>
@@ -33,11 +27,9 @@
         </section>
 
         <section class="upload-response response-upload-task">
-          <!-- <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %> -->
           <% if @response_task&.response_value.present? %>
             <a href=<%= rails_blob_path(@response_task.response_value, disposition: "attachment") %> data-toggle="tooltip" title="Download Resposta"><%= image_tag('download.png', id: "download", class: "icon-page") %></a>
             <span>Arquivo de Resposta: <%= @response_task.response_value.filename %></span>
-            <!-- <%= link_to "Arquivo enviado: #{@response_task.response_value.filename}", rails_blob_path(@response_task.response_value, disposition: "attachment") %> -->
           <% end %>
         </section>
       </section>
@@ -45,15 +37,12 @@
       <section class="content-body-response">
         <section class="response-user-task">
           <%= form.text_field :observation_responsible, class:"annotation-task observation-responsible", placeholder: "Escreva suas observações.." %>
-          <!-- <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %> -->
-          <%# <%= image_tag @response.response_value %>
         </section>
       
         <section class="section-alterar-status" style="margin-top: 0;">
-          <!--<%= form.select :status, Response.statuses.keys, {}, class: 'status-task' %> -->
           <%= form.label :nota, style: 'font-size: 19px'%>
           <%= form.number_field :grade, step:0.01, class:"status-task" %>
-          <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar', onclick: 'evaluate_response_path(1)' %>
+          <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
         </section>
       </section>
     <% end %>
