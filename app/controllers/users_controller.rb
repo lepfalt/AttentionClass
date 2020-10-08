@@ -47,11 +47,20 @@ class UsersController < ApplicationController
     if registered_user.nil?
       flash[:notice] = 'Usuário inexistente.'
       redirect_to new_user_class_path(class_id)
+    elsif registered_user.admin?
+      flash[:notice] = 'Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.'
+      redirect_to new_user_class_path(class_id)
     else
-      class_group = ClassGroup.find_by(id: class_id)
-      registered_user.class_groups << class_group
-      
-      flash[:notice] = 'Usuário vinculado com sucesso.'
+      class_associate = registered_user.class_groups.find_by(id: class_id)
+
+      if class_associate.nil?
+        class_group = ClassGroup.find_by(id: class_id)
+        registered_user.class_groups << class_group
+        
+        flash[:notice] = 'Usuário vinculado com sucesso.'
+      else
+        flash[:notice] = 'Este usuário já está vinculado à turma.'
+      end
       redirect_to class_group_path(class_id)
     end
   end
