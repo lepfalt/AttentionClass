@@ -53,7 +53,7 @@
           <!--<%= form.select :status, Response.statuses.keys, {}, class: 'status-task' %> -->
           <%= form.label :nota, style: 'font-size: 19px'%>
           <%= form.number_field :grade, step:0.01, class:"status-task" %>
-          <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar', onclick: 'evaluate_response_path(1)' %>
+          <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
         </section>
       </section>
     <% end %>

@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   get 'tasks/user/:user_id', to: 'tasks#index', as: :tasks_board
   get 'task/:id/responses', to: 'tasks#index_responses', as: :task_responses
   get 'task/response/:id', to: 'tasks#show_response', as: :task_response
-  patch 'response/evaluate/:id', to: 'responses#evaluate_response', as: :evaluate_response
   delete 'tasks/:id', to: 'tasks#destroy'
   delete 'task/:id', to: 'tasks#cancel', as: :cancel_task
   delete 'tasks/ajusted/:id', to: 'tasks#remove_ajusted', as: :remove_ajusted
