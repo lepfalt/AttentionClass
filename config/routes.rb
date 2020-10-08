@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[create show new destroy]
   post 'classes/:class_id/associate', to: 'users#update'
 
-  resources :class_groups, except: :index
+  resources :class_groups, except: %i[index edit new]
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes
   get 'classes/:id/associate', to: 'class_groups#new_user', as: :new_user_class
 

@@ -15,11 +15,6 @@ class ResponsesController < ApplicationController
   # GET /responses/1.json
   def show; end
 
-  # GET /responses/new
-  def new
-    @response = Response.new
-  end
-
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update

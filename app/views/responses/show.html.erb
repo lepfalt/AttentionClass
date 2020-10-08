@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <a href='<%= responses_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-  <%= form_with(model: @response, local: true) do |form| %>
+    <%= form_with(model: @response, local: true) do |form| %>
       <div class="top-panel">
         <h1 class='title-page title-task'><%= @response.task.title %></h1>
         
@@ -33,7 +33,7 @@
 
         <% if @response.done? && @response.grade.present? %>
           <div style="display: inline-block; width: 21%; height: 4em;">
-          <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
+            <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
           </div>
         <% end %>
       </div>
@@ -41,19 +41,19 @@
       <section class="content-body-response">
         <section class="response-user-task">
           <%= form.text_field :response_annotation, class:"annotation-task", disabled: @response.undelivered? , placeholder: "Escreva suas anotações.." %>
-          <!-- <%= link_to 'Anexar Resposta', nil, class: 'btn-new-student text-button-response upload-task' %> -->
-          <%# <%= image_tag @response.response_value %>
           <section class="upload-response">
             <% if !@response.undelivered? %>
-            <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
+              <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
             <% end %>
+
             <% if @response.response_value.attached? %>
               <%= link_to "Arquivo enviado: #{@response.response_value&.filename}", rails_blob_path(@response.response_value, disposition: "attachment")  %>
             <% end %>
           </section>
         </section>
+
         <% if Response.isActive?(@response.status, @response.active) %>
-        <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
+          <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
           <section class="section-alterar-status">
             <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, disabled: desabilitar_status, class: 'status-task' %>
             <%= form.submit 'Alterar', disabled: desabilitar_status, class: ' btn-alterar-response btn-new-item btn-alterar' %>

@@ -16,9 +16,6 @@ class ClassGroupsController < ApplicationController
     @class_group = ClassGroup.new
   end
 
-  # GET /class_groups/1/edit
-  def edit; end
-
   # POST /class_groups
   # POST /class_groups.json
   def create
