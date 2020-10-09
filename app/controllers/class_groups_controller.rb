@@ -4,7 +4,9 @@ class ClassGroupsController < ApplicationController
   # GET /class_groups
   # GET /class_groups.json
   def index
-    @class_groups = ClassGroup.where(user_id: params[:id])
+    class_groups_user = ClassGroup.where(user_id: params[:id])
+    check_class_groups_validity(class_groups_user)
+    @class_groups = class_groups_user.where(active: true)
   end
 
   # GET /class_groups/1
@@ -92,5 +94,14 @@ class ClassGroupsController < ApplicationController
     end
 
     true
+  end
+
+  def check_class_groups_validity(class_groups)
+    class_groups.each do |group|
+      if group.active && group.expiration_date < Date.today
+        group.active = false
+        puts 'Erro ao desativar turma' unless group.save
+      end
+    end
   end
 end
