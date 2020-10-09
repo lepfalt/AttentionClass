@@ -20,7 +20,12 @@ class SessionsController < ApplicationController
         redirect_to responses_board_path(@user.id)
       end
     else
-      flash[:notice] = 'Usuário inexistente'
+      if @user.nil?
+        flash[:notice_error] = 'Email ou senha inválidos.'
+      else
+        flash[:notice_error] = 'Senha Inválida.'
+      end
+
       redirect_to login_path
     end
   end

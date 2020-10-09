@@ -1,6 +1,15 @@
 <div class="content-intern-login">
 <div class="main-container"> 
-  <p id="notice"><%= notice %></p>
+  <% if flash[:notice] %>
+    <div class="alert alert-success" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <% if flash[:notice_error] %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:notice_error] %>
+    </div>
+  <% end %>
   <div class="form-group form-login">
     <%= form_tag sessions_path do %>
       <%= email_field_tag :email, nil, class:"form-control text-field", placeholder: "lembra o email?" %>
