@@ -50,10 +50,11 @@ class UsersController < ApplicationController
         assign_group_tasks(class_group, registered_user.id)
         
         flash[:notice] = 'Usuário vinculado com sucesso.'
+        redirect_to class_group_path(class_id)
       else
         flash[:notice] = 'Este usuário já está vinculado à turma.'
+        redirect_to new_user_class_path(class_id)
       end
-      redirect_to class_group_path(class_id)
     end
   end
 
