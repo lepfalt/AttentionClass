@@ -20,6 +20,12 @@ class ClassGroupsController < ApplicationController
   # POST /class_groups.json
   def create
     @class_group = ClassGroup.new(class_group_params)
+
+    unless valid_group?
+      redirect_to new_class_group_path
+      return
+    end
+
     @class_group.active = true
     @class_group.user_id = session[:user_id] # Verificar sobre passagem de id do user na rota
 
@@ -66,5 +72,25 @@ class ClassGroupsController < ApplicationController
 
   def remove_tasks
     @class_group.tasks.destroy_all
+  end
+
+  def valid_group?
+    unless @class_group.valid?
+      flash[:notice] = @class_group.errors.messages
+      return false
+    end
+
+    if @class_group.expiration_date < Date.today
+      flash[:notice] = 'Data Inválida.'
+      return false
+    end
+
+    group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
+    if group_equal.active
+      flash[:notice] = 'Já existe uma turma ativa com esse código.'
+      return false
+    end
+
+    true
   end
 end

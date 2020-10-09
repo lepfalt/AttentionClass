@@ -46,6 +46,8 @@ class UsersController < ApplicationController
       if class_associate.nil?
         class_group = ClassGroup.find_by(id: class_id)
         registered_user.class_groups << class_group
+
+        assign_group_tasks(class_group, registered_user.id)
         
         flash[:notice] = 'Usuário vinculado com sucesso.'
       else
@@ -116,6 +118,15 @@ class UsersController < ApplicationController
     else
       @user.responses.destroy_all
       @user.class_groups.clear
+    end
+  end
+
+  def assign_group_tasks(group, user_id)
+    group.tasks.each do |task|
+      if task.progress?
+        response = Response.new(user_id: user_id, task_id: task.id, status: 0, active: true)
+        puts "Error na criacao de response: ", response.errors unless response.save
+      end
     end
   end
 end
