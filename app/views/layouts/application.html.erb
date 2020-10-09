@@ -27,14 +27,14 @@
         <% end %>
       <% end %>
 
-      <% if current_page?(tasks_board_path(current_user)) %>
+      <% if !current_user.nil? && current_page?(tasks_board_path(current_user)) %>
         <% if flash[:notice] %>
           <div class="alert alert-success" role="alert">
             <%= flash[:notice] %>
           </div>
         <% end %>
       <% end %>
-      
+
       <div class=<%= get_main_class() %>>
         <%= yield %>
       </div>

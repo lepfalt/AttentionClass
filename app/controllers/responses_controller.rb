@@ -23,9 +23,15 @@ class ResponsesController < ApplicationController
       check_status_response(@response)
     end
 
+    unless valid_response?
+      redirect_to task_response_path(@response)
+      return
+    end
+
     if @response.update(response_params)
       if current_user.admin?
         task_ajusted?
+        flash[:notice] = "Resposta avaliada com sucesso."
         redirect_to task_responses_path(@response.task_id)
       else
         redirect_to responses_board_path(current_user.id)
@@ -91,5 +97,17 @@ class ResponsesController < ApplicationController
       response.status = 3
       puts 'Erro ao não entregar response', response.errors unless response.save
     end
+  end
+
+  def valid_response?
+    puts 'AQUI '
+    if current_user.admin?
+      unless response_params[:grade].present?
+        flash[:notice] = "Campo Nota é obrigatório."
+        return false
+      end
+    end
+
+    true
   end
 end
