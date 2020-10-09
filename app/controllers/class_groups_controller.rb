@@ -75,8 +75,8 @@ class ClassGroupsController < ApplicationController
   end
 
   def valid_group?
-    unless @class_group.valid?
-      flash[:notice] = @class_group.errors.messages
+    unless @class_group.discipline.present? || @class_group.class_code.present?
+      flash[:notice] = "Todos os campos devem ser preenchidos."
       return false
     end
 
@@ -86,7 +86,7 @@ class ClassGroupsController < ApplicationController
     end
 
     group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
-    if group_equal.active
+    if !group_equal.nil? && group_equal.active
       flash[:notice] = 'Já existe uma turma ativa com esse código.'
       return false
     end
