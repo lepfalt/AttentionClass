@@ -107,7 +107,7 @@ class TasksController < ApplicationController
   def generate_responses
     users_group = @task.class_group.users
     users_group.each do |user|
-      response = Response.new(user_id: user.id, task_id: @task.id, status: 0, active: true)
+      response = Response.find_or_initialize_by(user_id: user.id, task_id: @task.id, status: 0, active: true)
       puts "Error na criacao de response: ", response.errors unless response.save
     end
   end
