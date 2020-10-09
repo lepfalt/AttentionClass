@@ -127,18 +127,20 @@ class TasksController < ApplicationController
   def valid_task?
     field = nil
     if !@task.title.present?
-      field = "Título"
+      field = "Título inválido"
     elsif !@task.expiration_date.present? || @task.expiration_date < Date.today
-      field = "Data Limite"
+      field = "Data Limite inválida"
+    elsif @task.expiration_date > @task.class_group.expiration_date
+      field = "Data Limite inválida. A data deve ser compreendida no período vigente da turma."
     elsif !@task.class_group_id.present?
-      field = "Turma"
+      field = "Turma inválida"
     elsif !@task.description.present?
-      field = "Descrição"
+      field = "Descrição inválida"
     else
       return true
     end
 
-    flash[:notice] = field << ' invalido(a).'
+    flash[:notice] = field
     false
   end
 end
