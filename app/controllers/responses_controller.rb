@@ -30,7 +30,7 @@ class ResponsesController < ApplicationController
 
     if @response.update(response_params)
       if current_user.admin?
-        task_ajusted?
+        #task_ajusted?
         flash[:notice] = "Resposta avaliada com sucesso."
         redirect_to task_responses_path(@response.task_id)
       else
@@ -67,16 +67,16 @@ class ResponsesController < ApplicationController
     params.require(:response).permit(:response_value, :response_annotation, :status, :observation_responsible, :grade)
   end
 
-  def task_ajusted?
-    task = Task.find_by(id: @response.task_id)
-    return if task.expiration_date > Date.today
+  # def task_ajusted?
+  #   task = Task.find_by(id: @response.task_id)
+  #   return if task.expiration_date > Date.today
 
-    task.responses.each do |response|
-      return if response.done? && response.grade.blank?
-    end
-    task.status = 3
-    puts 'Erro ', task.errors unless task.save
-  end
+  #   task.responses.each do |response|
+  #     return if response.done? && response.grade.blank?
+  #   end
+  #   task.status = 3
+  #   puts 'Erro ', task.errors unless task.save
+  # end
 
   def check_status_task(response)
     if response.task.progress? && response.task.expiration_date < Date.today

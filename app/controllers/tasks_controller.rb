@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     class_groups = ClassGroup.where(user_id: params[:user_id])
     @tasks = Task.where(class_group_id: class_groups)
     check_completed_tasks
+    tasks_ajusted?
   end
 
   def index_responses
@@ -153,5 +154,22 @@ class TasksController < ApplicationController
 
     flash[:notice] = field
     false
+  end
+
+  def tasks_ajusted?
+    @tasks.each do |task|
+      next unless task.done?
+
+      responses_done = task.responses.where(status: 2)
+      has_one_unajusted = false
+      responses_done.each do |response|
+        has_one_unajusted = true if response.grade.blank?
+      end
+
+      unless has_one_unajusted
+        task.status = 3
+        puts 'Erro ', task.errors unless task.save
+      end
+    end
   end
 end
