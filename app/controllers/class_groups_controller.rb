@@ -4,7 +4,9 @@ class ClassGroupsController < ApplicationController
   # GET /class_groups
   # GET /class_groups.json
   def index
-    @class_groups = ClassGroup.where(user_id: params[:id])
+    class_groups_user = ClassGroup.where(user_id: params[:id])
+    check_class_groups_validity(class_groups_user)
+    @class_groups = class_groups_user.where(active: true)
   end
 
   # GET /class_groups/1
@@ -75,8 +77,8 @@ class ClassGroupsController < ApplicationController
   end
 
   def valid_group?
-    unless @class_group.valid?
-      flash[:notice] = @class_group.errors.messages
+    unless @class_group.discipline.present? || @class_group.class_code.present?
+      flash[:notice] = "Todos os campos devem ser preenchidos."
       return false
     end
 
@@ -86,11 +88,20 @@ class ClassGroupsController < ApplicationController
     end
 
     group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
-    if group_equal.active
+    if !group_equal.nil? && group_equal.active
       flash[:notice] = 'Já existe uma turma ativa com esse código.'
       return false
     end
 
     true
+  end
+
+  def check_class_groups_validity(class_groups)
+    class_groups.each do |group|
+      if group.active && group.expiration_date < Date.today
+        group.active = false
+        puts 'Erro ao desativar turma' unless group.save
+      end
+    end
   end
 end

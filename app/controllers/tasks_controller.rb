@@ -33,20 +33,34 @@ class TasksController < ApplicationController
     @task.status = 0
     @task.active = true
 
-    puts @task
+    unless valid_task?
+      redirect_to new_task_path
+      return
+    end
 
     if @task.save
       flash[:notice] = 'Tarefa criada com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
-      #flash[:notice] = 'Erro ao criar tarefa.'
-      render :new
+      flash[:notice] = 'Erro ao criar tarefa.'
+      redirect_to new_task_path
     end
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
-  def update
+  def update    
+    unless valid_task?
+      redirect_to task_path(@task)
+      return
+    end
+
+    if Date.parse(task_params[:expiration_date]) < @task.expiration_date
+      flash[:notice] = "A tarefa não pode ser antecipada."
+      redirect_to task_path(@task)
+      return
+    end
+
     if @task.update(task_params)
       if @task.progress?
         generate_responses
@@ -78,7 +92,7 @@ class TasksController < ApplicationController
       flash[:notice] = 'Tarefa excluída com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
-      puts "Erro ao cancelar task" # Criar Error
+      flash[:notice] =  "Erro ao cancelar task" # Criar Error
     end
   end
 
@@ -88,7 +102,7 @@ class TasksController < ApplicationController
       flash[:notice] = 'Tarefa excluída com sucesso!'
       redirect_to tasks_board_path(current_user.id)
     else
-      puts "Erro ao remover task" # Criar Error
+      flash[:notice] = "Erro ao remover task" # Criar Error
     end
   end
 
@@ -119,5 +133,25 @@ class TasksController < ApplicationController
         puts 'Erro ao concluir tarefa automática', task.errors unless task.save
       end
     end
+  end
+
+  def valid_task?
+    field = nil
+    if !@task.title.present?
+      field = "Título inválido"
+    elsif !@task.expiration_date.present? || @task.expiration_date < Date.today
+      field = "Data Limite inválida"
+    elsif @task.expiration_date > @task.class_group.expiration_date
+      field = "Data Limite inválida. A data deve ser compreendida no período vigente da turma."
+    elsif !@task.class_group_id.present?
+      field = "Turma inválida"
+    elsif !@task.description.present?
+      field = "Descrição inválida"
+    else
+      return true
+    end
+
+    flash[:notice] = field
+    false
   end
 end
