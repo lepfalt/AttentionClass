@@ -128,7 +128,7 @@ class TasksController < ApplicationController
 
   def check_completed_tasks
     @tasks.each do |task|
-      if (task.pending? || task.progress?) && task.expiration_date <= Date.today
+      if task.progress? && task.expiration_date < Date.today
         task.status = 2
         puts 'Erro ao concluir tarefa automática', task.errors unless task.save
       end

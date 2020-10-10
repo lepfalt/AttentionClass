@@ -79,7 +79,7 @@ class ResponsesController < ApplicationController
   end
 
   def check_status_task(response)
-    if response.task.progress? && response.task.expiration_date <= Date.today
+    if response.task.progress? && response.task.expiration_date < Date.today
       close_task(response.task)
       false
     end
@@ -100,7 +100,6 @@ class ResponsesController < ApplicationController
   end
 
   def valid_response?
-    puts 'AQUI '
     if current_user.admin?
       unless response_params[:grade].present?
         flash[:notice] = "Campo Nota é obrigatório."
