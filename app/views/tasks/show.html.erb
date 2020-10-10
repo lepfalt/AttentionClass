@@ -14,11 +14,11 @@
   <div class="content-intern">
     <%= form_for @task do |form| %>
       <div class="top-panel">
-        <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title', disabled: @task.ajusted? %></h1>
+        <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title', disabled: @task.ajusted? || @task.done? %></h1>
         
         <section class="section-task">
           <h4 class="field-task">Entregar até:  </h4>
-          <span class="span-task"><%= form.date_field :expiration_date, class: 'data-field-expiration', disabled: @task.ajusted? %></span>
+          <span class="span-task"><%= form.date_field :expiration_date, class: 'data-field-expiration', disabled: @task.ajusted? || @task.done? %></span>
         </section>
 
         <section class="section-task">
@@ -38,14 +38,18 @@
 
       <section class="description-task">
         <h4 class="item-description">Descrição:</h4>
-        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task', disabled: @task.ajusted? %></h3>
+        <h3 class="description-task-text item-description"><%= form.text_area :description, class: 'input-text-task', disabled: @task.ajusted? || @task.done? %></h3>
       </section>
 
       <section class="content-body">
-        <section class="section-alterar-status" style=<%= @task.progress? ? 'margin-left:38em' : '' %>>
-          <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, disabled: !@task.pending?, class: 'status-task' %>
-          <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar' %>
-        </section>
+        <% unless @task.done? || @task.ajusted? %>
+          <section class="section-alterar-status" style=<%= @task.progress? ? 'margin-left:38em' : '' %>>
+            <% if @task.pending? %>
+              <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, class: 'status-task' %>
+            <% end %>
+            <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar', style: @task.progress? ? 'margin-top: 2.5em;' : '' %>
+          </section>
+        <% end %>
 
         <section class="section-response-user" style=<%= @task.pending? ? 'display:none' : '' %>>
           <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
