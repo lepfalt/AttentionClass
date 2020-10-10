@@ -49,7 +49,18 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
-  def update
+  def update    
+    unless valid_task?
+      redirect_to task_path(@task)
+      return
+    end
+
+    if Date.parse(task_params[:expiration_date]) < @task.expiration_date
+      flash[:notice] = "A tarefa não pode ser antecipada."
+      redirect_to task_path(@task)
+      return
+    end
+
     if @task.update(task_params)
       if @task.progress?
         generate_responses
