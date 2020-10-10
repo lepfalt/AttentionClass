@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
 
   def index_responses
-    @responses_task = @task.responses.where(status: 2)
+    @responses_task = @task.responses
   end
 
   def show_response

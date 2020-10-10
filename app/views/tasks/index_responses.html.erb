@@ -21,7 +21,7 @@
          <% @responses_task.each do |response| %>
           <tr>
             <td class="content-text-table"><%= response.user.name %></td>
-            <td><%= response.grade %></td>
+            <td><%= response.done? ? response.grade : 'Sem nota' %></td>
             <td><%= link_to 'Visualizar', task_response_path(response.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
           </tr>
         <% end %>
