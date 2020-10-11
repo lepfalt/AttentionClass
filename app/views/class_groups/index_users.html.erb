@@ -1,0 +1,31 @@
+<main class="card-main card-table">
+  <a href=<%= class_group_path(@class_group.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <% if flash[:notice] %>
+    <div class="alert alert-success" role="alert">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  <div class="content-intern">
+    <h1 class='title-page'>Integrantes</h1>
+
+    <table class="table table-bordered table-hover table-page">
+      <thead class="header-table-red header-table-font">
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Matrícula</th>
+        </tr>
+      </thead>
+
+      <tbody class="body-table">
+         <% @class_group.users.each do |user| %>
+          <tr>
+            <td class="content-text-table"><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.registration %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>

@@ -1,5 +1,5 @@
 class ClassGroupsController < ApplicationController
-  before_action :set_class_group, only: %i[show new_user edit update destroy]
+  before_action :set_class_group, only: %i[show new_user index_users edit update destroy]
 
   # GET /class_groups
   # GET /class_groups.json
@@ -8,6 +8,8 @@ class ClassGroupsController < ApplicationController
     check_class_groups_validity(class_groups_user)
     @class_groups = class_groups_user.where(active: true)
   end
+
+  def index_users; end
 
   # GET /class_groups/1
   # GET /class_groups/1.json
