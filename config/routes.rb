@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :class_groups, except: %i[index edit]
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes
   get 'classes/:id/associate', to: 'class_groups#new_user', as: :new_user_class
+  get 'classes/:id/users', to: 'class_groups#index_users', as: :users_class
 
   resources :responses, except: %i[index destroy]
   get 'responses/user/:user_id', to: 'responses#index', as: :responses_board

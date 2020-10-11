@@ -32,8 +32,9 @@
 
     <br>
 
-    <div class="btns-content">
-      <%= link_to 'Vincular Aluno', new_user_class_path(@class_group.id), class: 'btn-associate-user' %>
+    <div class="btns-content content-btn-classes">
+      <%= link_to 'Visualizar Integrantes', users_class_path(@class_group.id), class: 'btn-new-student upload-task text-button-task' %>
+      <%= link_to 'Vincular Usuário', new_user_class_path(@class_group.id), class: 'btn-associate-user' %>
     </div>
   <div>
 </main>
