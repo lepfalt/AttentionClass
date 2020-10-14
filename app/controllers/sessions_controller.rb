@@ -44,9 +44,18 @@ class SessionsController < ApplicationController
   end
 
   def send_email
-    puts 'ENTROU AQUI', params
-    user = User.find_by(email: 'lepfalt@gmail.com')
-    # UserMailer.with(user: user).confirmation.deliver
+    if params[:email].present?
+      user = User.find_by(email: params[:email])
+      if !user.nil?
+        UserMailer.with(user: user).confirmation.deliver_later
+        flash[:notice] = 'Em instantes você receberá um email para resetar sua senha :).'
+      else
+        flash[:notice_error] = 'Email inválido.'
+      end
+    else
+      flash[:notice_error] = 'Email precisa ser preenchido.'
+    end
+
     redirect_to login_path
   end
 
