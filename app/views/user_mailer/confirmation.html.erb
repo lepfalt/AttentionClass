@@ -1,5 +1,8 @@
-<h1>User#confirmation</h1>
+<div style="font-family: sans-serif">
+  <p>Olá <%= @user.name %>,</p>
 
-<p>
-  <%= @user.name %>, find me in app/views/user_mailer/confirmation.html.erb
-</p>
+  <p>Alguém solicitou a mudança da sua senha. Você pode fazer isso através do link abaixo.</p>
+
+  <p>Se você não fez essa solicitação, por favor ignore esse email.</p>
+  <p>Sua senha não vai mudar até você acessar o link acima e criar uma nova.</p>
+</div>

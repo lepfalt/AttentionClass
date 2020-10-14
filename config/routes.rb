@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   delete '/sessions', to: 'sessions#destroy'
   get '/signup', to: 'users#new'
 
-  get '/send_email', to: 'sessions#send_email', as: :send_email
-
   resources :users, only: %i[create show new destroy]
   post 'classes/:class_id/associate', to: 'users#update'
 
