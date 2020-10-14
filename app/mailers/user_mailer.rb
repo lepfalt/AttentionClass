@@ -8,8 +8,6 @@ class UserMailer < ApplicationMailer
   def confirmation
     @user = params[:user]
 
-    puts 'AQUI'
-
-    mail to: "lepfalt@gmail.com", subject: "Hellor isia"
+    mail to: @user.email, subject: "Reset de senha"
   end
 end
