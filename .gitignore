@@ -30,6 +30,7 @@
 /config/*
 /config/database.yml
 /config/enviroments/*
+/config/local_env.yml
 
 /public/packs
 /public/packs-test

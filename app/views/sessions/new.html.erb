@@ -15,7 +15,7 @@
       <%= email_field_tag :email, nil, class:"form-control text-field", placeholder: "lembra o email?" %>
       <%= password_field_tag :password, nil, class:"form-control text-field", placeholder: "e a senha??" %>
       <%= submit_tag "Entrar", class:"btn btn-danger btn-login" %>
-      <%= link_to "Putz..esqueci minha senha", nil, class: "forgot-password" %>
+      <%= link_to "Putz..esqueci minha senha", send_email_path, class: "forgot-password" %>
       <%= link_to "Não tem login? Cadastre-se", new_user_path, class: "forgot-password" %>
     <% end %>
   </div>

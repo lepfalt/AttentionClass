@@ -34,4 +34,12 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to login_path
   end
+
+  def send_email
+    puts 'ENTROU AQUI'
+    user = User.find_by(email: 'lepfalt@gmail.com')
+    UserMailer.with(user: user).confirmation.deliver
+    redirect_to login_path
+  end
+
 end
