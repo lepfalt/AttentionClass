@@ -7,6 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def confirmation
     @user = params[:user]
+    @token = params[:token]
 
     mail to: @user.email, subject: "Reset de senha"
   end

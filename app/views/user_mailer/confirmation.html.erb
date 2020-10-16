@@ -3,6 +3,8 @@
 
   <p>Alguém solicitou a mudança da sua senha. Você pode fazer isso através do link abaixo.</p>
 
+  <p><%= link_to 'Alterar minha senha', reset_password_url(@user, :reset => @token) %></p>
+
   <p>Se você não fez essa solicitação, por favor ignore esse email.</p>
   <p>Sua senha não vai mudar até você acessar o link acima e criar uma nova.</p>
 </div>

@@ -67,6 +67,11 @@ class UsersController < ApplicationController
     redirect_to login_path
   end
 
+  def reset_password
+    puts 'PARAMS ', params
+    @user = match_user(params[:reset])
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -129,5 +134,26 @@ class UsersController < ApplicationController
         puts "Error na criacao de response: ", response.errors unless response.save
       end
     end
+  end
+
+  def match_user(token)
+    envs_vars
+    token_compare = BCrypt::Password.new(token)
+    User.all.each do |user|
+      sentence_compare = user.name + ENV["SEED"] + user.profile
+
+      if token_compare == sentence_compare
+        return user
+      end
+    end
+
+    nil
+  end
+
+  def envs_vars
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exists?(env_file)
   end
 end
