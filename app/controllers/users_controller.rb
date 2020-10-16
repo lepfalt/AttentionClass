@@ -75,6 +75,7 @@ class UsersController < ApplicationController
     end
 
     session[:token] = params[:reset]
+    session[:expire] = params[:expire]
     @user = match_user(params[:reset])
   end
 
@@ -83,7 +84,7 @@ class UsersController < ApplicationController
 
     unless form_params[:password] == form_params[:password_confirm]
       flash[:notice] = 'As senhas devem ser iguais.'
-      redirect_to reset_password_path(@user, :reset => session[:token])
+      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
       return
     end
     
@@ -93,7 +94,7 @@ class UsersController < ApplicationController
       redirect_to login_path
     else
       puts 'Erro ao resetar senha', @user.errors
-      redirect_to reset_password_path(@user, :reset => session[:token])
+      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
     end
   end
 
