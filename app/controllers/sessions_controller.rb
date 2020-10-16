@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :load_enviroments_vars, only: %i[send_email]
+
   def new
     if logged_in? #Se tá logado, redireciona pra conta
       is_admin = User.find_by(id: current_user).admin?
@@ -64,16 +66,7 @@ class SessionsController < ApplicationController
   private
 
   def generate_token(user)
-    envs_vars
     sentence = user.name + ENV["SEED"] + user.profile
-    puts 'SENTENCE ', sentence
     BCrypt::Password.create(sentence)
-  end
-
-  def envs_vars
-    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    YAML.load(File.open(env_file)).each do |key, value|
-      ENV[key.to_s] = value
-    end if File.exists?(env_file)
   end
 end

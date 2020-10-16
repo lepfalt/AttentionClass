@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
   before_action :set_user , only: %i[destroy update_password]
+  before_action :load_enviroments_vars, only: %i[reset_password]
 
   # GET /users/1
   # GET /users/1.json
@@ -30,7 +31,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    puts 'ENTRA NO UPDATE'
     email = params[:email]
     class_id = params[:class_id]
     registered_user = User.find_by(email: email)
@@ -167,7 +167,6 @@ class UsersController < ApplicationController
   end
 
   def match_user(token)
-    envs_vars
     token_compare = BCrypt::Password.new(token)
     User.all.each do |user|
       sentence_compare = user.name + ENV["SEED"] + user.profile
@@ -186,12 +185,5 @@ class UsersController < ApplicationController
     return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
 
     false
-  end
-
-  def envs_vars
-    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    YAML.load(File.open(env_file)).each do |key, value|
-      ENV[key.to_s] = value
-    end if File.exists?(env_file)
   end
 end

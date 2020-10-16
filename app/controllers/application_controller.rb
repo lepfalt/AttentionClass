@@ -12,4 +12,13 @@ class ApplicationController < ActionController::Base
   def authorized
     redirect_to login_path unless logged_in?
   end
+
+  private
+
+  def load_enviroments_vars
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exists?(env_file)
+  end
 end
