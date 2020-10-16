@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[create show new destroy]
   post 'classes/:class_id/associate', to: 'users#update'
+  patch 'users/:id', to: 'users#update_password'
 
   resources :class_groups, except: %i[index edit]
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes

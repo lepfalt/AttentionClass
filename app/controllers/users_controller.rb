@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
-  before_action :set_user , only: [:destroy]
+  before_action :set_user , only: %i[destroy update_password]
 
   # GET /users/1
   # GET /users/1.json
@@ -30,6 +30,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    puts 'ENTRA NO UPDATE'
     email = params[:email]
     class_id = params[:class_id]
     registered_user = User.find_by(email: email)
@@ -69,7 +70,27 @@ class UsersController < ApplicationController
 
   def reset_password
     puts 'PARAMS ', params
+    session[:token] = params[:reset]
     @user = match_user(params[:reset])
+  end
+
+  def update_password
+    form_params = params.require(:user).permit(:password, :password_confirm)
+
+    unless form_params[:password] == form_params[:password_confirm]
+      flash[:notice] = 'As senhas devem ser iguais.'
+      redirect_to reset_password_path(@user, :reset => session[:token])
+      return
+    end
+    
+    @user.password_digest = BCrypt::Password.create(params.dig(:user, :password))
+    if @user.save
+      flash[:notice] = 'Senha resetada com sucesso!'
+      redirect_to login_path
+    else
+      puts 'Erro ao resetar senha', @user.errors
+      redirect_to reset_password_path(@user, :reset => session[:token])
+    end
   end
 
   private
