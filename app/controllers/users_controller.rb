@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authorized, only: [:show]
-  before_action :set_user , only: [:destroy]
+  before_action :set_user , only: %i[destroy update_password]
 
   # GET /users/1
   # GET /users/1.json
@@ -30,6 +30,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    puts 'ENTRA NO UPDATE'
     email = params[:email]
     class_id = params[:class_id]
     registered_user = User.find_by(email: email)
@@ -65,6 +66,35 @@ class UsersController < ApplicationController
     @user.destroy
     session[:user_id] = nil
     redirect_to login_path
+  end
+
+  def reset_password
+    unless valid_token?
+      flash[:notice] = "token expirado"
+      return
+    end
+
+    session[:token] = params[:reset]
+    @user = match_user(params[:reset])
+  end
+
+  def update_password
+    form_params = params.require(:user).permit(:password, :password_confirm)
+
+    unless form_params[:password] == form_params[:password_confirm]
+      flash[:notice] = 'As senhas devem ser iguais.'
+      redirect_to reset_password_path(@user, :reset => session[:token])
+      return
+    end
+    
+    @user.password_digest = BCrypt::Password.create(params.dig(:user, :password))
+    if @user.save
+      flash[:notice] = 'Senha resetada com sucesso!'
+      redirect_to login_path
+    else
+      puts 'Erro ao resetar senha', @user.errors
+      redirect_to reset_password_path(@user, :reset => session[:token])
+    end
   end
 
   private
@@ -129,5 +159,34 @@ class UsersController < ApplicationController
         puts "Error na criacao de response: ", response.errors unless response.save
       end
     end
+  end
+
+  def match_user(token)
+    envs_vars
+    token_compare = BCrypt::Password.new(token)
+    User.all.each do |user|
+      sentence_compare = user.name + ENV["SEED"] + user.profile
+
+      if token_compare == sentence_compare
+        return user
+      end
+    end
+
+    nil
+  end
+
+  def valid_token?
+    expire = params[:expire].to_i
+    intervalo = Time.now.to_i - expire
+    return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
+
+    false
+  end
+
+  def envs_vars
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exists?(env_file)
   end
 end

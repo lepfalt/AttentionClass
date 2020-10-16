@@ -47,7 +47,9 @@ class SessionsController < ApplicationController
     if params[:email].present?
       user = User.find_by(email: params[:email])
       if !user.nil?
-        UserMailer.with(user: user).confirmation.deliver_later
+        token = generate_token(user)
+        puts 'TOKEN ', token
+        UserMailer.with(user: user, token: token).confirmation.deliver_later
         flash[:notice] = 'Em instantes você receberá um email para resetar sua senha :).'
       else
         flash[:notice_error] = 'Email inválido.'
@@ -59,4 +61,19 @@ class SessionsController < ApplicationController
     redirect_to login_path
   end
 
+  private
+
+  def generate_token(user)
+    envs_vars
+    sentence = user.name + ENV["SEED"] + user.profile
+    puts 'SENTENCE ', sentence
+    BCrypt::Password.create(sentence)
+  end
+
+  def envs_vars
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+    YAML.load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exists?(env_file)
+  end
 end
