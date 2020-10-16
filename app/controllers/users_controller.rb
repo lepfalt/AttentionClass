@@ -82,7 +82,11 @@ class UsersController < ApplicationController
   def update_password
     form_params = params.require(:user).permit(:password, :password_confirm)
 
-    unless form_params[:password] == form_params[:password_confirm]
+    if !form_params[:password].present?
+      flash[:notice] = 'A senha deve ser preenchida.'
+      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
+      return
+    elsif form_params[:password] != form_params[:password_confirm]
       flash[:notice] = 'As senhas devem ser iguais.'
       redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
       return
