@@ -2,7 +2,7 @@ Olá <%= @user.name %>,
 
 Alguém solicitou a mudança da sua senha. Você pode fazer isso através do link abaixo.
 
-<%= link_to 'Alterar minha senha', reset_password_url(@user, :reset => @token) %>
+<%= link_to 'Alterar minha senha', reset_password_url(@user, :reset => @token, :expire => @expire) %>
 
 Se você não fez essa solicitação, por favor ignore esse email.
 

@@ -8,6 +8,7 @@ class UserMailer < ApplicationMailer
   def confirmation
     @user = params[:user]
     @token = params[:token]
+    @expire = Time.now.to_i
 
     mail to: @user.email, subject: "Reset de senha"
   end

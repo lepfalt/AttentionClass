@@ -69,7 +69,11 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    puts 'PARAMS ', params
+    unless valid_token?
+      flash[:notice] = "token expirado"
+      return
+    end
+
     session[:token] = params[:reset]
     @user = match_user(params[:reset])
   end
@@ -169,6 +173,14 @@ class UsersController < ApplicationController
     end
 
     nil
+  end
+
+  def valid_token?
+    expire = params[:expire].to_i
+    intervalo = Time.now.to_i - expire
+    return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
+
+    false
   end
 
   def envs_vars
