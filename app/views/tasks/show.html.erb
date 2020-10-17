@@ -35,7 +35,7 @@
           <% unless @task.done? || @task.ajusted? %>
             <section class="section-alterar-status" style=<%= @task.progress? ? 'margin-left:38em' : '' %>>
               <% if @task.pending? %>
-                <%= form.select :status, Task.statuses.keys.reject { |k| k != "pending" && k != "progress" }, {}, class: 'status-task' %>
+                <%= form.select :status, options_for_enum(@task, :status, 2), {}, class: 'status-task' %>
               <% end %>
               <%= form.submit 'Alterar', class: 'btn-new-item btn-alterar', style: @task.progress? ? 'margin-top: 2.5em;' : '' %>
             </section>
