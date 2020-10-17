@@ -1,35 +1,39 @@
 <main class="card-main card-table">
   <a href=<%= admin_classes_path(current_user.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <h1 class='title-page'>Turma: <%=@class_group.class_code%></h1>
+    <% if current_user.id == @class_group.user_id %>
+      <h1 class='title-page'>Turma: <%=@class_group.class_code%></h1>
 
-    <table class="table table-bordered table-hover table-page">
-      <thead class="header-table header-table-font">
-        <tr>
-          <th>Tarefa</th>
-          <th>Data Limite</th> 
-          <th>Status</th>
-          <th colspan="1"></th>
-        </tr>
-      </thead>
-
-      <tbody class="body-table">
-        <% @class_group.tasks.each do |task| %>
+      <table class="table table-bordered table-hover table-page">
+        <thead class="header-table header-table-font">
           <tr>
-            <td class="content-text-table"><%= task.title %></td>
-            <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
-            <td><%= task.status %></td>
-            <td><%= link_to 'Ver Respostas', task_responses_path(task.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
+            <th>Tarefa</th>
+            <th>Data Limite</th> 
+            <th>Status</th>
+            <th colspan="1"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
-    <br>
+        <tbody class="body-table">
+          <% @class_group.tasks.each do |task| %>
+            <tr>
+              <td class="content-text-table"><%= task.title %></td>
+              <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
+              <td><%= task.status %></td>
+              <td><%= link_to 'Ver Respostas', task_responses_path(task.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-    <div class="btns-content content-btn-classes">
-      <%= link_to 'Visualizar Integrantes', users_class_path(@class_group.id), class: 'btn-new-student upload-task text-button-task' %>
-      <%= link_to 'Vincular Usuário', new_user_class_path(@class_group.id), class: 'btn-associate-user' %>
-    </div>
+      <br>
+
+      <div class="btns-content content-btn-classes">
+        <%= link_to 'Visualizar Integrantes', users_class_path(@class_group.id), class: 'btn-new-student upload-task text-button-task' %>
+        <%= link_to 'Vincular Usuário', new_user_class_path(@class_group.id), class: 'btn-associate-user' %>
+      </div>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
+    <% end %>
   <div>
 </main>

@@ -31,6 +31,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def restrict_by_identification(id, path)
+    if logged_in?
+      unless current_user.id == id
+        handler_notice_error('Página não autorizada para a conta logada.', path)
+      end
+    end
+  end
+
   def redirected_logged
     if logged_in? #Se tá logado, redireciona pra conta
       is_admin = User.find_by(id: current_user).admin?
