@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       if @user&.authenticate(params[:password])
         allow_user(@user)
       else
-        deny_user(user)
+        deny_user(@user)
       end
     end
   end
@@ -36,10 +36,10 @@ class SessionsController < ApplicationController
       if !user.nil? 
         trigger_email_to(user)
       else
-        handler_notice('Email inválido.', login_path)      
+        handler_notice_error('Email inválido.', login_path)      
       end
     else
-      handler_notice('Email precisa ser preenchido.', login_path)
+      handler_notice_error('Email precisa ser preenchido.', login_path)
     end
   end
 
@@ -60,9 +60,9 @@ class SessionsController < ApplicationController
 
   def deny_user(user)
     if user.nil?
-      flash[:notice_error] = 'Email ou senha inválidos.'
+      flash[:noticeError] = 'Email ou senha inválidos.'
     else
-      flash[:notice_error] = 'Senha Inválida.'
+      flash[:noticeError] = 'Senha Inválida.'
     end
 
     redirect_to login_path

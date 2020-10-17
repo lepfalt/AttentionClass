@@ -33,7 +33,7 @@ class ClassGroupsController < ApplicationController
     if @class_group.save
       handler_notice('Turma cadastrada com sucesso!', admin_classes_path(current_user))
     else
-      flash[:notice] = 'Erro ao cadastrar tarefa.'
+      flash[:noticeError] = 'Erro ao cadastrar tarefa.'
       render :new
     end
   end
@@ -76,18 +76,18 @@ class ClassGroupsController < ApplicationController
 
   def valid_group?
     unless @class_group.discipline.present? || @class_group.class_code.present?
-      handler_notice("Todos os campos devem ser preenchidos.", new_class_group_path)
+      handler_notice_error("Todos os campos devem ser preenchidos.", new_class_group_path)
       return false
     end
 
     if @class_group.expiration_date < Date.today
-      handler_notice('Data Inválida.', new_class_group_path)
+      handler_notice_error('Data Inválida.', new_class_group_path)
       return false
     end
 
     group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
     if !group_equal.nil? && group_equal.active
-      handler_notice('Já existe uma turma ativa com esse código.', new_class_group_path)
+      handler_notice_error('Já existe uma turma ativa com esse código.', new_class_group_path)
       return false
     end
 

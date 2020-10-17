@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if error.nil? && @user.save
       handler_notice('Usuário cadastrado com sucesso!', login_path)
     else
-      handler_notice(error, new_user_path)
+      handler_notice_error(error, new_user_path)
     end
   end
 
@@ -35,16 +35,16 @@ class UsersController < ApplicationController
     registered_user = User.find_by(email: params[:email])
     
     if registered_user.nil?
-      handler_notice('Usuário inexistente.', new_user_class_path(params[:class_id]))
+      handler_notice_error('Usuário inexistente.', new_user_class_path(params[:class_id]))
     elsif registered_user.admin?
-      handler_notice('Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.', new_user_class_path(params[:class_id]))
+      handler_notice_error('Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.', new_user_class_path(params[:class_id]))
     else
       class_associate = registered_user.class_groups.find_by(id: params[:class_id])
 
       if class_associate.nil?
         associate_user(registered_user, params[:class_id])
       else
-        handler_notice('Este usuário já está vinculado à turma.', new_user_class_path(params[:class_id]))
+        handler_notice_error('Este usuário já está vinculado à turma.', new_user_class_path(params[:class_id]))
       end
     end
   end
@@ -97,12 +97,12 @@ class UsersController < ApplicationController
 
   def valid_password?(params_validate)
     if params_validate[:password].present?
-      flash[:notice] = 'As senhas devem ser iguais.' if params_validate[:password] != params_validate[:password_confirm]
+      flash[:noticeError] = 'As senhas devem ser iguais.' if params_validate[:password] != params_validate[:password_confirm]
     else
-      flash[:notice] = 'A senha deve ser preenchida.'
+      flash[:noticeError] = 'A senha deve ser preenchida.'
     end
 
-    return true if flash[:notice].nil?
+    return true if flash[:noticeError].nil?
     redirect_to_reset_password
     false
   end
@@ -173,7 +173,7 @@ class UsersController < ApplicationController
     intervalo = Time.now.to_i - expire
     return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
 
-    flash[:notice] = "token expirado"
+    flash[:noticeError] = "token expirado"
     false
   end
 
