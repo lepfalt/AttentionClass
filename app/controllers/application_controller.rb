@@ -15,6 +15,27 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def restrict_by_authorization
+    unless logged_in? #Se tá logado, redireciona pra conta
+      handler_notice_error('É preciso estar logado para acesso das páginas.', login_path)
+    end
+  end
+
+  def redirected_logged
+    if logged_in? #Se tá logado, redireciona pra conta
+      is_admin = User.find_by(id: current_user).admin?
+      if is_admin
+        redirect_to tasks_board_path(current_user)
+      else
+        redirect_to responses_board_path(current_user)
+      end
+
+      return true
+    end
+
+    false
+  end
+
   def load_enviroments_vars
     env_file = File.join(Rails.root, 'config', 'local_env.yml')
     YAML.load(File.open(env_file)).each do |key, value|

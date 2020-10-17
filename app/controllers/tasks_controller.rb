@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :restrict_by_authorization
   before_action :set_task, only: %i[show index_responses update destroy cancel remove_ajusted]
 
   # GET /tasks

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :restrict_by_authorization, only: %i[update destroy]
   before_action :authorized, only: [:show]
   before_action :set_user , only: %i[destroy update_password]
   before_action :load_enviroments_vars, only: %i[reset_password]
@@ -12,6 +13,8 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    return if redirected_logged
+
     @user = User.new
   end
 

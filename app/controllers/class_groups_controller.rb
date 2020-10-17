@@ -1,4 +1,5 @@
 class ClassGroupsController < ApplicationController
+  before_action :restrict_by_authorization
   before_action :set_class_group, only: %i[show new_user index_users edit update destroy]
 
   # GET /class_groups
