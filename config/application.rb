@@ -32,5 +32,8 @@ module Attentionclass
     # Para debug apenas, é melhor que a linha abaixo seja adicionado apenas no ambiente de desenvolvimento
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+    config.time_zone = 'Brasilia'
+    config.active_record.default_timezone = :local
   end
 end
