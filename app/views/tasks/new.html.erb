@@ -6,9 +6,9 @@
 
 <main class="card-main card-table">
   <a href=<%= admin_classes_path(current_user) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
+  <% if flash[:noticeError] %>
     <div class="alert alert-danger" role="alert">
-      <%= flash[:notice] %>
+      <%= flash[:noticeError] %>
     </div>
   <% end %>
   <div class="content-intern">

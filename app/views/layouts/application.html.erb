@@ -27,10 +27,15 @@
         <% end %>
       <% end %>
 
-      <% if !current_user.nil? && current_page?(tasks_board_path(current_user)) %>
+      <% if !current_user.nil? && has_notice? %>
         <% if flash[:notice] %>
           <div class="alert alert-success" role="alert">
             <%= flash[:notice] %>
+          </div>
+        <% end %>
+        <% if flash[:noticeError] %>
+          <div class="alert alert-success" role="alert">
+            <%= flash[:noticeError] %>
           </div>
         <% end %>
       <% end %>

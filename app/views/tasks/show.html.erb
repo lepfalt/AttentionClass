@@ -1,8 +1,8 @@
 <main class="card-main card-table">
   <a href='<%= tasks_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
+  <% if flash[:noticeError] %>
     <div class="alert alert-danger" role="alert">
-      <%= flash[:notice] %>
+      <%= flash[:noticeError] %>
     </div>
   <% end %>
   <div class="content-intern">

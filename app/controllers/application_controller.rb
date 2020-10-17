@@ -21,4 +21,14 @@ class ApplicationController < ActionController::Base
       ENV[key.to_s] = value
     end if File.exists?(env_file)
   end
+
+  def handler_notice(notice, path)
+    flash[:notice] = notice
+    redirect_to path
+  end
+
+  def handler_notice_error(notice, path)
+    flash[:noticeError] = notice
+    redirect_to path
+  end
 end

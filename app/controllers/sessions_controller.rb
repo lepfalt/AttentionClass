@@ -18,20 +18,9 @@ class SessionsController < ApplicationController
     else
       @user = User.find_by(email: params[:email])
       if @user&.authenticate(params[:password])
-        session[:user_id] = @user.id
-        if @user.admin?
-          redirect_to tasks_board_path(@user.id)
-        else
-          redirect_to responses_board_path(@user.id)
-        end
+        allow_user(@user)
       else
-        if @user.nil?
-          flash[:notice_error] = 'Email ou senha inválidos.'
-        else
-          flash[:notice_error] = 'Senha Inválida.'
-        end
-
-        redirect_to login_path
+        deny_user(user)
       end
     end
   end
@@ -41,32 +30,51 @@ class SessionsController < ApplicationController
     redirect_to login_path
   end
 
+  def send_email
+    if params[:email].present?
+      user = User.find_by(email: params[:email])
+      if !user.nil? 
+        trigger_email_to(user)
+      else
+        handler_notice('Email inválido.', login_path)      
+      end
+    else
+      handler_notice('Email precisa ser preenchido.', login_path)
+    end
+  end
+
+  private
+
   def is_reset?
     params[:reset].present?
   end
 
-  def send_email
-    if params[:email].present?
-      user = User.find_by(email: params[:email])
-      if !user.nil?
-        token = generate_token(user)
-        puts 'TOKEN ', token
-        UserMailer.with(user: user, token: token).confirmation.deliver_later
-        flash[:notice] = 'Em instantes você receberá um email para resetar sua senha :).'
-      else
-        flash[:notice_error] = 'Email inválido.'
-      end
+  def allow_user(user)
+    session[:user_id] = user.id
+    if user.admin?
+      redirect_to tasks_board_path(user.id)
     else
-      flash[:notice_error] = 'Email precisa ser preenchido.'
+      redirect_to responses_board_path(user.id)
+    end
+  end
+
+  def deny_user(user)
+    if user.nil?
+      flash[:notice_error] = 'Email ou senha inválidos.'
+    else
+      flash[:notice_error] = 'Senha Inválida.'
     end
 
     redirect_to login_path
   end
 
-  private
+  def trigger_email_to(user)
+    UserMailer.with(user: user, token: generate_token(user)).confirmation.deliver_later
+    handler_notice('Em instantes você receberá um email para resetar sua senha :)', login_path)
+  end
 
   def generate_token(user)
     sentence = user.name + ENV["SEED"] + user.profile
     BCrypt::Password.create(sentence)
-  end
+  end  
 end

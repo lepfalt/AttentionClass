@@ -25,17 +25,13 @@ class ClassGroupsController < ApplicationController
   def create
     @class_group = ClassGroup.new(class_group_params)
 
-    unless valid_group?
-      redirect_to new_class_group_path
-      return
-    end
+    return unless valid_group?
 
     @class_group.active = true
     @class_group.user_id = session[:user_id] # Verificar sobre passagem de id do user na rota
 
     if @class_group.save
-      flash[:notice] = 'Turma cadastrada com sucesso!'
-      redirect_to admin_classes_path(current_user)
+      handler_notice('Turma cadastrada com sucesso!', admin_classes_path(current_user))
     else
       flash[:notice] = 'Erro ao cadastrar tarefa.'
       render :new
@@ -48,8 +44,8 @@ class ClassGroupsController < ApplicationController
     return unless remove_associates
     return unless remove_tasks
     return unless @class_group.destroy
-    flash[:notice] = 'Turma removida com sucesso!'
-    redirect_to admin_classes_path(current_user)
+
+    handler_notice('Turma removida com sucesso!', admin_classes_path(current_user))
   end
 
   def new_user; end
@@ -80,18 +76,18 @@ class ClassGroupsController < ApplicationController
 
   def valid_group?
     unless @class_group.discipline.present? || @class_group.class_code.present?
-      flash[:notice] = "Todos os campos devem ser preenchidos."
+      handler_notice("Todos os campos devem ser preenchidos.", new_class_group_path)
       return false
     end
 
     if @class_group.expiration_date < Date.today
-      flash[:notice] = 'Data Inválida.'
+      handler_notice('Data Inválida.', new_class_group_path)
       return false
     end
 
     group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
     if !group_equal.nil? && group_equal.active
-      flash[:notice] = 'Já existe uma turma ativa com esse código.'
+      handler_notice('Já existe uma turma ativa com esse código.', new_class_group_path)
       return false
     end
 

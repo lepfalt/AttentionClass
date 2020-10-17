@@ -5,10 +5,7 @@ class ResponsesController < ApplicationController
   # GET /responses.json
   def index
     @responses = Response.where(user_id: params[:user_id])
-    @responses.each do |response|
-      check_status_task(response)
-      check_status_response(response)
-    end
+    udpate_responses
   end
 
   # GET /responses/1
@@ -18,38 +15,29 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
-    if current_user.standard?
-      return if !check_status_task(@response)
-      check_status_response(@response)
-    end
-
-    unless valid_response?
-      redirect_to task_response_path(@response)
-      return
-    end
+    return unless check_update_reponses?
+    return unless valid_response_by_admin?
 
     if @response.update(response_params)
       if current_user.admin?
-        flash[:notice] = "Resposta avaliada com sucesso."
-        redirect_to task_responses_path(@response.task_id)
+        handler_notice("Resposta avaliada com sucesso.", task_responses_path(@response.task_id))
       else
-        redirect_to responses_board_path(current_user.id)
+        handler_notice("Resposta salva com sucesso.", responses_board_path(current_user.id))
       end
     else
-      # VER LANÇAMENTO DE ERRO
-      # format.html { render :show }
-      # format.json { render json: @response.errors, status: :unprocessable_entity }
+      handler_notice_error("Erro ao atualizar resposta.", response_path(@response))
     end
-
   end
 
   # DELETE /responses/1
   # DELETE /responses/1.json
   def destroy
     @response.active = false
-    puts 'Erro ao excluir' unless @response.save
-
-    redirect_to responses_board_path(current_user.id)
+    if @response.save
+      handler_notice_error("Resposta excluída com sucesso", responses_board_path(current_user.id))
+    else
+      handler_notice_error("Erro ao excluir resposta.", responses_board_path(current_user.id))
+    end
   end
 
   def show_grade; end
@@ -64,6 +52,22 @@ class ResponsesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def response_params
     params.require(:response).permit(:response_value, :response_annotation, :status, :observation_responsible, :grade)
+  end
+
+  def udpate_responses
+    @responses.each do |response|
+      check_status_task(response)
+      check_status_response(response)
+    end
+  end
+
+  def check_update_reponses?
+    if current_user.standard?
+      return false unless check_status_task(@response)
+      return false unless check_status_response(@response)
+    end
+
+    true
   end
 
   def check_status_task(response)
@@ -83,14 +87,19 @@ class ResponsesController < ApplicationController
   def check_status_response(response)
     if !response.task.progress? && (response.pending? || response.progress?)
       response.status = 3
-      puts 'Erro ao não entregar response', response.errors unless response.save
+      unless response.save
+        puts 'Erro ao não entregar response', response.errors
+        return false
+      end
     end
+
+    true
   end
 
-  def valid_response?
+  def valid_response_by_admin?
     if current_user.admin?
       unless response_params[:grade].present?
-        flash[:notice] = "Campo Nota é obrigatório."
+        handler_notice("Campo Nota é obrigatório.", task_response_path(@response))
         return false
       end
     end

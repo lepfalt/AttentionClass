@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <a href=<%= login_path %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <% if flash[:notice] %>
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-danger" role="alert">
       <%= flash[:notice] %>
     </div>
   <% end %>
