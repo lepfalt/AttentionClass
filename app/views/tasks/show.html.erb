@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <a href='<%= tasks_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <% if current_user.id == @task.class_group.user_id %>
+    <% if current_user.id == @task&.class_group&.user_id %>
       <%= form_for @task do |form| %>
         <div class="top-panel">
           <h1 class='title-page title-task'><%= form.text_field :title, class: 'input-title', disabled: @task.ajusted? || @task.done? %></h1>

@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   def index_responses
-    @responses_task = @task.responses
+    @responses_task = @task&.responses
   end
 
   def show_response
@@ -104,7 +104,7 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -1,7 +1,9 @@
 <main class="card-main card-table">
-  <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <% unless @response_task.nil? %>
+    <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <% end %>
   <div class="content-intern">
-    <% if current_user.id == @response_task.task.class_group.user_id %>
+    <% if current_user.id == @response_task&.task&.class_group&.user_id %>
       <%= form_with(model: @response_task, local: true) do |form| %>
         <div class="top-panel">
           <h1 class='title-page title-task'><%= @response_task.task.title %></h1>
