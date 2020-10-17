@@ -1,4 +1,6 @@
 class ClassGroupsController < ApplicationController
+  before_action :restrict_by_authorization
+  before_action :restrict_by_profile_admin
   before_action :set_class_group, only: %i[show new_user index_users edit update destroy]
 
   # GET /class_groups
@@ -25,19 +27,15 @@ class ClassGroupsController < ApplicationController
   def create
     @class_group = ClassGroup.new(class_group_params)
 
-    unless valid_group?
-      redirect_to new_class_group_path
-      return
-    end
+    return unless valid_group?
 
     @class_group.active = true
     @class_group.user_id = session[:user_id] # Verificar sobre passagem de id do user na rota
 
     if @class_group.save
-      flash[:notice] = 'Turma cadastrada com sucesso!'
-      redirect_to admin_classes_path(current_user)
+      handler_notice('Turma cadastrada com sucesso!', admin_classes_path(current_user))
     else
-      flash[:notice] = 'Erro ao cadastrar tarefa.'
+      flash[:noticeError] = 'Erro ao cadastrar tarefa.'
       render :new
     end
   end
@@ -48,8 +46,8 @@ class ClassGroupsController < ApplicationController
     return unless remove_associates
     return unless remove_tasks
     return unless @class_group.destroy
-    flash[:notice] = 'Turma removida com sucesso!'
-    redirect_to admin_classes_path(current_user)
+
+    handler_notice('Turma removida com sucesso!', admin_classes_path(current_user))
   end
 
   def new_user; end
@@ -58,7 +56,7 @@ class ClassGroupsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_class_group
-    @class_group = ClassGroup.find(params[:id])
+    @class_group = ClassGroup.find_by(id:params[:id])
   end
 
   # Only allow a list of trusted parameters through.
@@ -80,18 +78,18 @@ class ClassGroupsController < ApplicationController
 
   def valid_group?
     unless @class_group.discipline.present? || @class_group.class_code.present?
-      flash[:notice] = "Todos os campos devem ser preenchidos."
+      handler_notice_error("Todos os campos devem ser preenchidos.", new_class_group_path)
       return false
     end
 
     if @class_group.expiration_date < Date.today
-      flash[:notice] = 'Data Inválida.'
+      handler_notice_error('Data Inválida.', new_class_group_path)
       return false
     end
 
     group_equal = ClassGroup.find_by(class_code: @class_group.class_code)
     if !group_equal.nil? && group_equal.active
-      flash[:notice] = 'Já existe uma turma ativa com esse código.'
+      handler_notice_error('Já existe uma turma ativa com esse código.', new_class_group_path)
       return false
     end
 

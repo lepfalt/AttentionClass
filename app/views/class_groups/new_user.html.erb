@@ -1,15 +1,16 @@
 <main class="card-main card-table">
-  <% if flash[:notice] %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:notice] %>
-    </div>
+  <% unless @class_group.nil? %>
+    <a href=<%= class_group_path(@class_group.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <% end %>
-  <a href=<%= class_group_path(@class_group.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <h1 class='title-page'>Vincular Aluno</h1>
-    <%= form_with(model: @user, local: true) do |form| %>
-      <%= form.email_field :email, class:"form-control text-field text-email-associate", placeholder: "email do aluno.." %>
-      <%= form.submit 'Vincular', class: 'btn-associate btn-new-item' %>
+    <% if current_user.id == @class_group&.user_id %>
+      <h1 class='title-page'>Vincular Aluno</h1>
+      <%= form_with(model: @user, local: true) do |form| %>
+        <%= form.email_field :email, class:"form-control text-field text-email-associate", placeholder: "email do aluno.." %>
+        <%= form.submit 'Vincular', class: 'btn-associate btn-new-item' %>
+      <% end %>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
     <% end %>
   </div>
 </main>

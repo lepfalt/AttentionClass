@@ -1,55 +1,56 @@
 <main class="card-main card-table">
-  <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:notice] %>
-    </div>
+  <% unless @response_task.nil? %>
+    <a href='<%= task_responses_path(@response_task.task_id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <% end %>
   <div class="content-intern">
-    <%= form_with(model: @response_task, local: true) do |form| %>
-      <div class="top-panel">
-        <h1 class='title-page title-task'><%= @response_task.task.title %></h1>
+    <% if current_user.id == @response_task&.task&.class_group&.user_id %>
+      <%= form_with(model: @response_task, local: true) do |form| %>
+        <div class="top-panel">
+          <h1 class='title-page title-task'><%= @response_task.task.title %></h1>
 
-        <section class="section-task">
-          <h4 class="field-task">Aluno:  </h4>
-          <span class="span-task"><%= @response_task.user.name %></span>
+          <section class="section-task">
+            <h4 class="field-task">Aluno:  </h4>
+            <span class="span-task"><%= @response_task.user.name %></span>
+          </section>
+
+          <section class="section-task">
+            <h4 class="field-task">Disciplina:  </h4>
+            <span class="span-task"><%= @response_task.task.class_group.discipline %></span>
+          </section>
+
+          <section class="section-task">
+            <span class="card-class status-not-completed code-class"><%= @response_task.task.class_group.class_code %></span>
+          </section>
+        </div>
+
+        <section class="response">
+          <section class="description-task response-description-task">
+            <h4>Resposta:</h4>
+            <h3 class="description-task-text"><%= @response_task.response_annotation %></h3>
+          </section>
+
+          <section class="upload-response response-upload-task">
+            <% if @response_task&.response_value.present? %>
+              <a href=<%= rails_blob_path(@response_task.response_value, disposition: "attachment") %> data-toggle="tooltip" title="Download Resposta"><%= image_tag('download.png', id: "download", class: "icon-page") %></a>
+              <span>Arquivo de Resposta: <%= @response_task.response_value.filename %></span>
+            <% end %>
+          </section>
         </section>
 
-        <section class="section-task">
-          <h4 class="field-task">Disciplina:  </h4>
-          <span class="span-task"><%= @response_task.task.class_group.discipline %></span>
+        <section class="content-body-response">
+          <section class="response-user-task">
+            <%= form.text_field :observation_responsible, class:"annotation-task observation-responsible", placeholder: "Escreva suas observações.." %>
+          </section>
+        
+          <section class="section-alterar-status" style="margin-top: 0;">
+            <%= form.label :nota, style: 'font-size: 19px'%>
+            <%= form.number_field :grade, step:0.01, class:"status-task" %>
+            <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
+          </section>
         </section>
-
-        <section class="section-task">
-          <span class="card-class status-not-completed code-class"><%= @response_task.task.class_group.class_code %></span>
-        </section>
-      </div>
-
-      <section class="response">
-        <section class="description-task response-description-task">
-          <h4>Resposta:</h4>
-          <h3 class="description-task-text"><%= @response_task.response_annotation %></h3>
-        </section>
-
-        <section class="upload-response response-upload-task">
-          <% if @response_task&.response_value.present? %>
-            <a href=<%= rails_blob_path(@response_task.response_value, disposition: "attachment") %> data-toggle="tooltip" title="Download Resposta"><%= image_tag('download.png', id: "download", class: "icon-page") %></a>
-            <span>Arquivo de Resposta: <%= @response_task.response_value.filename %></span>
-          <% end %>
-        </section>
-      </section>
-
-      <section class="content-body-response">
-        <section class="response-user-task">
-          <%= form.text_field :observation_responsible, class:"annotation-task observation-responsible", placeholder: "Escreva suas observações.." %>
-        </section>
-      
-        <section class="section-alterar-status" style="margin-top: 0;">
-          <%= form.label :nota, style: 'font-size: 19px'%>
-          <%= form.number_field :grade, step:0.01, class:"status-task" %>
-          <%= form.submit 'Avaliar', class: ' btn-alterar-response btn-new-item btn-alterar' %>
-        </section>
-      </section>
+      <% end %>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
     <% end %>
   </div>
 </main>

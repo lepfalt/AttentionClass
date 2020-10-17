@@ -27,10 +27,15 @@
         <% end %>
       <% end %>
 
-      <% if !current_user.nil? && current_page?(tasks_board_path(current_user)) %>
+      <% if !current_user.nil? && !(current_page?(login_path) || current_page?(signup_path)) %>
         <% if flash[:notice] %>
           <div class="alert alert-success" role="alert">
             <%= flash[:notice] %>
+          </div>
+        <% end %>
+        <% if flash[:noticeError] && flash[:noticeError] != "token expirado" %>
+          <div class="alert alert-danger" role="alert">
+            <%= flash[:noticeError] %>
           </div>
         <% end %>
       <% end %>

@@ -6,11 +6,6 @@
 
 <main class="card-main card-table">
   <a href=<%= admin_classes_path(current_user) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
   <div class="content-intern">
    <h1 class='title-page title-task'>Criar Tarefa</h1>
     <%= form_for @task do |form| %>

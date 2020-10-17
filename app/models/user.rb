@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :class_groups
   has_secure_password
 
-  attr_accessor :password
+  attr_accessor :password, :password_confirm
 
   enum profile: { standard: 0, admin: 1 }
   #validates :profile, inclusion: { in: [standard, admin] }
@@ -11,10 +11,9 @@ class User < ApplicationRecord
   VALID_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i.freeze
   # pesquisar solução depois
   #validates :email, presence: true, length: {maximum: 260}, format: { with: VALID_EMAIL_FORMAT}, uniqueness: {case_sensitive: false}
-  validates :password_digest, :profile, :name, presence: true
+  validates :password_digest, :profile, :name, :email, presence: true
 
   def confirm_password?(confirm)
-    return false if confirm.nil?
     @password.eql?(confirm)
   end
 
@@ -24,5 +23,17 @@ class User < ApplicationRecord
     return true if user.nil?
 
     false
+  end
+
+  def validate_user?
+    if !self.valid? || !@password.present?
+      return 'Dados de usuário inválidos.'
+    elsif !User.unique_email?(self.email)
+      return 'Esse email já existe.'
+    elsif !self.confirm_password?(self.password_confirm) 
+      return 'A senha precisa ser igual à sua confirmação.'
+    end
+
+    nil
   end
 end

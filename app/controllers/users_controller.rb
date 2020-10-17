@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  before_action :restrict_by_authorization, only: %i[update destroy]
   before_action :authorized, only: [:show]
   before_action :set_user , only: %i[destroy update_password]
+  before_action :load_enviroments_vars, only: %i[reset_password]
 
   # GET /users/1
   # GET /users/1.json
@@ -11,6 +13,8 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    return if redirected_logged
+
     @user = User.new
   end
 
@@ -19,42 +23,31 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_to_be_created)
 
-    if validate_user? && @user.save
-      flash[:notice] = 'Usuário cadastrado com sucesso!'
-      redirect_to login_path
+    error = @user.validate_user?
+
+    if error.nil? && @user.save
+      handler_notice('Usuário cadastrado com sucesso!', login_path)
     else
-      redirect_to new_user_path
+      handler_notice_error(error, new_user_path)
     end
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    puts 'ENTRA NO UPDATE'
-    email = params[:email]
-    class_id = params[:class_id]
-    registered_user = User.find_by(email: email)
+    registered_user = User.find_by(email: params[:email])
     
     if registered_user.nil?
-      flash[:notice] = 'Usuário inexistente.'
-      redirect_to new_user_class_path(class_id)
+      handler_notice_error('Usuário inexistente.', new_user_class_path(params[:class_id]))
     elsif registered_user.admin?
-      flash[:notice] = 'Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.'
-      redirect_to new_user_class_path(class_id)
+      handler_notice_error('Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.', new_user_class_path(params[:class_id]))
     else
-      class_associate = registered_user.class_groups.find_by(id: class_id)
+      class_associate = registered_user.class_groups.find_by(id: params[:class_id])
 
       if class_associate.nil?
-        class_group = ClassGroup.find_by(id: class_id)
-        registered_user.class_groups << class_group
-
-        assign_group_tasks(class_group, registered_user.id)
-        
-        flash[:notice] = 'Usuário vinculado com sucesso.'
-        redirect_to class_group_path(class_id)
+        associate_user(registered_user, params[:class_id])
       else
-        flash[:notice] = 'Este usuário já está vinculado à turma.'
-        redirect_to new_user_class_path(class_id)
+        handler_notice_error('Este usuário já está vinculado à turma.', new_user_class_path(params[:class_id]))
       end
     end
   end
@@ -69,36 +62,23 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    unless valid_token?
-      flash[:notice] = "token expirado"
-      return
-    end
+    return unless valid_token?
 
+    # Armazenando para reacessar página em caso de erro
     session[:token] = params[:reset]
     session[:expire] = params[:expire]
     @user = match_user(params[:reset])
   end
 
   def update_password
-    form_params = params.require(:user).permit(:password, :password_confirm)
+    return unless valid_password?(reset_params)
 
-    if !form_params[:password].present?
-      flash[:notice] = 'A senha deve ser preenchida.'
-      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
-      return
-    elsif form_params[:password] != form_params[:password_confirm]
-      flash[:notice] = 'As senhas devem ser iguais.'
-      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
-      return
-    end
-    
-    @user.password_digest = BCrypt::Password.create(params.dig(:user, :password))
+    @user.password_digest = encrypt(params.dig(:user, :password))
     if @user.save
-      flash[:notice] = 'Senha resetada com sucesso!'
-      redirect_to login_path
+      handler_notice('Senha resetada com sucesso!', login_path)
     else
       puts 'Erro ao resetar senha', @user.errors
-      redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
+      redirect_to_reset_password
     end
   end
 
@@ -114,17 +94,19 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :password)
   end
 
-  def validate_user?
-    if !@user.valid? 
-      flash[:notice] = 'Dados de usuário inválidos.'
-    elsif !User.unique_email?(@user.email)
-      flash[:notice] = 'Esse email já existe.'
-    elsif !@user.confirm_password?(params.dig(:user, :password_confirm)) 
-      flash[:notice] = 'A senha precisa ser igual à sua confirmação.'
+  def reset_params
+    params.require(:user).permit(:password, :password_confirm)
+  end
+
+  def valid_password?(params_validate)
+    if params_validate[:password].present?
+      flash[:noticeError] = 'As senhas devem ser iguais.' if params_validate[:password] != params_validate[:password_confirm]
     else
-      return true
+      flash[:noticeError] = 'A senha deve ser preenchida.'
     end
 
+    return true if flash[:noticeError].nil?
+    redirect_to_reset_password
     false
   end
 
@@ -135,8 +117,18 @@ class UsersController < ApplicationController
       profile: params.dig(:user, :profile),
       email: params.dig(:user, :email),
       password: params.dig(:user, :password),
+      password_confirm: params.dig(:user, :password_confirm),
       password_digest: BCrypt::Password.create(params.dig(:user, :password))
     }.to_hash
+  end
+
+  def associate_user(user, class_id)
+    class_group = ClassGroup.find_by(id: class_id)
+    user.class_groups << class_group
+
+    assign_group_tasks(class_group, user.id)
+
+    handler_notice('Usuário vinculado com sucesso.', class_group_path(class_id))
   end
 
   def remove_user_associations
@@ -167,7 +159,6 @@ class UsersController < ApplicationController
   end
 
   def match_user(token)
-    envs_vars
     token_compare = BCrypt::Password.new(token)
     User.all.each do |user|
       sentence_compare = user.name + ENV["SEED"] + user.profile
@@ -185,13 +176,16 @@ class UsersController < ApplicationController
     intervalo = Time.now.to_i - expire
     return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
 
+    flash[:noticeError] = "token expirado"
     false
   end
 
-  def envs_vars
-    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    YAML.load(File.open(env_file)).each do |key, value|
-      ENV[key.to_s] = value
-    end if File.exists?(env_file)
+  def redirect_to_reset_password
+    redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
+  end
+
+  def encrypt(sentence)
+    #colocar exception
+    BCrypt::Password.create(sentence)
   end
 end

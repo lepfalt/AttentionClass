@@ -1,19 +1,8 @@
 <main class="card-main card-table">
   <a href=<%= login_path %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
-    <div class="alert alert-success" role="alert">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <% if flash[:noticeError] %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:noticeError] %>
     </div>
   <% end %>
   <div class="content-intern">

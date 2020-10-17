@@ -1,67 +1,71 @@
 <main class="card-main card-table">
   <a href='<%= responses_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <%= form_with(model: @response, local: true) do |form| %>
-      <div class="top-panel">
-        <h1 class='title-page title-task'><%= @response.task.title %></h1>
-        
-        <section class="section-task">
-          <h4 class="field-task">Entregar até:  </h4>
-          <span class="span-task"><%= @response.task.expiration_date.strftime("%d/%m/%Y") %></span>
-        </section>
-
-        <section class="section-task">
-          <h4 class="field-task">Professor:  </h4>
-          <span class="span-task"><%= @response.task.class_group.user.name %></span>
-        </section>
-
-        <section class="section-task">
-          <h4 class="field-task">Disciplina:  </h4>
-          <span class="span-task"><%= @response.task.class_group.discipline %></span>
-        </section>
-
-        <section class="section-task">
-          <span class="card-class status-not-completed code-class"><%= @response.task.class_group.class_code %></span>
-        </section>
-      </div>
-
-      <div style="width: 100%;">
-        <section class="description-task" style="display: inline-block; width: 65%;">
-          <h4>Descrição:</h4>
-          <h3 class="description-task-text"><%= @response.task.description %></h3>
-        </section>
-
-        <% if @response.done? && @response.grade.present? %>
-          <div style="display: inline-block; width: 21%; height: 4em;">
-            <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
-          </div>
-        <% end %>
-      </div>
-
-      <section class="content-body-response">
-        <section class="response-user-task">
-          <%= form.text_field :response_annotation, class:"annotation-task", disabled: !@response.task.progress? , placeholder: "Escreva suas anotações.." %>
-          <section class="upload-response">
-            <% if @response.task.progress? %>
-              <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
-            <% end %>
-
-            <% if @response.response_value.attached? %>
-              <%= link_to "Arquivo enviado: #{@response.response_value&.filename}", rails_blob_path(@response.response_value, disposition: "attachment")  %>
-            <% else %>
-              <%= form.label "Arquivo enviado: nenhum" %>
-            <% end %>
+    <% if current_user.id == @response&.user_id %>
+      <%= form_with(model: @response, local: true) do |form| %>
+        <div class="top-panel">
+          <h1 class='title-page title-task'><%= @response.task.title %></h1>
+          
+          <section class="section-task">
+            <h4 class="field-task">Entregar até:  </h4>
+            <span class="span-task"><%= @response.task.expiration_date.strftime("%d/%m/%Y") %></span>
           </section>
-        </section>
 
-        <% if Response.isActive?(@response.status, @response.active) %>
-          <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
-          <section class="section-alterar-status">
-            <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, disabled: desabilitar_status, class: 'status-task' %>
-            <%= form.submit 'Alterar', disabled: desabilitar_status, class: ' btn-alterar-response btn-new-item btn-alterar' %>
+          <section class="section-task">
+            <h4 class="field-task">Professor:  </h4>
+            <span class="span-task"><%= @response.task.class_group.user.name %></span>
           </section>
-        <% end %>
-      </section>
+
+          <section class="section-task">
+            <h4 class="field-task">Disciplina:  </h4>
+            <span class="span-task"><%= @response.task.class_group.discipline %></span>
+          </section>
+
+          <section class="section-task">
+            <span class="card-class status-not-completed code-class"><%= @response.task.class_group.class_code %></span>
+          </section>
+        </div>
+
+        <div style="width: 100%;">
+          <section class="description-task" style="display: inline-block; width: 65%;">
+            <h4>Descrição:</h4>
+            <h3 class="description-task-text"><%= @response.task.description %></h3>
+          </section>
+
+          <% if @response.done? && @response.grade.present? %>
+            <div style="display: inline-block; width: 21%; height: 4em;">
+              <%= link_to 'Visualizar Nota', view_grade_path, class: 'btn-view-grade' %>
+            </div>
+          <% end %>
+        </div>
+
+        <section class="content-body-response">
+          <section class="response-user-task">
+            <%= form.text_field :response_annotation, class:"annotation-task", disabled: !@response.task.progress? , placeholder: "Escreva suas anotações.." %>
+            <section class="upload-response">
+              <% if @response.task.progress? %>
+                <%= form.file_field :response_value, accept: '.pdf, .docx, .txt, .zip' %>
+              <% end %>
+
+              <% if @response.response_value.attached? %>
+                <%= link_to "Arquivo enviado: #{@response.response_value&.filename}", rails_blob_path(@response.response_value, disposition: "attachment")  %>
+              <% else %>
+                <%= form.label "Arquivo enviado: nenhum" %>
+              <% end %>
+            </section>
+          </section>
+
+          <% if Response.isActive?(@response.status, @response.active) %>
+            <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
+            <section class="section-alterar-status">
+              <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, disabled: desabilitar_status, class: 'status-task' %>
+              <%= form.submit 'Alterar', disabled: desabilitar_status, class: ' btn-alterar-response btn-new-item btn-alterar' %>
+            </section>
+          <% end %>
+        </section>
+      <% end %>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
     <% end %>
   </div>
 </main>

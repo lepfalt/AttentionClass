@@ -1,31 +1,32 @@
 <main class="card-main card-table">
-  <a href=<%= class_group_path(@task.class_group_id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-  <% if flash[:notice] %>
-    <div class="alert alert-success" role="alert">
-      <%= flash[:notice] %>
-    </div>
+  <% unless @task.nil? %>
+    <a href=<%= class_group_path(@task.class_group_id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <% end %>
   <div class="content-intern">
-    <h1 class='title-page'>Respostas</h1>
+    <% if current_user.id == @task&.class_group&.user_id %>
+      <h1 class='title-page'>Respostas</h1>
 
-    <table class="table table-bordered table-hover table-page">
-      <thead class="header-table-red header-table-font">
-        <tr>
-          <th>Nome</th>
-          <th>Nota</th>
-          <th colspan="1"></th>
-        </tr>
-      </thead>
-
-      <tbody class="body-table">
-         <% @responses_task.each do |response| %>
+      <table class="table table-bordered table-hover table-page">
+        <thead class="header-table-red header-table-font">
           <tr>
-            <td class="content-text-table"><%= response.user.name %></td>
-            <td><%= response.done? ? response.grade : 'Sem nota' %></td>
-            <td><%= link_to 'Visualizar', task_response_path(response.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
+            <th>Nome</th>
+            <th>Nota</th>
+            <th colspan="1"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody class="body-table">
+          <% @responses_task.each do |response| %>
+            <tr>
+              <td class="content-text-table"><%= response.user.name %></td>
+              <td><%= response.done? ? response.grade : 'Sem nota' %></td>
+              <td><%= link_to 'Visualizar', task_response_path(response.id), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
+    <% end %>
   </div>
 </main>

@@ -1,13 +1,9 @@
 class SessionsController < ApplicationController
+  before_action :restrict_by_authorization, only: [:destroy]
+  before_action :load_enviroments_vars, only: %i[send_email]
+
   def new
-    if logged_in? #Se tá logado, redireciona pra conta
-      is_admin = User.find_by(id: current_user).admin?
-      if is_admin
-        redirect_to tasks_board_path(current_user)
-      else
-        redirect_to responses_board_path(current_user)
-      end
-    end
+    redirected_logged
   end
 
   def create
@@ -16,20 +12,9 @@ class SessionsController < ApplicationController
     else
       @user = User.find_by(email: params[:email])
       if @user&.authenticate(params[:password])
-        session[:user_id] = @user.id
-        if @user.admin?
-          redirect_to tasks_board_path(@user.id)
-        else
-          redirect_to responses_board_path(@user.id)
-        end
+        allow_user(@user)
       else
-        if @user.nil?
-          flash[:notice_error] = 'Email ou senha inválidos.'
-        else
-          flash[:notice_error] = 'Senha Inválida.'
-        end
-
-        redirect_to login_path
+        deny_user(@user)
       end
     end
   end
@@ -39,41 +24,51 @@ class SessionsController < ApplicationController
     redirect_to login_path
   end
 
+  def send_email
+    if params[:email].present?
+      user = User.find_by(email: params[:email])
+      if !user.nil? 
+        trigger_email_to(user)
+      else
+        handler_notice_error('Email inválido.', login_path)      
+      end
+    else
+      handler_notice_error('Email precisa ser preenchido.', login_path)
+    end
+  end
+
+  private
+
   def is_reset?
     params[:reset].present?
   end
 
-  def send_email
-    if params[:email].present?
-      user = User.find_by(email: params[:email])
-      if !user.nil?
-        token = generate_token(user)
-        puts 'TOKEN ', token
-        UserMailer.with(user: user, token: token).confirmation.deliver_later
-        flash[:notice] = 'Em instantes você receberá um email para resetar sua senha :).'
-      else
-        flash[:notice_error] = 'Email inválido.'
-      end
+  def allow_user(user)
+    session[:user_id] = user.id
+    if user.admin?
+      redirect_to tasks_board_path(user.id)
     else
-      flash[:notice_error] = 'Email precisa ser preenchido.'
+      redirect_to responses_board_path(user.id)
+    end
+  end
+
+  def deny_user(user)
+    if user.nil?
+      flash[:noticeError] = 'Email ou senha inválidos.'
+    else
+      flash[:noticeError] = 'Senha Inválida.'
     end
 
     redirect_to login_path
   end
 
-  private
+  def trigger_email_to(user)
+    UserMailer.with(user: user, token: generate_token(user)).confirmation.deliver_later
+    handler_notice('Em instantes você receberá um email para resetar sua senha :)', login_path)
+  end
 
   def generate_token(user)
-    envs_vars
     sentence = user.name + ENV["SEED"] + user.profile
-    puts 'SENTENCE ', sentence
     BCrypt::Password.create(sentence)
-  end
-
-  def envs_vars
-    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    YAML.load(File.open(env_file)).each do |key, value|
-      ENV[key.to_s] = value
-    end if File.exists?(env_file)
-  end
+  end  
 end

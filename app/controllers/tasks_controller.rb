@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :restrict_by_authorization
+  before_action :restrict_by_profile_admin
   before_action :set_task, only: %i[show index_responses update destroy cancel remove_ajusted]
 
   # GET /tasks
@@ -11,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   def index_responses
-    @responses_task = @task.responses
+    @responses_task = @task&.responses
   end
 
   def show_response
@@ -40,46 +42,36 @@ class TasksController < ApplicationController
     end
 
     if @task.save
-      flash[:notice] = 'Tarefa criada com sucesso!'
-      redirect_to tasks_board_path(current_user.id)
+      handler_notice('Tarefa criada com sucesso!', tasks_board_path(current_user.id))
     else
-      flash[:notice] = 'Erro ao criar tarefa.'
-      redirect_to new_task_path
+      handler_notice_error('Erro ao criar tarefa.', new_task_path)
     end
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update    
-    unless valid_task?
-      redirect_to task_path(@task)
-      return
-    end
-
-    if Date.parse(task_params[:expiration_date]) < @task.expiration_date
-      flash[:notice] = "A tarefa não pode ser antecipada."
-      redirect_to task_path(@task)
-      return
-    end
+    return unless can_update?
 
     if @task.update(task_params)
       if @task.progress?
         generate_responses
       end
 
-      flash[:notice] = 'Tarefa atualizada com sucesso!'
-      redirect_to tasks_board_path(current_user.id)
+      handler_notice('Tarefa atualizada com sucesso!', tasks_board_path(current_user.id))
     else
-      renderiza :show
+      handler_notice_error("Erro ao atualizar tarefa.", task_path(@task))
     end
   end
 
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
-    @task.destroy
-    flash[:notice] = 'Tarefa excluída com sucesso!'
-    redirect_to tasks_board_path(current_user.id)
+    if @task.destroy
+      handler_notice('Tarefa excluída com sucesso!', tasks_board_path(current_user.id))
+    else
+      handler_notic_error('Erro ao excluir tarefa.', tasks_board_path(current_user.id))
+    end
   end
 
   def cancel
@@ -87,23 +79,24 @@ class TasksController < ApplicationController
     if @task.save
       @task.responses.each do |response|
         response.active = false
-        puts 'erro ao inativar response' unless response.save
+        unless response.save
+          puts 'erro ao inativar response'
+          return
+        end
       end
 
-      flash[:notice] = 'Tarefa excluída com sucesso!'
-      redirect_to tasks_board_path(current_user.id)
+      handler_notice('Tarefa excluída com sucesso!', tasks_board_path(current_user.id))
     else
-      flash[:notice] =  "Erro ao cancelar task" # Criar Error
+      handler_notice_error('Erro ao cancelar task', tasks_board_path(current_user.id))
     end
   end
 
   def remove_ajusted
     @task.active = false
     if @task.save
-      flash[:notice] = 'Tarefa excluída com sucesso!'
-      redirect_to tasks_board_path(current_user.id)
+      handler_notice('Tarefa excluída com sucesso!', tasks_board_path(current_user.id))
     else
-      flash[:notice] = "Erro ao remover task" # Criar Error
+      handler_notice_error('Erro ao remover task', tasks_board_path(current_user.id))
     end
   end
 
@@ -111,7 +104,7 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.
@@ -152,7 +145,7 @@ class TasksController < ApplicationController
       return true
     end
 
-    flash[:notice] = field
+    flash[:noticeError] = field
     false
   end
 
@@ -171,5 +164,17 @@ class TasksController < ApplicationController
         puts 'Erro ', task.errors unless task.save
       end
     end
+  end
+
+  def can_update?
+    if !valid_task?
+      redirect_to task_path(@task)
+      return false
+    elsif Date.parse(task_params[:expiration_date]) < @task.expiration_date
+      handler_notice_error("A tarefa não pode ser antecipada.", task_path(@task))
+      return false
+    end
+
+    true
   end
 end
