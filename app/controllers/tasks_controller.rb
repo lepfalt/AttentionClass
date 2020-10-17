@@ -13,6 +13,7 @@ class TasksController < ApplicationController
   end
 
   def index_responses
+    session[:page_back] = params[:page_back] == 'task' ? task_path(@task&.id) : class_group_path(@task&.class_group_id)
     @responses_task = @task&.responses
   end
 
