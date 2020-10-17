@@ -21,6 +21,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def restrict_by_profile_admin
+    if logged_in? #Se tá logado, redireciona pra conta
+      is_admin = User.find_by(id: current_user).admin?
+
+      unless is_admin
+        handler_notice_error('Essa página não existe para este tipo de perfil.', responses_board_path(current_user))
+      end
+    end
+  end
+
   def redirected_logged
     if logged_in? #Se tá logado, redireciona pra conta
       is_admin = User.find_by(id: current_user).admin?
