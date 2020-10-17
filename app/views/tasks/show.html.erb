@@ -42,7 +42,7 @@
           <% end %>
 
           <section class="section-response-user" style=<%= @task.pending? ? 'display:none' : '' %>>
-            <%= link_to 'Visualizar Respostas', task_responses_path(@task.id), class: 'btn-new-student upload-task text-button-task' %>
+            <%= link_to 'Visualizar Respostas', task_responses_path(@task.id, :page_back => 'task'), class: 'btn-new-student upload-task text-button-task' %>
           </section>
         </section>    
       <% end %>
