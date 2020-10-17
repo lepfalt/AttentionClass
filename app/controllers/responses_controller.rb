@@ -1,4 +1,5 @@
 class ResponsesController < ApplicationController
+  include EnumHelper
   before_action :restrict_by_authorization
   before_action :set_response, only: %i[show update destroy show_grade]
 
@@ -11,7 +12,10 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1
   # GET /responses/1.json
-  def show; end
+  def show
+    # options = options_for_enum(@response, :status)
+    # puts 'OPTION ',  options
+  end
 
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json

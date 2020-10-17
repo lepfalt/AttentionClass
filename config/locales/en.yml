@@ -30,4 +30,21 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    enums:
+      user:
+        profile:
+          admin: "Administrador"
+          standard: "Padrão"
+      response:
+        status:
+          pending: "Pendente"
+          progress: "Em Andamento"
+          done: "Concluído"
+          undelivered: "Não Entregue"
+      task:
+        status:
+          pending: "Pendente"
+          progress: "Em Andamento"
+          done: "Concluído"
+          ajusted: "Corrigido"

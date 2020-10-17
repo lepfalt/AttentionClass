@@ -58,7 +58,7 @@
           <% if Response.isActive?(@response.status, @response.active) %>
             <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
             <section class="section-alterar-status">
-              <%= form.select :status, Response.statuses.keys.reject { |k| k == "undelivered" }, {}, disabled: desabilitar_status, class: 'status-task' %>
+              <%= form.select :status, options_for_enum(@response, :status, 1), {}, disabled: desabilitar_status, class: 'status-task' %>
               <%= form.submit 'Alterar', disabled: desabilitar_status, class: ' btn-alterar-response btn-new-item btn-alterar' %>
             </section>
           <% end %>
