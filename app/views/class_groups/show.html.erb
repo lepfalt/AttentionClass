@@ -1,7 +1,7 @@
 <main class="card-main card-table">
   <a href=<%= admin_classes_path(current_user.id) %> data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
   <div class="content-intern">
-    <% if current_user.id == @class_group.user_id %>
+    <% if current_user.id == @class_group&.user_id %>
       <h1 class='title-page'>Turma: <%=@class_group.class_code%></h1>
 
       <table class="table table-bordered table-hover table-page">
