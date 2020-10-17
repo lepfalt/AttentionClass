@@ -1,38 +1,39 @@
-<p id="notice"><%= notice %></p>
-<% if current_user == @user %>
-  <main class="card-main card-table">
-    <a href='<%= current_user.admin? ? tasks_board_path(current_user.id) : responses_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
-    <div class="content-intern">
-    
-    <h1 class='title-my-account'>Minha Conta</h1>
-    <div style="display:inline-block; margin-top: 3em; margin-left: 10.5em;">
-      <p class="infos-my-account">
-        <strong>Perfil:</strong>
-        <%= @user.profile %>
-      </p>
+<main class="card-main card-table">
+  <a href='<%= current_user.admin? ? tasks_board_path(current_user.id) : responses_board_path(current_user.id) %>' data-toggle="tooltip" title="Voltar"><%= image_tag('back.png', id: "back", class: "icon-page") %></a>
+  <div class="content-intern">
+    <% if current_user.id == @user.id %>
+      <h1 class='title-my-account'>Minha Conta</h1>
+      <div style="display:inline-block; margin-top: 3em; margin-left: 10.5em;">
+        <p class="infos-my-account">
+          <strong>Perfil:</strong>
+          <%= @user.profile %>
+        </p>
 
-      <p class="infos-my-account">
-        <strong>Nome:</strong>
-        <%= @user.name %>
-      </p>
+        <p class="infos-my-account">
+          <strong>Nome:</strong>
+          <%= @user.name %>
+        </p>
 
-      <p class="infos-my-account">
-        <strong>Matrícula:</strong>
-        <%= @user.registration %>
-      </p>
+        <p class="infos-my-account">
+          <strong>Matrícula:</strong>
+          <%= @user.registration %>
+        </p>
 
-      <p class="infos-my-account">
-        <strong>Email:</strong>
-        <%= @user.email %>
-      </p>
+        <p class="infos-my-account">
+          <strong>Email:</strong>
+          <%= @user.email %>
+        </p>
 
-      <p class="infos-my-account">
-        <strong>Criado em:</strong>
-        <%= @user.created_at.strftime("%d/%m/%Y") %>
-      </p>
-    </div>
-    <div style="height: 65vh; margin: auto;">
-      <%= link_to 'Excluir Conta', @user, method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta conta? Isso irá apagar todo o progresso realizado' }, class: 'btn-remove-account' %>
-    </div>
-  </main>
-<% end %>
+        <p class="infos-my-account">
+          <strong>Criado em:</strong>
+          <%= @user.created_at.strftime("%d/%m/%Y") %>
+        </p>
+      </div>
+      <div style="height: 65vh; margin: auto;">
+        <%= link_to 'Excluir Conta', @user, method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta conta? Isso irá apagar todo o progresso realizado' }, class: 'btn-remove-account' %>
+      </div>
+    <% else %>
+      <h1 class='title-page'>Código identificador inválido</h1>
+    <% end %>
+  </div>
+</main>
