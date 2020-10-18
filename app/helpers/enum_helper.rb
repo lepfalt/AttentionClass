@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EnumHelper
   def options_for_enum(object, enum, remove_n_top)
     options = enums_to_translated_options_array(object.class.name, enum.to_s)
@@ -6,21 +8,21 @@ module EnumHelper
   end
 
   def enums_to_translated_options_array(klass, enum)
-    klass.classify.safe_constantize.send(enum.pluralize).map {
-        |key, value| [I18n.t("activerecord.enums.#{klass.underscore}.#{enum}.#{key}"), key]
-    }
+    klass.classify.safe_constantize.send(enum.pluralize).map do |key, _value|
+      [I18n.t("activerecord.enums.#{klass.underscore}.#{enum}.#{key}"), key]
+    end
   end
 
   def set_value_enum(status)
     case status
     when 'pending'
-      return "Pendente"
+      'Pendente'
     when 'progress'
-      return "Em Andamento"
+      'Em Andamento'
     when 'done'
-      return "Concluído"
+      'Concluído'
     when 'ajusted'
-      return "Corrigido"
+      'Corrigido'
     end
   end
 end

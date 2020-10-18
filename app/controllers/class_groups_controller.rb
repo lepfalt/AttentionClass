@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClassGroupsController < ApplicationController
   before_action :restrict_by_authorization
   before_action :restrict_by_profile_admin
@@ -57,7 +59,7 @@ class ClassGroupsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_class_group
-    @class_group = ClassGroup.find_by(id:params[:id])
+    @class_group = ClassGroup.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.
@@ -79,7 +81,7 @@ class ClassGroupsController < ApplicationController
 
   def valid_group?
     unless @class_group.discipline.present? || @class_group.class_code.present?
-      handler_notice_error("Todos os campos devem ser preenchidos.", new_class_group_path)
+      handler_notice_error('Todos os campos devem ser preenchidos.', new_class_group_path)
       return false
     end
 

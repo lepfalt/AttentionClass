@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :restrict_by_authorization, only: %i[update destroy]
   before_action :authorized, only: [:show]
-  before_action :set_user , only: %i[destroy update_password]
+  before_action :set_user, only: %i[destroy update_password]
   before_action :load_enviroments_vars, only: %i[reset_password]
 
   # GET /users/1
@@ -36,7 +38,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     registered_user = User.find_by(email: params[:email])
-    
+
     if registered_user.nil?
       handler_notice_error('Usuário inexistente.', new_user_class_path(params[:class_id]))
     elsif registered_user.admin?
@@ -100,12 +102,15 @@ class UsersController < ApplicationController
 
   def valid_password?(params_validate)
     if params_validate[:password].present?
-      flash[:noticeError] = 'As senhas devem ser iguais.' if params_validate[:password] != params_validate[:password_confirm]
+      if params_validate[:password] != params_validate[:password_confirm]
+        flash[:noticeError] = 'As senhas devem ser iguais.'
+      end
     else
       flash[:noticeError] = 'A senha deve ser preenchida.'
     end
 
     return true if flash[:noticeError].nil?
+
     redirect_to_reset_password
     false
   end
@@ -153,7 +158,7 @@ class UsersController < ApplicationController
     group.tasks.each do |task|
       if task.progress?
         response = Response.new(user_id: user_id, task_id: task.id, status: 0, active: true)
-        puts "Error na criacao de response: ", response.errors unless response.save
+        puts 'Error na criacao de response: ', response.errors unless response.save
       end
     end
   end
@@ -161,11 +166,9 @@ class UsersController < ApplicationController
   def match_user(token)
     token_compare = BCrypt::Password.new(token)
     User.all.each do |user|
-      sentence_compare = user.name + ENV["SEED"] + user.profile
+      sentence_compare = user.name + ENV['SEED'] + user.profile
 
-      if token_compare == sentence_compare
-        return user
-      end
+      return user if token_compare == sentence_compare
     end
 
     nil
@@ -176,16 +179,16 @@ class UsersController < ApplicationController
     intervalo = Time.now.to_i - expire
     return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
 
-    flash[:noticeError] = "token expirado"
+    flash[:noticeError] = 'token expirado'
     false
   end
 
   def redirect_to_reset_password
-    redirect_to reset_password_path(@user, :expire => session[:expire], :reset => session[:token])
+    redirect_to reset_password_path(@user, expire: session[:expire], reset: session[:token])
   end
 
   def encrypt(sentence)
-    #colocar exception
+    # colocar exception
     BCrypt::Password.create(sentence)
   end
 end
