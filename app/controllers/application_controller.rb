@@ -24,21 +24,20 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_by_profile_admin
-    if logged_in? # Se tá logado, redireciona pra conta
-      is_admin = User.find_by(id: current_user).admin?
+    return unless logged_in? # Se ta logado, redireciona pra conta
 
-      handler_notice_error('Essa página não existe para este tipo de perfil.', responses_board_path(current_user)) unless is_admin
-    end
+    is_admin = User.find_by(id: current_user).admin?
+    handler_notice_error('Essa página não existe para este tipo de perfil.', responses_board_path(current_user)) unless is_admin
   end
 
   def restrict_by_identification(id, path)
-    if logged_in?
-      handler_notice_error('Página não autorizada para a conta logada.', path) unless current_user.id == id
-    end
+    return unless logged_in?
+
+    handler_notice_error('Página não autorizada para a conta logada.', path) unless current_user.id == id
   end
 
   def redirected_logged
-    if logged_in? # Se tá logado, redireciona pra conta
+    if logged_in? # Se ta logado, redireciona pra conta
       is_admin = User.find_by(id: current_user).admin?
       if is_admin
         redirect_to tasks_board_path(current_user)
@@ -53,11 +52,11 @@ class ApplicationController < ActionController::Base
   end
 
   def load_enviroments_vars
-    env_file = File.join(Rails.root, 'config', 'local_env.yml')
-    if File.exist?(env_file)
-      YAML.safe_load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end
+    env_file = Rails.root.join('config/local_env.yml')
+    return unless File.exist?(env_file)
+
+    YAML.safe_load(File.open(env_file)).each do |key, value|
+      ENV[key.to_s] = value
     end
   end
 

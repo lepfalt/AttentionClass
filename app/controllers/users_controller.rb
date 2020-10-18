@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   def reset_password
     return unless valid_token?
 
-    # Armazenando para reacessar página em caso de erro
+    # Armazenando para reacessar pagina em caso de erro
     session[:token] = params[:reset]
     session[:expire] = params[:expire]
     @user = match_user(params[:reset])
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     if @user.save
       handler_notice('Senha resetada com sucesso!', login_path)
     else
-      puts 'Erro ao resetar senha', @user.errors
+      Rails.logger.debug 'Erro ao resetar senha', @user.errors
       redirect_to_reset_password
     end
   end
@@ -156,7 +156,7 @@ class UsersController < ApplicationController
     group.tasks.each do |task|
       if task.progress?
         response = Response.new(user_id: user_id, task_id: task.id, status: 0, active: true)
-        puts 'Error na criacao de response: ', response.errors unless response.save
+        Rails.logger.debug 'Error na criacao de response: ', response.errors unless response.save
       end
     end
   end
@@ -175,7 +175,7 @@ class UsersController < ApplicationController
   def valid_token?
     expire = params[:expire].to_i
     intervalo = Time.now.to_i - expire
-    return true if intervalo / 60 <= 10 # não resetar se tiver mais de 10 min que foi gerado o token
+    return true if intervalo / 60 <= 10 # nao resetar se tiver mais de 10 min que foi gerado o token
 
     flash[:noticeError] = 'token expirado'
     false

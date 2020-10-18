@@ -11,12 +11,9 @@ class Response < ApplicationRecord
   # validates_associated :user
   # validates_associated :task
 
-  def self.isActive?(status, active)
-    if status == 'undelivered'
-      return false
-    elsif status == 'done' && !active
-      return false
-    end
+  def self.active?(status, active)
+    return false if status == 'undelivered'
+    return false if status == 'done' && !active
 
     true
   end

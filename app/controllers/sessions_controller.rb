@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if is_reset?
+    if reset?
       send_email
     else
       @user = User.find_by(email: params[:email])
@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
 
   private
 
-  def is_reset?
+  def reset?
     params[:reset].present?
   end
 

@@ -11,7 +11,7 @@ class User < ApplicationRecord
   # validates :profile, inclusion: { in: [standard, admin] }
 
   VALID_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i.freeze
-  # pesquisar solução depois
+  # pesquisar solucao depois
   # validates :email, presence: true, length: {maximum: 260}, format: { with: VALID_EMAIL_FORMAT}, uniqueness: {case_sensitive: false}
   validates :password_digest, :profile, :name, :email, presence: true
 
@@ -28,13 +28,9 @@ class User < ApplicationRecord
   end
 
   def validate_user?
-    if !valid? || @password.blank?
-      return 'Dados de usuário inválidos.'
-    elsif !User.unique_email?(email)
-      return 'Esse email já existe.'
-    elsif !confirm_password?(password_confirm)
-      return 'A senha precisa ser igual à sua confirmação.'
-    end
+    return 'Dados de usuário inválidos.' if !valid? || @password.blank?
+    return 'Esse email já existe.' unless User.unique_email?(email)
+    return 'A senha precisa ser igual à sua confirmação.' unless confirm_password?(password_confirm)
 
     nil
   end

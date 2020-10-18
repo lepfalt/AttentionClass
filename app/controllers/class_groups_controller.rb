@@ -3,7 +3,7 @@
 class ClassGroupsController < ApplicationController
   before_action :restrict_by_authorization
   before_action :restrict_by_profile_admin
-  before_action :set_class_group, only: %i[show new_user index_users edit update destroy]
+  before_action :set_class_group, only: %i[show new_user index_users destroy]
 
   # GET /class_groups
   # GET /class_groups.json
@@ -79,13 +79,14 @@ class ClassGroupsController < ApplicationController
     @class_group.tasks.destroy_all
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def valid_group?
     unless @class_group.discipline.present? || @class_group.class_code.present?
       handler_notice_error('Todos os campos devem ser preenchidos.', new_class_group_path)
       return false
     end
 
-    if @class_group.expiration_date < Date.today
+    if @class_group.expiration_date < Time.zone.today
       handler_notice_error('Data Inválida.', new_class_group_path)
       return false
     end
@@ -101,9 +102,9 @@ class ClassGroupsController < ApplicationController
 
   def check_class_groups_validity(class_groups)
     class_groups.each do |group|
-      if group.active && group.expiration_date < Date.today
+      if group.active && group.expiration_date < Time.zone.today
         group.active = false
-        puts 'Erro ao desativar turma' unless group.save
+        Rails.logger.debug 'Erro ao desativar turma' unless group.save
       end
     end
   end

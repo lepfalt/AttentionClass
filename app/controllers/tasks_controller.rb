@@ -82,7 +82,7 @@ class TasksController < ApplicationController
       @task.responses.each do |response|
         response.active = false
         unless response.save
-          puts 'erro ao inativar response'
+          Rails.logger.debug 'erro ao inativar response'
           return
         end
       end
@@ -118,15 +118,15 @@ class TasksController < ApplicationController
     users_group = @task.class_group.users
     users_group.each do |user|
       response = Response.find_or_initialize_by(user_id: user.id, task_id: @task.id, status: 0, active: true)
-      puts 'Error na criacao de response: ', response.errors unless response.save
+      Rails.logger.debug 'Error na criacao de response: ', response.errors unless response.save
     end
   end
 
   def check_completed_tasks
     @tasks.each do |task|
-      if task.progress? && task.expiration_date < Date.today
+      if task.progress? && task.expiration_date < Time.zone.today
         task.status = 2
-        puts 'Erro ao concluir tarefa automática', task.errors unless task.save
+        Rails.logger.debug 'Erro ao concluir tarefa automática', task.errors unless task.save
       end
     end
   end
@@ -135,7 +135,7 @@ class TasksController < ApplicationController
     field = nil
     if @task.title.blank?
       field = 'Título inválido'
-    elsif @task.expiration_date.blank? || @task.expiration_date < Date.today
+    elsif @task.expiration_date.blank? || @task.expiration_date < Time.zone.today
       field = 'Data Limite inválida'
     elsif @task.class_group_id.blank?
       field = 'Turma inválida'
@@ -163,7 +163,7 @@ class TasksController < ApplicationController
 
       unless has_one_unajusted
         task.status = 3
-        puts 'Erro ', task.errors unless task.save
+        Rails.logger.debug 'Erro ', task.errors unless task.save
       end
     end
   end

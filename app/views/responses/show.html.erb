@@ -55,7 +55,7 @@
             </section>
           </section>
 
-          <% if Response.isActive?(@response.status, @response.active) %>
+          <% if Response.active?(@response.status, @response.active) %>
             <% desabilitar_status = (@response.done? && !@response.task.progress?) %>
             <section class="section-alterar-status">
               <%= form.select :status, options_for_enum(@response, :status, 1), {}, disabled: desabilitar_status, class: 'status-task' %>

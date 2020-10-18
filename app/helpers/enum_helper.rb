@@ -13,16 +13,13 @@ module EnumHelper
     end
   end
 
-  def set_value_enum(status)
-    case status
-    when 'pending'
-      'Pendente'
-    when 'progress'
-      'Em Andamento'
-    when 'done'
-      'Concluído'
-    when 'ajusted'
-      'Corrigido'
-    end
+  def value_enum_current(status)
+    status_list = {
+      'pending' => 'Pendente',
+      'progress' => 'Em Andamento',
+      'done' => 'Concluído',
+      'ajusted' => 'Corrigido'
+    }
+    status_list[status]
   end
 end

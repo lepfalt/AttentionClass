@@ -8,7 +8,6 @@ class ResponsesController < ApplicationController
   # GET /responses.json
   def index
     @user_id_param = params[:user_id].to_i
-    puts 'USR ', @user_id_param, current_user.id
     @responses = Response.where(user_id: @user_id_param)
     udpate_responses
   end
@@ -79,7 +78,7 @@ class ResponsesController < ApplicationController
   end
 
   def check_status_task(response)
-    if response.task.progress? && response.task.expiration_date < Date.today
+    if response.task.progress? && response.task.expiration_date < Time.zone.today
       close_task(response.task)
       false
     end
@@ -89,14 +88,14 @@ class ResponsesController < ApplicationController
 
   def close_task(task)
     task.status = 2
-    puts 'Erro ao concluir tarefa automática no response', task.errors unless task.save
+    Rails.logger.debug 'Erro ao concluir tarefa automática no response', task.errors unless task.save
   end
 
   def check_status_response(response)
     if !response.task.progress? && (response.pending? || response.progress?)
       response.status = 3
       unless response.save
-        puts 'Erro ao não entregar response', response.errors
+        Rails.logger.debug 'Erro ao não entregar response', response.errors
         return false
       end
     end
