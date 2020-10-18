@@ -1,5 +1,4 @@
 class ResponsesController < ApplicationController
-  include EnumHelper
   before_action :restrict_by_authorization
   before_action :set_response, only: %i[show update destroy show_grade]
 

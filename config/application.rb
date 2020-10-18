@@ -24,6 +24,7 @@ module Attentionclass
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'smtp.gmail.com',
+      :user                 => "Attention Class",
       :user_name            => ENV["USERNAME_EMAIL"],
       :password             => ENV["PASSWORD_EMAIL"],
       :authentication       => :login,
