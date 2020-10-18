@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ResponsesController < ApplicationController
   before_action :restrict_by_authorization
   before_action :set_response, only: %i[show update destroy show_grade]
@@ -26,12 +28,12 @@ class ResponsesController < ApplicationController
 
     if @response.update(response_params)
       if current_user.admin?
-        handler_notice("Resposta avaliada com sucesso.", task_responses_path(@response.task_id))
+        handler_notice('Resposta avaliada com sucesso.', task_responses_path(@response.task_id))
       else
-        handler_notice("Resposta salva com sucesso.", responses_board_path(current_user.id))
+        handler_notice('Resposta salva com sucesso.', responses_board_path(current_user.id))
       end
     else
-      handler_notice_error("Erro ao atualizar resposta.", response_path(@response))
+      handler_notice_error('Erro ao atualizar resposta.', response_path(@response))
     end
   end
 
@@ -40,9 +42,9 @@ class ResponsesController < ApplicationController
   def destroy
     @response.active = false
     if @response.save
-      handler_notice_error("Resposta excluída com sucesso", responses_board_path(current_user.id))
+      handler_notice_error('Resposta excluída com sucesso', responses_board_path(current_user.id))
     else
-      handler_notice_error("Erro ao excluir resposta.", responses_board_path(current_user.id))
+      handler_notice_error('Erro ao excluir resposta.', responses_board_path(current_user.id))
     end
   end
 
@@ -104,8 +106,8 @@ class ResponsesController < ApplicationController
 
   def valid_response_by_admin?
     if current_user.admin?
-      unless response_params[:grade].present?
-        handler_notice("Campo Nota é obrigatório.", task_response_path(@response))
+      if response_params[:grade].blank?
+        handler_notice('Campo Nota é obrigatório.', task_response_path(@response))
         return false
       end
     end

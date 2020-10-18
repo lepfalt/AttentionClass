@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Response < ApplicationRecord
   enum status: { pending: 0, progress: 1, done: 2, undelivered: 3 }
   belongs_to :user, optional: false
@@ -16,6 +18,6 @@ class Response < ApplicationRecord
       return false
     end
 
-    return true
+    true
   end
 end

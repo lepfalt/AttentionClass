@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   before_action :restrict_by_authorization, only: [:destroy]
   before_action :load_enviroments_vars, only: %i[send_email]
@@ -27,10 +29,10 @@ class SessionsController < ApplicationController
   def send_email
     if params[:email].present?
       user = User.find_by(email: params[:email])
-      if !user.nil? 
+      if !user.nil?
         trigger_email_to(user)
       else
-        handler_notice_error('Email inválido.', login_path)      
+        handler_notice_error('Email inválido.', login_path)
       end
     else
       handler_notice_error('Email precisa ser preenchido.', login_path)
@@ -53,11 +55,11 @@ class SessionsController < ApplicationController
   end
 
   def deny_user(user)
-    if user.nil?
-      flash[:noticeError] = 'Email ou senha inválidos.'
-    else
-      flash[:noticeError] = 'Senha Inválida.'
-    end
+    flash[:noticeError] = if user.nil?
+                            'Email ou senha inválidos.'
+                          else
+                            'Senha Inválida.'
+                          end
 
     redirect_to login_path
   end
@@ -68,7 +70,7 @@ class SessionsController < ApplicationController
   end
 
   def generate_token(user)
-    sentence = user.name + ENV["SEED"] + user.profile
+    sentence = user.name + ENV['SEED'] + user.profile
     BCrypt::Password.create(sentence)
-  end  
+  end
 end

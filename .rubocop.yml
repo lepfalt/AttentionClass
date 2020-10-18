@@ -1,0 +1,43 @@
+require: rubocop-rails
+
+Rails:
+  Enabled: true
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7
+
+  Include:
+    - '**/*.gemspec'
+    - '**/*.podspec'
+    #- '**/*.jbuilder'
+    - '**/*.rb'
+    - '**/*.rake'
+    - '**/*.opal'
+    - Gemfile
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/**
+    - config/**
+    - script/**
+    - bin/bundle
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 140
+  # To make it possible to copy or click on URIs in the code, we allow lines
+  # containing a URI to be longer than Max.
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - test
+    - production

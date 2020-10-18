@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UserMailer < ApplicationMailer
-  default :from => 'attentionclasss@gmail.com'
+  default from: 'attentionclasss@gmail.com'
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -10,6 +12,6 @@ class UserMailer < ApplicationMailer
     @token = params[:token]
     @expire = Time.now.to_i
 
-    mail to: @user.email, subject: "Reset de senha"
+    mail to: @user.email, subject: 'Reset de senha'
   end
 end

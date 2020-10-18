@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   before_action :restrict_by_authorization
   before_action :restrict_by_profile_admin
@@ -52,17 +54,15 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
-  def update    
+  def update
     return unless can_update?
 
     if @task.update(task_params)
-      if @task.progress?
-        generate_responses
-      end
+      generate_responses if @task.progress?
 
       handler_notice('Tarefa atualizada com sucesso!', tasks_board_path(current_user.id))
     else
-      handler_notice_error("Erro ao atualizar tarefa.", task_path(@task))
+      handler_notice_error('Erro ao atualizar tarefa.', task_path(@task))
     end
   end
 
@@ -118,7 +118,7 @@ class TasksController < ApplicationController
     users_group = @task.class_group.users
     users_group.each do |user|
       response = Response.find_or_initialize_by(user_id: user.id, task_id: @task.id, status: 0, active: true)
-      puts "Error na criacao de response: ", response.errors unless response.save
+      puts 'Error na criacao de response: ', response.errors unless response.save
     end
   end
 
@@ -133,16 +133,16 @@ class TasksController < ApplicationController
 
   def valid_task?
     field = nil
-    if !@task.title.present?
-      field = "Título inválido"
-    elsif !@task.expiration_date.present? || @task.expiration_date < Date.today
-      field = "Data Limite inválida"
-    elsif !@task.class_group_id.present?
-      field = "Turma inválida"
+    if @task.title.blank?
+      field = 'Título inválido'
+    elsif @task.expiration_date.blank? || @task.expiration_date < Date.today
+      field = 'Data Limite inválida'
+    elsif @task.class_group_id.blank?
+      field = 'Turma inválida'
     elsif @task.expiration_date > @task.class_group.expiration_date
-      field = "Data Limite inválida. A data deve ser compreendida no período vigente da turma."
-    elsif !@task.description.present?
-      field = "Descrição inválida"
+      field = 'Data Limite inválida. A data deve ser compreendida no período vigente da turma.'
+    elsif @task.description.blank?
+      field = 'Descrição inválida'
     else
       return true
     end
@@ -173,7 +173,7 @@ class TasksController < ApplicationController
       redirect_to task_path(@task)
       return false
     elsif Date.parse(task_params[:expiration_date]) < @task.expiration_date
-      handler_notice_error("A tarefa não pode ser antecipada.", task_path(@task))
+      handler_notice_error('A tarefa não pode ser antecipada.', task_path(@task))
       return false
     end
 

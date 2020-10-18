@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_many :responses
   has_and_belongs_to_many :class_groups
@@ -6,11 +8,11 @@ class User < ApplicationRecord
   attr_accessor :password, :password_confirm
 
   enum profile: { standard: 0, admin: 1 }
-  #validates :profile, inclusion: { in: [standard, admin] }
+  # validates :profile, inclusion: { in: [standard, admin] }
 
   VALID_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i.freeze
   # pesquisar solução depois
-  #validates :email, presence: true, length: {maximum: 260}, format: { with: VALID_EMAIL_FORMAT}, uniqueness: {case_sensitive: false}
+  # validates :email, presence: true, length: {maximum: 260}, format: { with: VALID_EMAIL_FORMAT}, uniqueness: {case_sensitive: false}
   validates :password_digest, :profile, :name, :email, presence: true
 
   def confirm_password?(confirm)
@@ -26,11 +28,11 @@ class User < ApplicationRecord
   end
 
   def validate_user?
-    if !self.valid? || !@password.present?
+    if !valid? || @password.blank?
       return 'Dados de usuário inválidos.'
-    elsif !User.unique_email?(self.email)
+    elsif !User.unique_email?(email)
       return 'Esse email já existe.'
-    elsif !self.confirm_password?(self.password_confirm) 
+    elsif !confirm_password?(password_confirm)
       return 'A senha precisa ser igual à sua confirmação.'
     end
 

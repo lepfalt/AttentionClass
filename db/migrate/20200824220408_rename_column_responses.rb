@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameColumnResponses < ActiveRecord::Migration[6.0]
   def change
     rename_column :responses, :person_id, :user_id
