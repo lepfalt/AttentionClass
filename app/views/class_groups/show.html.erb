@@ -19,7 +19,7 @@
             <tr>
               <td class="content-text-table"><%= task.title %></td>
               <td><%= task.expiration_date.strftime("%d/%m/%Y") %></td>
-              <td><%= task.status %></td>
+              <td><%= set_value_enum(task.status) %></td>
               <td><%= link_to 'Ver Respostas', task_responses_path(task.id, :page_back => 'class'), class: 'btn btn-default btn-view-item-table', style: 'width: 35%' %></td>
             </tr>
           <% end %>

@@ -10,4 +10,17 @@ module EnumHelper
         |key, value| [I18n.t("activerecord.enums.#{klass.underscore}.#{enum}.#{key}"), key]
     }
   end
+
+  def set_value_enum(status)
+    case status
+    when 'pending'
+      return "Pendente"
+    when 'progress'
+      return "Em Andamento"
+    when 'done'
+      return "Concluído"
+    when 'ajusted'
+      return "Corrigido"
+    end
+  end
 end
