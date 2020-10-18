@@ -102,9 +102,7 @@ class UsersController < ApplicationController
 
   def valid_password?(params_validate)
     if params_validate[:password].present?
-      if params_validate[:password] != params_validate[:password_confirm]
-        flash[:noticeError] = 'As senhas devem ser iguais.'
-      end
+      flash[:noticeError] = 'As senhas devem ser iguais.' if params_validate[:password] != params_validate[:password_confirm]
     else
       flash[:noticeError] = 'A senha deve ser preenchida.'
     end
