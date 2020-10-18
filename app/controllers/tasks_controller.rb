@@ -118,7 +118,11 @@ class TasksController < ApplicationController
     users_group = @task.class_group.users
     users_group.each do |user|
       response = Response.find_or_initialize_by(user_id: user.id, task_id: @task.id, status: 0, active: true)
+<<<<<<< HEAD
       Rails.logger.debug 'Error na criacao de response: ', response.errors unless response.save
+=======
+      puts 'Error na criacao de response: ', response.errors unless response.save
+>>>>>>> c3be7d8033e6b87250f7d2ff074d689dcbb04549
     end
   end
 
@@ -133,6 +137,7 @@ class TasksController < ApplicationController
 
   def valid_task?
     field = nil
+
     if @task.title.blank?
       field = 'Título inválido'
     elsif @task.expiration_date.blank? || @task.expiration_date < Time.zone.today
