@@ -6,7 +6,8 @@ class ClassGroupsController < ApplicationController
   # GET /class_groups
   # GET /class_groups.json
   def index
-    class_groups_user = ClassGroup.where(user_id: params[:id])
+    @user_id_param = params[:id].to_i
+    class_groups_user = ClassGroup.where(user_id: @user_id_param)
     check_class_groups_validity(class_groups_user)
     @class_groups = class_groups_user.where(active: true)
   end

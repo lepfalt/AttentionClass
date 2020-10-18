@@ -1,6 +1,6 @@
 <%# <% if current_user == @user %>
 <main class="card-main align-columns">
-  <% if current_user.id == @tasks.first&.class_group&.user_id %>
+  <% if current_user.id == @user_id_param %>
     <section class="status-column">
       <div class="status-header">
         <h3 class="status-name">Pendente</h3>

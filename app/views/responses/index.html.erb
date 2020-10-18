@@ -1,5 +1,5 @@
 <main class="card-main align-columns">
-  <% if current_user.id == @responses.first&.user_id %>
+  <% if current_user.id == @user_id_param %>
     <section class="status-column">
       <div class="status-header">
         <h3 class="status-name">Pendente</h3>

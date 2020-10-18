@@ -6,6 +6,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
+    @user_id_param = params[:user_id].to_i
     class_groups = ClassGroup.where(user_id: params[:user_id])
     @tasks = Task.where(class_group_id: class_groups)
     check_completed_tasks
@@ -136,10 +137,10 @@ class TasksController < ApplicationController
       field = "Título inválido"
     elsif !@task.expiration_date.present? || @task.expiration_date < Date.today
       field = "Data Limite inválida"
-    elsif @task.expiration_date > @task.class_group.expiration_date
-      field = "Data Limite inválida. A data deve ser compreendida no período vigente da turma."
     elsif !@task.class_group_id.present?
       field = "Turma inválida"
+    elsif @task.expiration_date > @task.class_group.expiration_date
+      field = "Data Limite inválida. A data deve ser compreendida no período vigente da turma."
     elsif !@task.description.present?
       field = "Descrição inválida"
     else

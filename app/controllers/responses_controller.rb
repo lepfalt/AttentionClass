@@ -5,7 +5,9 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.json
   def index
-    @responses = Response.where(user_id: params[:user_id])
+    @user_id_param = params[:user_id].to_i
+    puts 'USR ', @user_id_param, current_user.id
+    @responses = Response.where(user_id: @user_id_param)
     udpate_responses
   end
 
