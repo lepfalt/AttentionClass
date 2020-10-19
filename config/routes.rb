@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   root to: 'sessions#new'
 
   get '/login', to: 'sessions#new'
@@ -11,17 +13,17 @@ Rails.application.routes.draw do
   get 'user/reset_password(/:user_id)', to: 'users#reset_password', as: :reset_password
 
   resources :users, only: %i[create show new destroy]
-  post 'classes/:class_id/associate', to: 'users#update'
-  patch 'users/:id', to: 'users#update_password'
+  post 'users/class_group/:class_id/associate', to: 'users#update'
+  patch 'users/reset/:id', to: 'users#update_password'
 
   resources :class_groups, except: %i[index edit update]
-  get 'classes/:id', to: 'class_groups#index', as: :admin_classes
-  get 'classes/:id/associate', to: 'class_groups#new_user', as: :new_user_class
-  get 'classes/:id/users', to: 'class_groups#index_users', as: :users_class
+  get 'class_groups/user/:id', to: 'class_groups#index', as: :admin_classes
+  get 'class_groups/:id/associate', to: 'class_groups#new_user', as: :new_user_class
+  get 'class_groups/:id/users', to: 'class_groups#index_users', as: :users_class
 
   resources :responses, except: %i[index destroy]
   get 'responses/user/:user_id', to: 'responses#index', as: :responses_board
-  delete 'responses/:id', to: 'responses#destroy'
+  delete 'responses/:id/desactive', to: 'responses#destroy'
   get 'responses/:id/grade', to: 'responses#show_grade', as: :view_grade
 
   resources :tasks, except: %i[index destroy]
