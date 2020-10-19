@@ -107,6 +107,138 @@ paths:
         '406':
           description: unsupported accept header
           content: {}
+  api/responses:
+    post:
+      summary: Create a Response
+      tags:
+      - Responses
+      parameters: []
+      responses:
+        '201':
+          description: response created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                task_id:
+                  type: integer
+                status:
+                  type: integer
+              required:
+              - user_id
+              - task_id
+              - status
+  api/responses/{id}:
+    get:
+      summary: Get Response
+      tags:
+      - Responses
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: response not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+    put:
+      summary: Update a Response
+      tags:
+      - Responses
+      parameters: []
+      responses:
+        '201':
+          description: response updated
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                response_value:
+                  type: string
+                response_annotation:
+                  type: string
+                status:
+                  type: integer
+              required:
+              - id
+              - response_value
+              - response_annotation
+              - status
+    patch:
+      summary: Evaluate a Response
+      tags:
+      - Responses
+      parameters: []
+      responses:
+        '201':
+          description: response evaluated
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                grade:
+                  type: float
+                observation_responsible:
+                  type: string
+              required:
+              - id
+              - grade
+              - observation_responsible
+  api/responses/{id}/desactive:
+    patch:
+      summary: Delete a Response
+      tags:
+      - Responses
+      parameters: []
+      responses:
+        '201':
+          description: response deleted
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                active:
+                  type: boolean
+              required:
+              - id
+              - active
   api/sessions:
     post:
       summary: Authentication User
