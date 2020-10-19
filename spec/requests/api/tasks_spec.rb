@@ -152,9 +152,30 @@ RSpec.describe 'Tasks', type: :request do
         run_test!
       end
     end
+
+    patch 'Cancel a Task' do
+      tags 'Tasks'
+      consumes 'application/json'
+      parameter name: :task, in: :body, schema: {
+        type: :object,
+        properties: {
+          active: { type: :boolean }
+        },
+        required: ['active']
+      }
+
+      response "201", "task canceled" do
+        let(:task) { { task_id: 10 } }
+        run_test!
+      end
+      response "422", "invalid request" do
+        let(:task) { { task_id: 10 } }
+        run_test!
+      end
+    end
   end
 
-  path 'api/tasks/{id}/responses' do
+  path 'api/task/{id}/responses' do
     get 'Get Responses by Task' do
       tags 'Tasks'
       consumes 'application/json'

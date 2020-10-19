@@ -237,6 +237,28 @@ paths:
         '406':
           description: unsupported accept header
           content: {}
+    patch:
+      summary: Cancel a Task
+      tags:
+      - Tasks
+      parameters: []
+      responses:
+        '201':
+          description: task canceled
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: boolean
+              required:
+              - active
   api/tasks/user/{user_id}:
     get:
       summary: Get Tasks by Responsible of Group
@@ -255,7 +277,7 @@ paths:
         '406':
           description: unsupported accept header
           content: {}
-  api/tasks/{id}/responses:
+  api/task/{id}/responses:
     get:
       summary: Get Responses by Task
       tags:
