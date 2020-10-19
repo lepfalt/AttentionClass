@@ -62,83 +62,82 @@ RSpec.describe 'Users', type: :request, capture_examples: true do
         run_test!
       end
     end
+  end
+  path 'api/users/class_group/{class_id}/associate' do
+    put 'Associate User in group' do
+      tags 'Users'
+      consumes 'application/json'
+      parameter name: :user, in: :body, schema: {
+        type: :object,
+        properties: {
+          user_id: { type: :integer },
+          class_group_id: { type: :integer }
+        },
+        required: ['user_id', 'class_group_id']
+      }
 
-    path 'api/users/class_group/{class_id}/associate' do
-      put 'Associate User in group' do
-        tags 'Users'
-        consumes 'application/json'
-        parameter name: :user, in: :body, schema: {
-          type: :object,
-          properties: {
-            user_id: { type: :integer },
-            class_group_id: { type: :integer }
-          },
-          required: ['user_id', 'class_group_id']
-        }
-  
-        response "201", "user not found" do
-          let(:status) { true }
-          run_test!
-        end
-        response "422", "invalid request" do
-          let(:status) { false }
-          run_test!
-        end
+      response "201", "user not found" do
+        let(:status) { true }
+        run_test!
+      end
+      response "422", "invalid request" do
+        let(:status) { false }
+        run_test!
       end
     end
+  end
 
-    path 'api/users/reset/{user_id}' do
-      patch 'Reset Password User' do
-        tags 'Users'
-        consumes 'application/json'
-        parameter name: :user, in: :body, schema: {
-          type: :object,
-          properties: {
-            password_digest: { type: :string }
-          },
-          required: ['password_digest']
-        }
-  
-        response "201", "user reseted" do
-          let(:status) { true }
-          run_test!
-        end
-        response "422", "invalid request" do
-          let(:status) { false }
-          run_test!
-        end
+  path 'api/users/reset/{user_id}' do
+    patch 'Reset Password User' do
+      tags 'Users'
+      consumes 'application/json'
+      parameter name: :user, in: :body, schema: {
+        type: :object,
+        properties: {
+          password_digest: { type: :string }
+        },
+        required: ['password_digest']
+      }
+
+      response "201", "user reseted" do
+        let(:status) { true }
+        run_test!
+      end
+      response "422", "invalid request" do
+        let(:status) { false }
+        run_test!
       end
     end
+  end
 
-    path 'api/users/{id}' do
-      delete 'Delete User' do
-        tags 'Users'
-        consumes 'application/json'
-        parameter name: :id, in: :path, type: :integer
-  
-        response '200', 'user found' do
-          schema type: :object,
-            properties: {
-              status: { type: :boolean }
-            },
-            required: [ 'status' ]
-  
-          let(:id) { User.find_by(id: 1).destroy }
-          run_test! do |response|
-            data = JSON.parse(response.body)
-            expect(data['status']).to eq('true')
-          end
+  path 'api/users/{id}' do
+    delete 'Delete User' do
+      tags 'Users'
+      consumes 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'user found' do
+        schema type: :object,
+          properties: {
+            status: { type: :boolean }
+          },
+          required: [ 'status' ]
+
+        let(:id) { User.find_by(id: 1).destroy }
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data['status']).to eq('true')
         end
-  
-        response '404', 'user not found' do
-          let(:id) { 'invalid' }
-          run_test!
-        end
-  
-        response '406', 'unsupported accept header' do
-          let(:'Accept') { 'application/foo' }
-          run_test!
-        end
+      end
+
+      response '404', 'user not found' do
+        let(:id) { 'invalid' }
+        run_test!
+      end
+
+      response '406', 'unsupported accept header' do
+        let(:'Accept') { 'application/foo' }
+        run_test!
       end
     end
   end
