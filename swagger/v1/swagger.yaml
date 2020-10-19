@@ -1,0 +1,262 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  api/class_groups:
+    post:
+      summary: Create an Group
+      tags:
+      - Groups
+      parameters: []
+      responses:
+        '201':
+          description: group created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                discipline:
+                  type: string
+                class_code:
+                  type: string
+                expiration_date:
+                  type: date
+              required:
+              - user_id
+              - discipline
+              - class_code
+              - expiration_date
+    get:
+      summary: Get Groups by Responsible
+      tags:
+      - Groups
+      parameters:
+      - name: user_id
+        in: path
+        require: false
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: groups not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  api/class_groups/{id}:
+    get:
+      summary: Get Group
+      tags:
+      - Groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: user not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+    delete:
+      summary: Delete Group
+      tags:
+      - Groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: group not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  api/class_groups/{id}/users:
+    get:
+      summary: Get Users of Group
+      tags:
+      - Groups
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: users not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  api/sessions:
+    post:
+      summary: Authentication User
+      tags:
+      - Sessions
+      parameters:
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: password_digest
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: user found
+          content: {}
+        '404':
+          description: user not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  api/users:
+    post:
+      summary: Create an User
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                profile:
+                  type: integer
+                registration:
+                  type: string
+                email:
+                  type: string
+                password_digest:
+                  type: string
+              required:
+              - name
+              - email
+  api/users/{id}:
+    get:
+      summary: Get User
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user found
+          content: {}
+        '404':
+          description: user not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+    delete:
+      summary: Delete User
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user found
+          content: {}
+        '404':
+          description: user not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  api/users/class_group/{class_id}/associate:
+    put:
+      summary: Associate User in group
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user not found
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                class_group_id:
+                  type: integer
+              required:
+              - user_id
+              - class_group_id
+  api/users/reset/{user_id}:
+    patch:
+      summary: Reset Password User
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user reseted
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password_digest:
+                  type: string
+              required:
+              - password_digest
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
