@@ -51,7 +51,9 @@ class ClassGroupsController < ApplicationController
     handler_notice('Turma removida com sucesso!', admin_classes_path(current_user))
   end
 
-  def new_user; end
+  def new_user
+    puts 'ENTROU NO NEW USER ', @user.to_json
+  end
 
   private
 

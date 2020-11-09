@@ -9,8 +9,9 @@ Rails.application.routes.draw do
   get 'user/reset_password(/:user_id)', to: 'users#reset_password', as: :reset_password
 
   resources :users, only: %i[create show new destroy]
-  post 'classes/:class_id/associate', to: 'users#update'
-  patch 'users/:id', to: 'users#update_password'
+  patch 'users/:id', to: 'users#update'
+  put 'user/:class_id/associate', to: 'users#update', as: :vinculate_user
+  patch 'user/:id', to: 'users#update_password'
 
   resources :class_groups, except: %i[index edit]
   get 'classes/:id', to: 'class_groups#index', as: :admin_classes

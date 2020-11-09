@@ -35,19 +35,28 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    registered_user = User.find_by(email: params[:email])
+    puts 'ENTROU NO UPDATE USER'
+    return vinculate_user unless params[:vincular].nil?
+
+    update_password
+  end
+
+  def vinculate_user
+    registered_user = User.find_by(email: params.dig(:user, :email))
+
+    class_id = params[:id]
     
     if registered_user.nil?
-      handler_notice_error('Usuário inexistente.', new_user_class_path(params[:class_id]))
+      handler_notice_error('Usuário inexistente.', new_user_class_path(class_id))
     elsif registered_user.admin?
-      handler_notice_error('Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.', new_user_class_path(params[:class_id]))
+      handler_notice_error('Este usuário não pode ser vinculado à turma devido ao tipo de perfil que possui.', new_user_class_path(class_id))
     else
-      class_associate = registered_user.class_groups.find_by(id: params[:class_id])
+      class_associate = registered_user.class_groups.find_by(id: class_id)
 
       if class_associate.nil?
-        associate_user(registered_user, params[:class_id])
+        associate_user(registered_user, class_id)
       else
-        handler_notice_error('Este usuário já está vinculado à turma.', new_user_class_path(params[:class_id]))
+        handler_notice_error('Este usuário já está vinculado à turma.', new_user_class_path(class_id))
       end
     end
   end
