@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   private
 
   def restrict_by_authorization
+    puts 'ENTROU NO RESTRICTY'
     unless logged_in? #Se tá logado, redireciona pra conta
       handler_notice_error('É preciso estar logado para acesso das páginas.', login_path)
     end
