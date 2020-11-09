@@ -52,6 +52,7 @@ class ClassGroupsController < ApplicationController
   end
 
   def new_user
+    @user.email = nil
     puts 'ENTROU NO NEW USER ', @user.to_json
   end
 
