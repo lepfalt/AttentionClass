@@ -2,6 +2,7 @@ class ClassGroupsController < ApplicationController
   before_action :restrict_by_authorization
   before_action :restrict_by_profile_admin
   before_action :set_class_group, only: %i[show new_user index_users edit update destroy]
+  before_action :clear_session_vinculate, only: [:show]
 
   # GET /class_groups
   # GET /class_groups.json
@@ -53,7 +54,6 @@ class ClassGroupsController < ApplicationController
 
   def new_user
     @user.email = nil
-    puts 'ENTROU NO NEW USER ', @user.to_json
   end
 
   private
@@ -107,5 +107,9 @@ class ClassGroupsController < ApplicationController
         puts 'Erro ao desativar turma' unless group.save
       end
     end
+  end
+
+  def clear_session_vinculate
+    session[:class_id_vinculate] = nil
   end
 end
