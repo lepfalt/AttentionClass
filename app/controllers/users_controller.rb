@@ -42,9 +42,11 @@ class UsersController < ApplicationController
   end
 
   def vinculate_user
+    puts 'PARAMS ', params
     registered_user = User.find_by(email: params.dig(:user, :email))
 
-    class_id = params[:id]
+    class_id = session[:class_id_vinculate]
+    puts 'CLASSGH ', session[:class_id_vinculate]
     
     if registered_user.nil?
       handler_notice_error('Usuário inexistente.', new_user_class_path(class_id))

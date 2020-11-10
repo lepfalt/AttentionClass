@@ -7,7 +7,8 @@
       <h1 class='title-page'>Vincular Aluno</h1>
       <%= form_with(model: @user, local: true) do |form| %>
         <%= form.email_field :email, class:"form-control text-field text-email-associate", placeholder: "email do aluno.." %>
-        <%= form.submit 'Vincular', name: 'vincular', class_id: @class_group.id, class: 'btn-associate btn-new-item' %>
+        <% session[:class_id_vinculate] = @class_group.id %>
+        <%= form.submit 'Vincular', name: 'vincular', class_id: 'aqui', class: 'btn-associate btn-new-item' %>
       <% end %>
     <% else %>
       <h1 class='title-page'>Código identificador inválido</h1>
