@@ -22,7 +22,7 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 
 <h2>⚙ Funcionamento</h2>
 <p>⤷ O administrador do grupo posta as tarefas com todas as instruções necessárias para a resolução e os requisitos da entrega;</p>
-<p>↳ Os integrantes desse grupo recebem a tarefa, que fica armazenada na coluna do devido status;</p>  
+<p>⤷ Os integrantes desse grupo recebem a tarefa, que fica armazenada na coluna do devido status;</p>  
 </br>
 
 <h2>✅ Features</h2>
