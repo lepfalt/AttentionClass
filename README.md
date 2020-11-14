@@ -49,7 +49,7 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 <p>É necessária a instalação de alguns programas e bibliotecas para configuração local deste projeto. Essa configuração será detalhada nos itens abaixo.</p>
 
 ### WSL
-<p>A linguagem Ruby escolhida não é compatível com alguns programas de SOs. Portanto, para os usuários de Windows é necessário a intalação da WSL(Windows Subsystem for Linux), que é um subprograma windows para uso de serviços linux, permitindo o desenvolvimento desse projeto dentro deste sistema operacional.</p>
+<p>A linguagem Ruby escolhida não é compatível com alguns programas de SOs. Portanto, para os usuários de Windows é necessário a intalação da WSL (Windows Subsystem for Linux), que é um subprograma windows para uso de serviços linux, permitindo o desenvolvimento desse projeto dentro deste sistema operacional.</p>
 
 A instalação deve ser feita conforme o link <a href="https://docs.microsoft.com/pt-br/windows/wsl/install-win10 ">WSL</a>. Nesta estapa o computador deve ser reiniciado. É aconselhado a utilização do WSL2.
 
@@ -61,11 +61,11 @@ A instalação pode ser feita através do link <a href="https://www.enterprisedb
 Em alguns casos, pode ser necessário a alteração da senha conforme o link <a href="http://help.market.com.br/desenvolvimento/trocar_senha_usuario_postgresq.htm">Update Password Postgres</a>. Ou a alteração da senha pode também ser feita direto no arquivo `./config/database.yml` do projeto.
 
 ### Ruby On Rails
-<p>A instalação do Ruby e do Rails são feitas separadamente. É aconselhavél para o Ruby o uso de um versionador, neste projeto foi usado o </p>`rbenv`
+<p>A instalação do Ruby e do Rails são feitas separadamente. É aconselhavél para o Ruby o uso de um versionador, neste projeto foi usado o RBenv.</p>
 
-Link para instalação do Ruby <a href="https://www.theodinproject.com/courses/ruby-programming/lessons/installing-ruby-ruby-programming">Tutorial Ruby</a>
-Link para instalação do Rails <a href="https://www.theodinproject.com/courses/ruby-on-rails/lessons/your-first-rails-application-ruby-on-rails">Tutorial Rails</a>
-Tem também um tutorial completo que auxilia na instalação de ambos pelo WSL: <a href="https://gorails.com/setup/windows/10">Tutorial Completo</a>
+<p>Link para instalação do Ruby <a href="https://www.theodinproject.com/courses/ruby-programming/lessons/installing-ruby-ruby-programming">Tutorial Ruby</a></p>
+<p>Link para instalação do Rails <a href="https://www.theodinproject.com/courses/ruby-on-rails/lessons/your-first-rails-application-ruby-on-rails">Tutorial Rails</a></p>
+<p>Tem também um tutorial completo que auxilia na instalação de ambos pelo WSL: <a href="https://gorails.com/setup/windows/10">Tutorial Completo</a></p>
 
 ### Node e Yarn
 <p>É necessário a instalação do node e yarn para uso de algumas bibliotecas.</p>
@@ -103,7 +103,7 @@ Por fim, basta startar o projeto e acessá-lo localmente em `localhost:3000`:
 <h2>✨ Considerações Finais</h2>
 
 ### Envio de E-mail
-Para essa funcionalidade é necessário declarar as credenciais do email a ser usado. Isso pode ser feito criando um arquivo com o nome de `.config/local_env.rb` com os seguintes campos:
+Para essa funcionalidade é necessário declarar as credenciais do email a ser usado. Isso pode ser feito criando um arquivo com o nome de `./config/local_env.rb` com os seguintes campos:
 
     USERNAME_EMAIL: 'seu email aqui'
     PASSWORD_EMAIL: 'sua senha aqui'
