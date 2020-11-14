@@ -44,6 +44,7 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 <h5> PostgreSQL</h5>
 <h5> Twitter Bootstrap Rails</h5>
 
+</br>
 <h2>🚀 Instalação</h2>
 <p>É necessária a instalação de alguns programas e bibliotecas para configuração local deste projeto. Essa configuração será detalhada nos itens abaixo.</p>
 
@@ -97,7 +98,8 @@ Então devem ser executados comandos de criação e migração do banco de dados
 Por fim, basta startar o projeto e acessá-lo localmente em `localhost:3000`:
 
     rails s             // roda o projeto
-    
+   
+</br>
 <h2>✨ Considerações Finais</h2>
 
 ### Envio de E-mail
