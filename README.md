@@ -21,22 +21,27 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 </br>
 
 <h2>⚙ Funcionamento</h2>
-<p>⤷ O professor posta as tarefas com todas as instruções necessárias para a resolução e os requisitos da entrega;</p>
-<p>↳ O aluno recebe a tarefa, que fica armazenada na lista do devido status;</p>  
+<p>⤷ O administrador do grupo posta as tarefas com todas as instruções necessárias para a resolução e os requisitos da entrega;</p>
+<p>↳ Os integrantes desse grupo recebem a tarefa, que fica armazenada na coluna do devido status;</p>  
 </br>
 
 <h2>✅ Features</h2>
-<h6>Professores</h6>
+<h6>Perfil Administrador</h6>
 
 - [x] Postagem de Tarefas
-- [x] Registro de tarefas entregues por cada aluno
+- [x] Registro de tarefas entregues por cada integrante do grupo
 - [x] Organização por turma
 
-<h6>Alunos</h6>
+<h6>Perfil Comum</h6>
 
 - [x] Kanban com status de cada tarefa
+- [X] Tarefas de todos os seus grupos no mesmo board
 </br>
 
 <h2>🛠️ Tecnologias</h2>
-<h5>✦ Ruby</h5>
-<h5> Bootstrap</h5>
+<h5>✦ Linguagem Ruby</h5>
+<h5> Framework Rails</h5>
+<h5> PostgreSQL</h5>
+<h5> Twitter Bootstrap Rails</h5>
+
+<h2> Instalação</h2>
