@@ -44,4 +44,68 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 <h5> PostgreSQL</h5>
 <h5> Twitter Bootstrap Rails</h5>
 
-<h2> Instalação</h2>
+<h2>🚀 Instalação</h2>
+<p>É necessária a instalação de alguns programas e bibliotecas para configuração local deste projeto. Essa configuração será detalhada nos itens abaixo.</p>
+
+### WSL
+<p>A linguagem Ruby escolhida não é compatível com alguns programas de SOs. Portanto, para os usuários de Windows é necessário a intalação da WSL(Windows Subsystem for Linux), que é um subprograma windows para uso de serviços linux, permitindo o desenvolvimento desse projeto dentro deste sistema operacional.</p>
+
+A instalação deve ser feita conforme o link <a href="https://docs.microsoft.com/pt-br/windows/wsl/install-win10 ">WSL</a>. Nesta estapa o computador deve ser reiniciado. É aconselhado a utilização do WSL2.
+
+### PostgreSQL
+<p>Com o SO devidamente configurado ou compatível com a ferramenta, o próximo passo é a instalação do banco de dados, que nesse caso será o Postgres.</p>
+
+A instalação pode ser feita através do link <a href="https://www.enterprisedb.com/downloads/postgresql">Postgres</a> de acordo com o SO usado.
+
+Em alguns casos, pode ser necessário a alteração da senha conforme o link <a href="http://help.market.com.br/desenvolvimento/trocar_senha_usuario_postgresq.htm">Update Password Postgres</a>. Ou a alteração da senha pode também ser feita direto no arquivo `./config/database.yml` do projeto.
+
+### Ruby On Rails
+<p>A instalação do Ruby e do Rails são feitas separadamente. É aconselhavél para o Ruby o uso de um versionador, neste projeto foi usado o </p>`rbenv`
+
+Link para instalação do Ruby <a href="https://www.theodinproject.com/courses/ruby-programming/lessons/installing-ruby-ruby-programming">Tutorial Ruby</a>
+Link para instalação do Rails <a href="https://www.theodinproject.com/courses/ruby-on-rails/lessons/your-first-rails-application-ruby-on-rails">Tutorial Rails</a>
+Tem também um tutorial completo que auxilia na instalação de ambos pelo WSL: <a href="https://gorails.com/setup/windows/10">Tutorial Completo</a>
+
+### Node e Yarn
+<p>É necessário a instalação do node e yarn para uso de algumas bibliotecas.</p>
+
+Link para instalação do <a href="https://nodejs.org/en/">Node</a>.
+
+Para instalar o yarn e suas dependências é necessário rodar o seguinte comando no terminal:
+
+    yarn install
+    
+### GIT
+Para clonar e versionar o projeto, deve ser instalado e configurado o git. Através do link <a href="https://git-scm.com/downloads">GIT</a>.
+
+### Comandos Iniciais
+<p>Com as intalações realizadas e o projeto devidamente clonado, alguns comando devem ser rodados para configurar o projeto local.</p>
+
+Priemiro é necessário rodar o `bundle` para que todas as gems declaradas no `Gemfile` sejam usadas localmente:
+
+    bundle install
+    
+Após isso, em alguns casos, é necessário rodar o `yarn` também dentro do projeto:
+
+    yarn install
+    
+Então devem ser executados comandos de criação e migração do banco de dados local através do rails:
+
+    rails db:create     // cria os bancos de teste e desenvolvimento declarados no database.yml
+    rails db:migrate    // executa todas as migrações para gerar as tabelas e suas configurações
+    
+Por fim, basta startar o projeto e acessá-lo localmente em `localhost:3000`:
+
+    rails s             // roda o projeto
+    
+<h2>✨ Considerações Finais</h2>
+
+### Envio de E-mail
+Para essa funcionalidade é necessário declarar as credenciais do email a ser usado. Isso pode ser feito criando um arquivo com o nome de `.config/local_env.rb` com os seguintes campos:
+
+    USERNAME_EMAIL: 'seu email aqui'
+    PASSWORD_EMAIL: 'sua senha aqui'
+    SEED: 'semente pro hash do reset de senha'    // pode ser qualquer palavra para elevar o nível de criptografia
+    
+### Rotas
+É possível visualizar todas as rotas do sistema atráves da url: `localhost:3000/rails/info/routes` durante a execução local.
