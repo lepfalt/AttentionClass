@@ -6,7 +6,7 @@
 <p>Este é um trabalho acadêmico prestado ao programa de graduação em Ciência da Computação do Centro Universitário Carioca. O desafio realizado é um projeto de Gerenciamento de Tarefas da Turma cujo nome escolhido foi "Attention Class".</p>
 
 <p><i>Já pensou o quanto a falta de organização pode afetar seus afazeres?</i></p>
-<p>No meio acadêmico, isso é um desafio. Alguns alunos utilizam de agendas, aplicativos, e várias outras ferramentas a fim de não perder nenhuma tarefa. No entanto, seu organizador não está sempre atualizado, pois o esquecimento pode se tornar habitual em meio a correria do dia a dia. O que resulta, muitas vezes, em tarefas sendo feitas na última hora ou nem mesmo sendo entregues. Os professores também são afetados por isso, em meio a correção de provas, trabalhos, notas, preparo de contrúdos para várias e várias turmas. Isso ocorre em muitas áreas e no dia a dia de muita gente independente da área de atuação.</p>
+<p>No meio acadêmico, isso é um desafio. Alguns alunos utilizam de agendas, aplicativos, e várias outras ferramentas a fim de não perder nenhuma tarefa. No entanto, seu organizador não está sempre atualizado, pois o esquecimento pode se tornar habitual em meio a correria do dia a dia. O que resulta, muitas vezes, em tarefas sendo feitas na última hora ou nem mesmo sendo entregues. Os professores também são afetados por isso, em meio a correção de provas, trabalhos, notas, preparo de conteúdos para várias e várias turmas. Isso ocorre em muitas áreas e no dia a dia de muita gente independente da área de atuação.</p>
 
 <p><i>Então, por que não otimizar nossas tarefas da melhor forma?</i></p> 
 <p>No cenário acadêmico, por exemplo, imagine poder juntar a dinâmica do lançamento de tarefas dos professores - e todo o gerencimento necessário para controlar tantas turmas diferentes - com um organizador de tarefas de acordo com o status de desenvolvimento pelo aluno. Esse é o objetivo desse projeto, ajudar na execução e interação de tarefas para ambos os papéis.</p>
@@ -22,7 +22,7 @@ Ao fim, o usuário comum envia a tarefa e o adminsitrador tem visualização dos
 
 <h2>⚙ Funcionamento</h2>
 <p>⤷ O administrador do grupo posta as tarefas com todas as instruções necessárias para a resolução e os requisitos da entrega;</p>
-<p>⤷ Os integrantes desse grupo recebem a tarefa, que fica armazenada na coluna do devido status;</p>  
+<p>⤷ Os integrantes desse grupo recebem a tarefa, que fica armazenada na coluna do devido status.</p>  
 </br>
 
 <h2>✅ Features</h2>
