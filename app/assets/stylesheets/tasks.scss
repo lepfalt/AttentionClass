@@ -19,12 +19,12 @@
   line-height: 21px;
   align-items: center;
   text-align: center;
-  color: #FFFFFF;
+  color: #666666;
   padding-left: 3.5em;
 }
 
 .btn-new-student:hover {
-  color: #000;
+  color: #fff;
   background-color: #c4c4c4;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .text-button-task {
-  padding-left: 2.5em;
+  padding-left: 2em;
 }
 
 .section-response-user {
@@ -211,7 +211,20 @@
   position: relative;
   min-width: 100%;
   max-width: 100%;
-  padding-left: 7em;
+}
+
+.btn-new-item-create-task {
+  background: #D11919;
+  border-radius: 5px;
+  width: 13em;
+  height: 4em;
+
+  font-family: Roboto;
+  font-size: 25px;
+  line-height: 21px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .btn-associate-user {
