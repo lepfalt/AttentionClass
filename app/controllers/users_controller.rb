@@ -78,12 +78,14 @@ class UsersController < ApplicationController
     # Armazenando para reacessar página em caso de erro
     session[:token] = params[:reset]
     session[:expire] = params[:expire]
-    @user = match_user(params[:reset])
+    session[:user] = params[:reset]
+    @user = match_user(session[:user])
   end
 
   def update_password
     return unless valid_password?(reset_params)
 
+    @user = match_user(session[:user])
     @user.password_digest = encrypt(params.dig(:user, :password))
     if @user.save
       handler_notice('Senha resetada com sucesso!', login_path)
