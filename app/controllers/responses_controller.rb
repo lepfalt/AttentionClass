@@ -40,7 +40,7 @@ class ResponsesController < ApplicationController
   def destroy
     @response.active = false
     if @response.save
-      handler_notice_error("Resposta excluída com sucesso", responses_board_path(current_user.id))
+      handler_notice("Resposta excluída com sucesso", responses_board_path(current_user.id))
     else
       handler_notice_error("Erro ao excluir resposta.", responses_board_path(current_user.id))
     end
